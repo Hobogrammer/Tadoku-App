@@ -1,4 +1,10 @@
 TadokuApp::Application.routes.draw do
+  get "view_pages/home"
+
+  get "view_pages/about"
+
+  get "view_pages/manual"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
