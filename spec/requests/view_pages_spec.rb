@@ -7,7 +7,7 @@ describe "ViewPages" do
   describe "Home page" do
     before { visit root_path }
 
-    it { should have_selector('h3', text: 'Welcome to the Tadoku App!') }
+    it { should have_selector('h1', text: 'Welcome to the Tadoku App!') }
   end
 
   describe "About page" do
