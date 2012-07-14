@@ -14,6 +14,9 @@
 class User < ActiveRecord::Base
   attr_accessible :admin, :name, :provider, :uid
 
+  has_many :rounds, dependent: :destroy
+  has_many :updates, dependent: :destroy
+
   validates :name, presence: true
   validates :provider, presence: true
   validates :uid, presence: true

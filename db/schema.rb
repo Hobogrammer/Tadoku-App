@@ -11,7 +11,46 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120624082958) do
+ActiveRecord::Schema.define(:version => 20120628223710) do
+
+  create_table "rounds", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "round_id"
+    t.decimal  "book"
+    t.decimal  "manga"
+    t.decimal  "net"
+    t.decimal  "fgame"
+    t.decimal  "game"
+    t.decimal  "lyric"
+    t.decimal  "subs"
+    t.decimal  "news"
+    t.decimal  "sent"
+    t.decimal  "nico"
+    t.decimal  "pcount"
+    t.integer  "goal"
+    t.boolean  "gmet",       :default => false
+    t.string   "lang1"
+    t.string   "lang2"
+    t.string   "lang3"
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+  end
+
+  create_table "updates", :force => true do |t|
+    t.integer  "user_id"
+    t.decimal  "book"
+    t.decimal  "manga"
+    t.decimal  "fgame"
+    t.decimal  "game"
+    t.decimal  "lyric"
+    t.decimal  "subs"
+    t.decimal  "news"
+    t.decimal  "sent"
+    t.decimal  "nico"
+    t.decimal  "recpcount"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "provider"
