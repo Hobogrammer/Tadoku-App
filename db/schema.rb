@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120628223710) do
+ActiveRecord::Schema.define(:version => 20120830082912) do
 
   create_table "rounds", :force => true do |t|
     t.integer  "user_id"
@@ -38,16 +38,11 @@ ActiveRecord::Schema.define(:version => 20120628223710) do
 
   create_table "updates", :force => true do |t|
     t.integer  "user_id"
-    t.decimal  "book"
-    t.decimal  "manga"
-    t.decimal  "fgame"
-    t.decimal  "game"
-    t.decimal  "lyric"
-    t.decimal  "subs"
-    t.decimal  "news"
-    t.decimal  "sent"
-    t.decimal  "nico"
-    t.decimal  "recpcount"
+    t.integer  "round_id"
+    t.integer  "newread"
+    t.string   "medium"
+    t.string   "lang"
+    t.integer  "recpage"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

@@ -18,8 +18,6 @@ describe RoundsController do
   			expect do
   				click_button 'Register for the next round'
 
-  				puts user.name
-
   			end.to change(user.rounds, :count).by(1)
   		end
   	end

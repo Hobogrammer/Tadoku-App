@@ -18,3 +18,7 @@
     </div>
   </body>
 </html>
+
+<% if signed_in? %>
+	<%= render "shared/updatemodal" %>
+<% end %>

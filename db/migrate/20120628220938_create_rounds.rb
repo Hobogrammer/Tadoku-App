@@ -13,7 +13,6 @@ class CreateRounds < ActiveRecord::Migration
       t.decimal :news
       t.decimal :sent
       t.decimal :nico
-      t.decimal :nico
       t.decimal :pcount
       t.integer :goal
       t.boolean :gmet

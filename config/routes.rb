@@ -2,6 +2,11 @@ TadokuApp::Application.routes.draw do
   resources :users
   resources :sessions, only: [:create, :destroy]
   resources :rounds
+  resources :updates
+
+  resources :users do
+    resources :updates, :rounds
+  end
   
 
   root to: 'view_pages#home'
@@ -15,3 +20,4 @@ TadokuApp::Application.routes.draw do
 
   match "auth/twitter/callback" => "sessions#create"
 end
+

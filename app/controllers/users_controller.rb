@@ -1,4 +1,10 @@
 class UsersController < ApplicationController
-  def new
-  end
+
+	def show
+		@user = User.find(params[:id])
+		if signed_in?
+  			@update = current_user.updates.build
+  		end
+	end
+
 end
