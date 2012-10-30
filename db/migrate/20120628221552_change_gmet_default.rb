@@ -3,3 +3,4 @@ class ChangeGmetDefault < ActiveRecord::Migration
   		change_column :rounds, :gmet, :boolean, default: false
   end
 end
+ 

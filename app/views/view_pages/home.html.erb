@@ -42,7 +42,7 @@
 			</div>
 			<div class="modal-body">
 				<%= simple_form_for @reg do |f| %>
-					<%= f.input :round_id, :collection => [ curr_round().to_i ] %>
+					<%= f.input :round_id, :collection => [ "#{curr_round().to_i}" ] %>
 					<%= f.input :lang1, :collection => ["jp", "zh", "ko", "en", "es", "fr", "it"] %>
 					<%= f.input :lang2, :collection => ["jp", "zh", "ko", "en", "es", "fr", "it"] %>
 					<%= f.input :lang3, :collection => ["jp", "zh", "ko", "en", "es", "fr", "it"] %>

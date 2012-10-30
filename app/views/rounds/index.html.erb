@@ -1,0 +1,13 @@
+<% provide(:title, 'Main Ranking') %>
+<h1>Tadoku Ranking page</h1>
+
+<ol class="users">
+	<%#= @entrants.inspect %>
+		<% @entrants.each do |entrant| %>
+			<li>
+				<%= twivatar_for entrant.user %>
+				<%= link_to entrant.user.name, user_path(entrant.user) %>
+				<%= entrant.pcount %>
+			</li>
+		<% end %>
+</ol>

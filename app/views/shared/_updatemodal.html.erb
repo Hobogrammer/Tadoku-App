@@ -7,6 +7,8 @@
   		<%= simple_form_for @update do |f| %>
   			<%= f.input :newread , :label => "Number of pages" %>
    		<%= f.input :medium, :label=> "Medium Read", :collection => ["book", "manga", "game", "fgame", "net", "lyric", "subs", "news", "sent", "nico" ] %>
+   		<%= f.input :repeat, :label => "Repeat number", :input_html => { :value => '0' } %>
+   		<%= f.input :dr, :inline_label => 'Double Rowed' %>
        <%= f.input :lang, :label => "Language", :collection => ["jp", "zh", "ko", "en", "es", "fr", "it"] %>
   	</div>
   	<div class="modal-footer">

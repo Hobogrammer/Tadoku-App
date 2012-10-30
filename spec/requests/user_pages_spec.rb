@@ -13,6 +13,23 @@ describe "User Pages" do
 	    
   subject { user }
 
+  describe "index" do
+
+  		before do
+  		 sign_in user
+  		 visit users_path
+  		end
+
+  		it { should have_selector('title', text: 'Tadoku Ranking') }
+  		it { should have_selector('h1', text: 'Tadoku Ranking') }
+
+  		it "should list all users in the ranking" do
+  			User.all.each do |user|
+  				page.should have_selector('li', text: user.name)
+  			end
+  		end
+  	end
+
   describe "making an update" do
 
 		before do 
