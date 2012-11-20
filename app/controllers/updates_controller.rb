@@ -1,5 +1,6 @@
 class UpdatesController < ApplicationController
-	include ApplicationHelper, Calc
+	include ApplicationHelper, Calc, Tweet
+
 
 before_filter :signed_in_user, only: [:create, :destroy]
 
@@ -8,8 +9,11 @@ before_filter :signed_in_user, only: [:create, :destroy]
 	end
 
 	def create
+
+		client = Twitter::Client.new
+
 		@update = current_user.updates.build(params[:update])
-		round = curr_round()
+		round = curr_round().to_s
 		@update.round_id = round
 		@update.recpage = current_user.rounds.find_by_round_id(round).pcount
 		new_read = score_calc(@update.newread, @update.medium, @update.lang)
@@ -23,6 +27,8 @@ before_filter :signed_in_user, only: [:create, :destroy]
 		new_total = new_read + @update.recpage
 
 		current_user.rounds.find_by_round_id(round).update_attributes(:pcount => new_total)
+
+		#tweet_up(current_user,new_total,client)
 
 		if @update.save
 			flash[:success] = "Update successfully submitted"

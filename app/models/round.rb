@@ -4,4 +4,17 @@ class Round < ActiveRecord::Base
   belongs_to :user
 
   default_scope order: 'rounds.pcount DESC'
+
+  def self.rank(user,roundid)
+  		part_list = "SELECT user_id FROM rounds WHERE round_id = :roundid"
+
+  		i = 1
+
+  		part_list.each do |id|
+  			if (user.id == id)
+  				rank = i
+  			end
+  			i += 1
+  		end
+  	end
 end
