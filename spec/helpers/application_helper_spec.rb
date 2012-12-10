@@ -4,8 +4,8 @@ describe ApplicationHelper do
 
 	describe "curr_round" do
 
-		it "should return 201203 for August 2012" do
-			Timecop.freeze(Date.today)
+		it "should return 201209 for August 2012" do
+			Timecop.freeze(2012, 8, 15)
 			curr_round().should =~ /201203/
 			Timecop.return
 		end
@@ -24,10 +24,10 @@ describe ApplicationHelper do
 			Timecop.return
 		end
 
-		it "should return 201202 for March 2012" do
+		it "should return 201205 for March 2012" do
 			secquar2012 = Time.local(2012, 3, 1)
 			Timecop.freeze(secquar2012)
-			curr_round().should =~ /201202/
+			curr_round().should =~ /201205/
 			Timecop.return 
 		end
 	end

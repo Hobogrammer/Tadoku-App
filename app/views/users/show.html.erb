@@ -1,5 +1,32 @@
 <% provide(:title, @user.name) %>
 <div class ="row">
+	<script type="text/javascript" charset="utf-8">
+	$(function() {
+		new Highcharts.Chart({
+			chart: {
+				renderTo: "progress_chart"
+			},
+			title: {
+				text: "Reading Progress"
+			},
+			xAxis: {
+					type: "datetime"
+			},
+			yAxis: {
+				title: {
+					text: "Pages Read"
+				}
+			},
+			series: [{
+				name: "Overall",
+				pointInterval: <%= 1.day * 1000 %>,
+				pointStart: <%= 3.weeks.ago.to_i * 1000 %>,
+				data: <%= updates_chart_series(@user,"201204") %>
+			}]
+		});
+	});
+	</script>
+	<div id ="progress_chart" style="width:700px; height:300px;"></div>
 	<aside class = "span4">
 		<section>
 			<h1> 
