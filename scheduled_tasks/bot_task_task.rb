@@ -14,7 +14,7 @@ class BotTaskTask < Scheduler::SchedulerTask
     # User.send_due_invoices!
     
     # use log() for writing to scheduler daemon log
-    lib/bot.rb
+    Bot.main
     log("Bot Ran!")
   end
 end

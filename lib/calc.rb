@@ -1,35 +1,41 @@
 module Calc
 
-	def score_calc(count,med,lang)
+	def self.score_calc(count,med,lang)
 		case med
 		when "manga"
 			count *=  0.2
+			return count
 		when "game"
 			count *= 0.05
+			return count
 		when "fgame"
 			count *= (1/6.0)
+			return count
 		when "net"
 			count = count
-		when "subs"
+		when "sub", "subs"
 			count *= 0.2
-		when "sent"
+			return count
+		when "sent", "sentences", "sentence"
 			count = sent_count(count,lang)
+			return count
 		when "nico"
 			count *= 0.1
-		when "book", "net", "news", "lyric"
+			return count
+		when "book", "books", "net", "news", "lyric"
 			count = count
 		end
 	end
 
-	def repeat(count,rep)
+	def self.repeat(count,rep)
 		count *= (1/(2.0 * rep))
 	end
 
-	def dr(count)
-		count *= 1.4
+	def self.dr(count)
+		count *= 1.48
 	end
 
-	def sent_count(read,la)
+	def self.sent_count(read,la)
 		case la 
 		when "jp"
 			read *= (1/17.0)
@@ -57,5 +63,4 @@ module Calc
 			read *= (1/33.0)		
 		end
 	end
-
 end

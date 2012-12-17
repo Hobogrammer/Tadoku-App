@@ -5,7 +5,7 @@ class RoundsController < ApplicationController
 
 
 	def index
-		@entrants = Round.includes(:user).where(:round_id => "#{curr_round()}")
+		@entrants = Round.includes(:user).where(:round_id => "#{ApplicationHelper::curr_round}")
 		if @entrants == nil
 			redirect_to root_url, :flash => { :error => "There are currently no users registered for this round." }
 		end
@@ -16,7 +16,7 @@ class RoundsController < ApplicationController
 	end
 
 	def create
-		if current_user.rounds.find_by_round_id(curr_round()) != nil
+		if current_user.rounds.find_by_round_id(ApplicationHelper::curr_round) != nil
 			redirect_to root_url, :flash => { :error => "You are already registered for the Contest"}
 		else
 			@reg = current_user.rounds.build(params[:round])

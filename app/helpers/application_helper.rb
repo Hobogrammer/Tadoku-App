@@ -9,7 +9,7 @@ module ApplicationHelper
 		end
 	end
 
-	def curr_round()
+	def self.curr_round()
 		# date = Time.now
 
 		# if date.month == 12

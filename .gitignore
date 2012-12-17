@@ -15,3 +15,5 @@
 /tmp
 
 /config/initializers/omniauth.rb
+/lib/bot_handtest.rb
+/config/initializers/twitter.rb

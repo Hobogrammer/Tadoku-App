@@ -13,22 +13,22 @@ before_filter :signed_in_user, only: [:create, :destroy]
 		client = Twitter::Client.new
 
 		@update = current_user.updates.build(params[:update])
-		round = curr_round().to_s
+		round = ApplicationHelper::curr_round.to_s
 		@update.round_id = round
 		@update.recpage = current_user.rounds.find_by_round_id(round).pcount
-		new_read = score_calc(@update.newread, @update.medium, @update.lang)
+		new_read = Calc::score_calc(@update.newread, @update.medium, @update.lang)
 		
 #Don't like all these if statements, might try to add it to the score_calc function.
-		new_read = dr(new_read) if @update.dr == true
+		new_read = Calc::dr(new_read) if @update.dr == true
 
-		new_read = repeat(new_read, @update.repeat) if (@update.repeat > 0)
+		new_read = Calc::repeat(new_read, @update.repeat) if (@update.repeat > 0)
 
 		@update.newread = new_read
 		new_total = new_read + @update.recpage
 
 		current_user.rounds.find_by_round_id(round).update_attributes(:pcount => new_total)
 
-		#tweet_up(current_user,new_total,client)
+		#Tweet::tweet_up(current_user,new_total,client)
 
 		if @update.save
 			flash[:success] = "Update successfully submitted"
