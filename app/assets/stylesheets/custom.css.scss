@@ -146,3 +146,33 @@ footer {
 .debug_dump {
 	clear: both;
 }
+
+/* ranking */
+
+.ranking {
+	list-style-type: decimal; 
+	list-style-position: inside;
+
+	ol { counter-reset: item; }
+
+	ol li { 
+		list-style: decimal inside none;
+		display: inline-block;
+	}
+
+	li:before { 
+		display: inline-block;
+		content: counter(item);
+		counter-increment: item;
+	}
+
+	td { vertical-align: middle; }
+
+	.avatar {
+		width: 56px;
+		height: 56px;
+	}
+}
+
+
+

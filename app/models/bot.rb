@@ -2,7 +2,7 @@ class Bot < ActiveRecord::Base
 include Calc,Tweet, ApplicationHelper
 
 MEDREGEX = /#(books?|manga|net|fullgame|news|subs?|sentences?|nico|undo|lyric|reg)/i
-LANGREGEX = /#(fr|de|es|en|ko|th |zh|it|nl|pl|el|ru|eo|sv|he|nn|nb|la|hu|jp|fi)/i
+LANGREGEX = /#(fr|de|es|en|ko|th |zh|it|nl|pl|el|ru|eo|sv|he|nn|nb|la|hu|jp|fi|af)/i
 
 	#this got nasty real quick. Now I remember why I seperated the register and the bot
 	def self.main 

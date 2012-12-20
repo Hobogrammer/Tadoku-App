@@ -5,11 +5,11 @@
   	</div>
   	<div class="modal-body">
   		<%= simple_form_for @update do |f| %>
-  			<%= f.input :newread , :label => "Number of pages" %>
-   		<%= f.input :medium, :label=> "Medium Read", :collection => ["book", "manga", "game", "fgame", "net", "lyric", "subs", "news", "sent", "nico" ] %>
-   		<%= f.input :repeat, :label => "Repeat number", :input_html => { :value => '0' } %>
-   		<%= f.input :dr, :inline_label => 'Double Rowed' %>
-       <%= f.input :lang, :label => "Language", :collection => ["jp", "zh", "ko", "en", "es", "fr", "it"] %>
+  			<%= f.input :newread , :label => "Amount Read", :placeholder => 'pages/screens/minutes #' , :input_html => { :maxlength => 5 } %>
+   		<%= f.input :medium, :label=> "Medium Read", :collection => ["book", "manga", "game", "fgame", "net", "lyric", "subs", "news", "sent", "nico" ], :prompt => "Select medium read" %>
+       <%= f.input :lang, :label => "Language", :collection => ["jp", "zh", "ko", "en", "es", "fr", "it"], :prompt => "Select your language" %>
+       <%= f.input :repeat, :label => "Repeat number", :collection =>0..50 , :priority => '0' %>
+       <%= f.input :dr, :inline_label => 'Double Rowed?', :hint => 'Only to be used with Japanese books', :label => false %>
   	</div>
   	<div class="modal-footer">
   		<%= submit_tag 'Cancel', :class => "btn btn-danger", 'data-dismiss' => "modal" %>

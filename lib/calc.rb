@@ -59,6 +59,8 @@ module Calc
 			read *= (1/24.0)
 		when "nl"
 			read *= (1/30.0)
+		when "af"
+			read *= (1/31.0)
 		else
 			read *= (1/33.0)		
 		end
