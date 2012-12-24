@@ -7,47 +7,40 @@ LANGREGEX = /#(fr|de|es|en|ko|th |zh|it|nl|pl|el|ru|eo|sv|he|nn|nb|la|hu|jp|fi|a
 	#this got nasty real quick. Now I remember why I seperated the register and the bot
 	def self.main 
 		client = Twitter::Client.new
-	#	since_id = get_id
-	#	updates = client.mentions(:since_id=> since_id)
-	#	updates.reverse!
-	#	updates.each do |update|
-		update = "@Tadokubot #manga 190" 
-		relevance = update.scan(MEDREGEX)
-		if !relevance.empty?
-			#	partaker = update.from_user_name
-			partaker = "lordsient"
-			id = "14281032"
-			#	reg_check = update.text.scan(/#reg/i)
-			reg_check = update.scan(/#reg/i)
-			if !reg_check.empty?
-				if regis_check(update) == false
-					 regis(update,client)
-				elsif regis_check(update).nil?
-				#	new_user = User.new(uid: update.from_user_uid, name: update.from_user_name, provider: "twitter")
-					new_user = User.new(uid: id, name: partaker, provider: "twitter")
-					new_user.save
-					regis(update,client)
-				else
-					Tweet::already_regis(partaker,client)
-				end
-			elsif !regis_check(update)  #Check tweeter's registration status if they are not attempting to register
-				Tweet::not_regis(partaker,client)
-			else
-				split_up = update.split(/;/)
-				split_up.each do |reup|
-				#	rel_check = reup.text.scan(MEDREGEX)
-					rel_check  = reup.scan(MEDREGEX)
-					if !rel_check.empty?
-						processor(update,reup,client)
+		since_id = get_id
+		updates = client.mentions(:since_id=> since_id)
+		updates.reverse!
+		updates.each do |update|
+			relevance = update.scan(MEDREGEX)
+			if !relevance.empty?
+					partaker = update.from_user_name
+					reg_check = update.text.scan(/#reg/i)
+				reg_check = update.scan(/#reg/i)
+				if !reg_check.empty?
+					if regis_check(update) == false
+						 regis(update,client)
+					elsif regis_check(update).nil?
+						new_user = User.new(uid: update.from_user_uid, name: update.from_user_name, provider: "twitter")
+						new_user.save
+						regis(update,client)
 					else
-						puts "no rel, no reg" #remove else section after testing
+						Tweet::already_regis(partaker,client)
+					end
+				elsif !regis_check(update)  #Check tweeter's registration status if they are not attempting to register
+					Tweet::not_regis(partaker,client)
+				else
+					split_up = update.split(/;/)
+					split_up.each do |reup|
+						rel_check = reup.text.scan(MEDREGEX)
+						if !rel_check.empty?
+							processor(update,reup,client)
+						end
 					end
 				end
 			end
+			since_id = update.id
+			save_id(since_id)
 		end
-		#since_id = update.id
-		#save_id(since_id)
-	#	end
 	end	
 
 
@@ -56,22 +49,13 @@ LANGREGEX = /#(fr|de|es|en|ko|th |zh|it|nl|pl|el|ru|eo|sv|he|nn|nb|la|hu|jp|fi|a
 			medium = subreq.scan(MEDREGEX).first.to_s.gsub(/[^A-Za-z]/, '')
 			language = subreq.scan(LANGREGEX).first.to_s.to_s.gsub(/[^A-Za-z]/, '')
 			sub_read = subreq.scan(/[.]?\d+/).first.to_f
-			
-			puts "printing subreq, #{subreq}"
-			puts "sub_read, #{sub_read}"
-			puts "medium, #{medium}"
-		
 
 			if language.empty? 
-			#	usr = User.find_by_uid(request.from_user_id)
-				usr = User.find_by_uid(14281032)
+				usr = User.find_by_uid(request.from_user_id)
 				language = usr.rounds.find_by_round_id(ApplicationHelper::curr_round).lang1
 			end
 
 			new_read = Calc::score_calc(sub_read,medium,language).to_f
-
-			puts "submit language, #{language}"
-			puts "new_read after calc, #{new_read.to_f}"
 
 			# really wanted to make this a one liner but I need to pass the variable just in case
 			if !subreq.scan(/#dr/).empty?
@@ -89,7 +73,6 @@ LANGREGEX = /#(fr|de|es|en|ko|th |zh|it|nl|pl|el|ru|eo|sv|he|nn|nb|la|hu|jp|fi|a
 			else
 				reps = 0
 			end
-
 			db_update(request,new_read,medium,language,dr,reps,sub_read)
 		else
 			undo(request,ApplicationHelper::curr_round,client)
@@ -97,20 +80,13 @@ LANGREGEX = /#(fr|de|es|en|ko|th |zh|it|nl|pl|el|ru|eo|sv|he|nn|nb|la|hu|jp|fi|a
 	end
 
 	def self.regis(request, client)
-	#	requester = request.from_user_name
-		requester = "lordsilent"
-	#	goal = request.text.scan(/[.]?\d+/)
-		goal = request.scan(/[.]?\d+/)
-	#	user = User.new(name: requester, provider: "twitter", uid: request.from_user_id)
-		id = "14281032"
-	#	user = User.find_by_uid(request.from_user_id)
-		user = User.find_by_uid(id)
+		requester = request.from_user_name
+		goal = request.text.scan(/[.]?\d+/)
+		user = User.find_by_uid(request.from_user_id)
 		new_round = user.rounds.new(round_id: ApplicationHelper::curr_round, goal: goal)
 		new_round.save
 
-	#	sep_lang = request.text.split(/;/)
-		sep_lang = request.split(/;/)
-		puts sep_lang
+		sep_lang = request.text.split(/;/)
 		x = 0
 
 		sep_lang.each do |lang|
@@ -120,16 +96,12 @@ LANGREGEX = /#(fr|de|es|en|ko|th |zh|it|nl|pl|el|ru|eo|sv|he|nn|nb|la|hu|jp|fi|a
 			#this is sort of nasty
 			if (sep_lang.count == 0) && regis_lang.empty?
 				regis_lang = "jp"
-				puts regis_lang
-				puts regis_lang.class
-				puts usr_round
+				usr_round = user.rounds.find_by_round_id(ApplicationHelper::curr_round)
 				usr_round.update_attributes(:lang1 => regis_lang)
 				Tweet::regis_tweet(user, usr_round,client)
 			else
 				#this is DEFINITELY odd 
 				regis_lang = regis_lang.to_s.gsub(/[^A-Za-z0-9_]+/,'')
-				puts regis_lang
-				puts regis_lang.class
 				if x == 0  
 					user.rounds.find_by_round_id(ApplicationHelper::curr_round).update_attributes(:lang1 => regis_lang) #had the idea to make this one loop and just starting x at 1 and writing lang#{x} in the update attributes field
 					x += 1
@@ -147,22 +119,13 @@ LANGREGEX = /#(fr|de|es|en|ko|th |zh|it|nl|pl|el|ru|eo|sv|he|nn|nb|la|hu|jp|fi|a
 	end
 
 	def self.db_update(req,count,med,lang,double,rep,fresh_count)
-	#	user = User.find_by_uid(req.from_user_id)
-		user = User.find_by_uid(14281032)
+		user = User.find_by_uid(req.from_user_id)
 		total = user.rounds.find_by_round_id(ApplicationHelper::curr_round).pcount
-
-
-		puts "count, #{count}"
-		puts "total, #{total}"
 
 		new_total = count.to_f + total.to_f
 
-
-		puts "total for update #{new_total}"
-
-		new_update = Update.new(:user_id => user.id, :newread => count, :medium => med, :lang => lang, :dr => double, :repeat => rep, :round_id => ApplicationHelper::curr_round,:recpage => total, :raw => fresh_count )
-		new_update.save
-		ApplicationHelper::medium_update(user,ApplicationHelper::curr_round,med,fresh_count,new_total)
+		Update.new(:user_id => user.id, :raw => fresh_count ,:newread => count, :medium => med, :lang => lang, :dr => double, :repeat => rep, :round_id => ApplicationHelper::curr_round,:recpage => total )
+		ApplicationHelper::medium_update(user,ApplicationHelper::curr_round,med,count,new_total)
 	end
 
 	def self.repinterp(txt)
@@ -178,8 +141,7 @@ LANGREGEX = /#(fr|de|es|en|ko|th |zh|it|nl|pl|el|ru|eo|sv|he|nn|nb|la|hu|jp|fi|a
 	end
 
 	def self.regis_check(request)
-	#	user = User.find_by_uid(request.from_user_id)
-		user = User.find_by_uid(14281032)
+		user = User.find_by_uid(request.from_user_id)
 		if user == nil
 			return nil
 		else
@@ -205,8 +167,7 @@ LANGREGEX = /#(fr|de|es|en|ko|th |zh|it|nl|pl|el|ru|eo|sv|he|nn|nb|la|hu|jp|fi|a
 	end	
 
 	def self.undo(request,round,client)
-	#	requester_id = request.from_user_id
-		requester_id = "14281032"
+		requester_id = request.from_user_id
 		user = User.find_by_uid(requester_id)
 		old_total = ApplicationHelper::rollback(user,round)
 		Tweet::undo_tweet(user, old_total,client)

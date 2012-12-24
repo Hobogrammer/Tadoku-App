@@ -1,7 +1,8 @@
 class RoundsController < ApplicationController
 	include ApplicationHelper
 	include SessionsHelper
-	before_filter :signed_in_user, only: [:create, :destroy]
+	before_filter :signed_in_user, only: :create
+	before_filter :admin_user, only: [:destroy, :edit]
 
 
 	def index
@@ -26,6 +27,11 @@ class RoundsController < ApplicationController
 		end
 	end
 
-	def new
-	end
+
+
+	private
+	
+		def admin_user
+			redirect_to(root_path) unless current_user.admin?
+		end
 end

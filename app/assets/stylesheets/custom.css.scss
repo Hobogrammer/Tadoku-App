@@ -175,4 +175,20 @@ footer {
 }
 
 
+.user_side {
+	font-size: 15px;
+	text-align: center;
+
+	.avatar { 
+	margin-top: 50px;
+	width: 120px;
+	height: 120px;
+	}
+
+	.info { 
+		font-size: 12px; 
+		line-height: 50%;
+	}
+}
+
 

@@ -13,7 +13,7 @@ TadokuApp::Application.routes.draw do
 
   match '/manual', to: 'view_pages#manual'
   match '/about', to: 'view_pages#about'
-  match '/ranking', to: 'rounds#ranking'
+  match '/ranking', to: 'rounds#index'
   
   match '/signin' => redirect("/auth/twitter")
   match '/signout', to: "sessions#destroy", via: :delete

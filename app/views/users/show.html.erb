@@ -1,5 +1,4 @@
 <% provide(:title, @user.name) %>
-<div class ="row">
 	<script type="text/javascript" charset="utf-8">
 	$(function() {
 		new Highcharts.Chart({
@@ -27,13 +26,136 @@
 		});
 	});
 	</script>
-	<div id ="progress_chart" style="width:700px; height:300px;"></div>
-	<aside class = "span4">
-		<section>
-			<h1> 
-				<%= twivatar_for @user %>
-				<%= @user.name %>
-			</h1>
-		</section>
-	</aside>
+<div class="row">
+	<h1>Stats of Wrath</h1>
 </div>
+<div class ="row">
+	<div class = "user_side">
+		<aside class = "span3">
+			<section>
+					<%= twivatar_for @user %>
+					<p><%= @user.name %></p>
+					<div class = "well well-small">
+						<p class = "info">Reading language(s): <%= @round_stats.lang1 %>
+							<% if !@round_stats.lang2.empty? %>
+								<%= @round_stats.lang2 %>
+							<% end %>
+							<% if !@round_stats.lang3.empty? %>
+								<%= @round_stats.lang3 %>
+							<% end %>
+						</p>
+						<p class = "info">Goal: <%= @round_stats.goal %></p>
+						<p class = "info">Round reading avg:</p>
+				</div>
+			</section>
+		</aside>
+	</div>
+	<div class = "span5" id ="progress_chart" style="width:600px; height:300px;"></div>
+</div>
+<div class="row">
+	<div class="tabbable tabs-left">
+		<ul id="myTab" class="nav nav-tabs">
+			<li class="active"><a href="#overchart" data-toggle="tab">Chart</a></li>
+			<li><a href="#medium" data-toggle="tab">Mediums</a></li>
+			<li><a href="#updates" data-toggle="tab">Updates</a></li>
+		</ul>
+		<div class="tab-content" id="myTabContent">
+			<div id="#overchart" class="tab-pane active">
+				<div class="span5">
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th></th>
+								<th>Book</th>
+								<th>Manga</th>
+								<th>Net</th>
+								<th>Full Game</th>
+								<th>Game</th>
+								<th>Lyrics</th>
+								<th>Subs</th>
+								<th>News</th>
+								<th>Sentences</th>
+								<th>Nico</th>
+								<th>Total</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td></td>
+								<td>100.32</td>
+								<td>100.32</td>
+								<td>100.32</td>
+								<td>100.32</td>
+								<td>100.32</td>
+								<td>100.32</td>
+								<td>100.32</td>
+								<td>100.32</td>
+								<td>100.32</td>
+								<td>100.32</td>
+								<td>100.32</td>
+							</tr>
+							<tr>
+								<td>% of Total</td>
+								<td>%</td>
+								<td>%</td>
+								<td>%</td>
+								<td>%</td>
+								<td>%</td>
+								<td>%</td>
+								<td>%</td>
+								<td>%</td>
+								<td>%</td>
+								<td>%</td>
+								<td>%</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div id="#medium" class="tab-pane">
+				<p>will put shit here later</p>
+			</div>
+			<div id="#updates" class="tab-pane">
+				<h4> Last 10 Updates </h4>
+				<br />
+				<ul>
+					<% @updates.each do |update| %>
+						<li><strong><%= update.newread %></strong> pages worth of <strong><%= update.medium %></strong> in <strong><%= update.lang %></strong>
+							<% if current_user.admin? && !current_user?(user) %>
+								<%= link_to "delete", update, method: :delete, date: { confirm: "Are you sure you want to undo this update?" } %>
+							<% end %>
+						</li>
+					<% end %>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	(function() {
+
+  $('#myTab a').click(function(e) {
+    var paneWeWant, self;
+    e.preventDefault();
+    self = $(this);
+    $('#myTab a').each(function() {
+      $(this).parent().removeClass('active');
+      return $(this).removeClass('active');
+    });
+    self.addClass('active');
+    self.parent().addClass('active');
+    paneWeWant = this.href.match(/\#\w+/);
+    console.log("The pane we want is " + paneWeWant);
+    return $('.tab-pane').each(function(n, i) {
+      if (("" + i.id) === paneWeWant[0]) {
+        console.log("The tab-pane's id is " + i.id);
+        return $(this).addClass('active in');
+      } else {
+        return $(this).removeClass('active in');
+      }
+    });
+  });
+
+}).call(this);
+</script>

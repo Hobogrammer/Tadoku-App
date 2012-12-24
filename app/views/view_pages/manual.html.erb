@@ -1,3 +1,162 @@
 <% provide(:title, 'Tadoku Manual') %>
 <h3>Tadoku Manual</h3>
-<p>This be where they put the instuctions...later</p>
+<I realized that tadoku may have been a little confusing earlier since all the information was spread around a bunch of old post so I am going to pool all that information into this post. <strong>This contest runs on twitter.</strong>
+<ol>
+<ol>
+	<li>
+<h3>Contest Months</h3>
+</li>
+</ol>
+</ol>
+<div style="padding-left: 30px;">The ReadMOD Tadoku contests runs during the months of <strong>January</strong>, <strong>April</strong>,<strong> July</strong>, and<strong> October</strong>. This means that the contest starts the second that the timezone you inhabit hits a contest month. example  <em>January 1, 2012 00:00:00</em>.  Contest rounds end on the last second of the month. Example <em>January 31, 2012 23:59:59</em>.</div>
+<ol>
+<ol>
+	<li>
+<h3>Mediums and Values</h3>
+</li>
+</ol>
+</ol>
+<p style="padding-left: 30px;">You can read various types of media for the Tadoku contest. Each medium has a different points (<strong>points = Tadoku pages</strong>) per page value associated with it.  The following list will show you the viable mediums and points per page (ppp) values.</p>
+
+<ol>
+<ol>
+<ul>
+<ul>
+	<li>#book  : <strong>1 ppp</strong>
+<ul>
+	<li>#dr <sup><a href="#6">[6]</a></sup> - (double rowed) Japanese Only : <strong>1.48 ppp</strong></li>
+</ul>
+</li>
+	<li>#manga :<strong> 0.2 ppp</strong></li>
+	<li>#net : <strong>1 ppp</strong></li>
+	<li>#fullgame <sup><a href="#1">[1]</a></sup> : <strong>0.1667 pps</strong> (points per screen) <sup><a href="#2">[2]</a></sup></li>
+	<li>#game<sup><a href="#3">[3]</a></sup> :  <strong>0.05 pps</strong> <sup><a href="#4">[4]</a></sup></li>
+	<li> #lyric: <strong>1 ppl</strong> (point per lyrics for whole song)</li>
+	<li>#subs : <strong>0.2 ppm</strong> (points per minute)</li>
+	<li>#news : <strong>1 ppp</strong></li>
+	<li>#nico : <strong>0.1 ppm</strong></li>
+	<li>#sentences : <strong>Language dependent</strong></li>
+</ul>
+</ul>
+	<li>
+<h3>How to Register</h3>
+</li>
+</ol>
+</ol>
+<div style="padding-left: 30px;">Registering for Tadoku contests usually (unless I am unable to open them for some reason) starts 15 days before the start of the round and closes midway into the contest. Participants are restricted to 3 reading languages in order to ensure that they get to read extensively in each language.  When you sign up you will let the bot know you are registering by using the #reg tag followed by what languages<sup><a href="#5">[5]</a></sup> (separated with a semicolon) you plan on reading in. Example:</div>
+<div style="padding-left: 30px; text-align: center;"><strong><em>
+"@TadokuBot #reg #lang1; #lang2; #lang3"</em></strong></div>
+<div style="padding-left: 30px;">If you <strong>only intend on reading  Japanese</strong> you simply submit "@TadokuBot #reg". This will set your language to JP automatically.</div>
+<div style="padding-left: 30px;">If you only plan on<strong> reading 2 languages</strong> simply remove "; #lang3" from the first example : "@TadokuBot #reg #lang1; #lang2".  Participants that <strong>only plan on reading one language (that isn't Japanese)</strong> simply remove everything behind #lang1.  If your attempt to register is successful the bot should send you back a message confirming that you have registered.</div>
+<div style="padding-left: 30px;"></div>
+<div>
+<ul>
+	<li>
+<h3>Setting a goal</h3>
+<div>You may set a goal as long as the register is open.  Simply tweet “<strong>@TadokuBot #target {number}</strong>“(minus the {}) to set your goal for this round. This may also be attached to your initial register tweet.</div></li>
+	<li>
+<h3>Submitting your read pages</h3>
+</li>
+</ul>
+<div style="padding-left: 30px;">Reading submissions, like registering, are handled by the TadokuBot. In order to submit your update to the bot you simply tell the bot how much(page, screens, minutes) you read and what medium it was. <strong>You are not required to do any page conversion, the bot will handle all that for you</strong>. Example:</div>
+</div>
+<div style="padding-left: 30px; text-align: center;"><strong><em>"@TadokuBot 51 #manga"</em></strong></div>
+<div style="padding-left: 30px;"><strong><strong>Be very careful to section off other non-update related numbers with a semicolon.</strong></strong>If you forget this the bot will include that number in your update. Example:</div>
+<div style="padding-left: 30px; text-align: center;"><strong><em>"@TadokuBot 94 #book; Man Harry Potter book 6 is awesome!"</em>
+</strong></div>
+<div style="padding-left: 30px;">The example above is a shows the correct way to section off other numbers from an update. If the semicolon had not been placed the bot would read the update as 946 #book. <strong>Please don't forget your semicolons</strong>.</div>
+<div style="padding-left: 30px;">You can submit however many updates you like at once provided that you separate each medium's update with a semicolon. Example:</div>
+<div style="padding-left: 30px; text-align: center;"><strong><em>"@TadokuBot 51 #manga; 12 #book; 982 #sentences"</em></strong></div>
+<h4 style="padding-left: 60px;">a. Submitting minutes</h4>
+<div style="padding-left: 60px;">The #subs and #nico mediums require you submit the time watched. The syntax for that is HH:MM, H being hour and M being minutes. Example:</div>
+<div style="padding-left: 60px; text-align: center;"><strong><em>"@TadokuBot 01:50 #subs" </em></strong></div>
+<div style="padding-left: 60px;"><strong>The colon must be present or the bot will ignore the update.</strong></div>
+<h4 style="padding-left: 60px;">b. Submitting pages you re-read (repeats)</h4>
+<div style="padding-left: 60px;">If you have previously something before but would still like to read it for the contest you must tell the bot how many times you have read the text. You receive half as many points for each read. So if this is your second time reading a book you would use the #second tag. Third time? #third etc (note: the repeats only go to #fifth) Example:</div>
+<div style="text-align: center;"><strong><em>"@TadokuBot 80 #book #third"</em></strong></div>
+<h4 style="padding-left: 60px;">c. Undoing a mistake</h4>
+<div style="padding-left: 60px;">If you incorrectly submit an update you can undo it by using the #undo tag. The #undo tag deletes your last update and recalculates your score.  If you previously submitted a tweet with 10 updates and made a mistake in the 5th update you have to undo all the updates that followed that tweet AND that update (thats 6 undos). Example (for 3 undos) :</div>
+<div style="text-align: center;"><em>"@TadokuBot #undo; #undo; #undo"</em></div>
+<h4 style="padding-left: 60px;">d. Submitting for languages other than Japanese</h4>
+<div style="padding-left: 60px;">Previous examples have shown the way to submit pages for Japanese language reading. If you want to submit pages for another language all you have to so is specify which languages the submission is for. To do this all you have to do is add the language tag to the end of that particular update. Example showing multiple language submission:</div>
+<div style="text-align: center;"><strong><em>"@TadokuBot 15 #book #pt; 86 #net #ko"</em></strong></div>
+<ol>
+<ol>
+	<li>
+<h3>Checking your score/rank</h3>
+</li>
+</ol>
+</ol>
+<div style="padding-left: 30px;">You may view your current page count and rank at any time by viewing the <a href="http://digitalartificer.com/railed/ranking.php">ranking page</a>.</div>
+<ol>
+<ol>
+	<li>
+<h3>List of all the tags</h3>
+</li>
+</ol>
+</ol>
+<div>
+<ul>
+<ul>
+<ul>
+	<li>#book</li>
+</ul>
+<ul>
+<ul>
+	<li>#dr ( for Japanese use only)</li>
+</ul>
+</ul>
+<ul>
+	<li>#manga</li>
+	<li>#net</li>
+	<li>#fullgame</li>
+	<li>#game</li>
+	<li>#lyric</li>
+	<li>#subs</li>
+	<li>#news</li>
+	<li>#nico</li>
+	<li>#sentences</li>
+	<li>#undo</li>
+	<li>Lang tags</li>
+</ul>
+<ul>
+<ul>
+	<li>#fr – French</li>
+	<li>#de – German</li>
+	<li>#es – Spanish</li>
+	<li>#en – English</li>
+	<li>#ko – Korean</li>
+	<li>#th – Thai</li>
+	<li>#zh – Chinese</li>
+	<li>#it – Italian</li>
+	<li>#nl – Dutch</li>
+	<li>#pl – Polish</li>
+	<li>#el – Greek</li>
+	<li>#ru – Russian</li>
+	<li>#eo – Esperanto</li>
+	<li>#he – Hebrew</li>
+	<li>#sv - Swedish</li>
+	<li>#pt  – Portuguese</li>
+	<li>#af - Afrikaans</li>
+</ul>
+<ul>
+	<li>repeat tags
+<ul>
+	<li>#second</li>
+	<li>#third</li>
+	<li>#fourth</li>
+	<li>#fifth</li>
+</ul>
+</li>
+</ul>
+</ul>
+</ul>
+</ul>
+If you have any questions you can comment here or contact me on twitter <a href="http://www.twitter.com/LordSilent">@LordSilent</a>.
+<div id="1">[1] : "Fullgames" are visual novels where text covers the whole screen.  <a title="Sea Kitties" href="http://readmod.files.wordpress.com/2010/12/fullgame.png">Example</a></div>
+<div id="2">[2] : That's (1/6)th a page</div>
+<div id="3">[3] :"Games" tag is for visual novels that display text inside a text box. <a title="My Eyes." href="http://readmod.files.wordpress.com/2010/12/game.png">Example</a> (If you are playing a game that isn't as text heavy please count the sentences and adjust them to games for submission.)</div>
+<div id="4">[4] : That's (1/20)th a page</div>
+<div id="5">[5] : See the language tags above</div>
+<div id="6">[6] : The #dr tag is only to be used with the Japanese language and must be accompanied by the #book tag. <a title="text on text action" href="http://readmod.files.wordpress.com/2011/03/01_022.png">Example</a></div>
+</div>

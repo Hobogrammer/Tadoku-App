@@ -11,7 +11,12 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121030061939) do
+ActiveRecord::Schema.define(:version => 20121223094149) do
+
+  create_table "bots", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "rounds", :force => true do |t|
     t.integer  "user_id"
@@ -47,6 +52,7 @@ ActiveRecord::Schema.define(:version => 20121030061939) do
     t.datetime "updated_at",                    :null => false
     t.integer  "repeat",     :default => 0
     t.boolean  "dr",         :default => false
+    t.decimal  "raw",        :default => 0.0
   end
 
   create_table "users", :force => true do |t|
