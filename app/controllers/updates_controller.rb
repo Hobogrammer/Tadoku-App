@@ -30,7 +30,7 @@ before_filter :admin_user, only: [:destroy, :edit]
 		new_total = new_read + @update.recpage
 
 		ApplicationHelper::medium_update(current_user,round,@update.medium,@update.raw,new_total)
-		#Tweet::tweet_up(current_user,new_total,client)
+		Tweet::tweet_up(current_user,new_total,client)
 
 		if @update.save
 			flash[:success] = "Update successfully submitted"
