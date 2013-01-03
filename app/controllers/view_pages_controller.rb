@@ -12,8 +12,14 @@ class ViewPagesController < ApplicationController
   end
 
   def about
+    if signed_in?
+        @update = current_user.updates.build
+    end
   end
 
   def manual
+    if signed_in?
+        @update = current_user.updates.build
+    end
   end
 end

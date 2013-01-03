@@ -21,6 +21,7 @@ class RoundsController < ApplicationController
 			redirect_to root_url, :flash => { :error => "You are already registered for the Contest"}
 		else
 			@reg = current_user.rounds.build(params[:round])
+			@reg.pcount = '0'
 			if @reg.save
 				redirect_to root_url, :flash => { :success => "You have successfully registered for the Tadoku contest" }
 			end

@@ -4,7 +4,8 @@
 
 $grayMediumLight: #eaeaea;
 $Dblue3: #1569C7;
-
+$grayLight: #999;
+$gray : #555;
 @mixin box_sizing {
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
@@ -181,8 +182,8 @@ footer {
 
 	.avatar { 
 	margin-top: 50px;
-	width: 120px;
-	height: 120px;
+	width: 170px;
+	height: 170px;
 	}
 
 	.info { 
@@ -191,4 +192,12 @@ footer {
 	}
 }
 
+#pie_chart {
+	margin-left: 225px;
+}
 
+#donate {
+	display:block;
+	margin-left:auto;
+	margin-right: auto;
+}

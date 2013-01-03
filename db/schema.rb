@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121223094149) do
+ActiveRecord::Schema.define(:version => 20130101051833) do
 
   create_table "bots", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -21,16 +21,16 @@ ActiveRecord::Schema.define(:version => 20121223094149) do
   create_table "rounds", :force => true do |t|
     t.integer  "user_id"
     t.integer  "round_id"
-    t.decimal  "book"
-    t.decimal  "manga"
-    t.decimal  "net"
-    t.decimal  "fgame"
-    t.decimal  "game"
-    t.decimal  "lyric"
-    t.decimal  "subs"
-    t.decimal  "news"
-    t.decimal  "sent"
-    t.decimal  "nico"
+    t.decimal  "book",       :default => 0.0
+    t.decimal  "manga",      :default => 0.0
+    t.decimal  "net",        :default => 0.0
+    t.decimal  "fgame",      :default => 0.0
+    t.decimal  "game",       :default => 0.0
+    t.decimal  "lyric",      :default => 0.0
+    t.decimal  "subs",       :default => 0.0
+    t.decimal  "news",       :default => 0.0
+    t.decimal  "sent",       :default => 0.0
+    t.decimal  "nico",       :default => 0.0
     t.decimal  "pcount",     :default => 0.0
     t.integer  "goal"
     t.boolean  "gmet",       :default => false
@@ -62,6 +62,8 @@ ActiveRecord::Schema.define(:version => 20121223094149) do
     t.boolean  "admin",      :default => false
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
+    t.string   "time_zone"
+    t.integer  "utc_offset"
   end
 
 end

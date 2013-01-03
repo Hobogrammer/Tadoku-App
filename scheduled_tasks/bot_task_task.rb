@@ -1,5 +1,5 @@
 class BotTaskTask < Scheduler::SchedulerTask
-  environments :development
+  environments :production
   # environments :staging, :production
   
   every '1m'

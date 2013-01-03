@@ -1,29 +1,29 @@
 <% provide(:title) %>
-<script>
-		$(function() {
-    	$('div#clock').countdown("2013/01/01", function(event) {
-        var $this = $(this);
-        switch(event.type) {
-            case "seconds":
-            case "minutes":
-            case "hours":
-            case "days":
-            case "weeks":
-            case "daysLeft":
-                $this.find('span#'+event.type).html(event.value);
-                break;
-            case "finished":
-                $this.hide();
-                break;
-        }
-    	});
-	});
-		</script>
 
 <% if current_user %>
+	<script type="text/javascript">
+			$(function() {
+	    	$('div#clock').countdown("2013/01/01", function(event) {
+	        var $this = $(this);
+	        switch(event.type) {
+	            case "seconds":
+	            case "minutes":
+	            case "hours":
+	            case "days":
+	            case "weeks":
+	            case "daysLeft":
+	                $this.find('span#'+event.type).html(event.value);
+	                break;
+	            case "finished":
+	                $this.hide();
+	                break;
+	        }
+	    	});
+		});
+	</script>
 	<div class="center hero-unit">
 		<h1><%= current_user.name %></h1>
-		<h2>Time until start/end of current round</h2>
+		<h2>Time until start of current round</h2>
 		
 		<div id="clock">
         <span id="weeks"></span>      Weeks
@@ -44,10 +44,10 @@
 			</div>
 			<div class="modal-body">
 				<%= simple_form_for @reg do |f| %>
-					<%= f.input :round_id, :collection => [ "#{ApplicationHelper::curr_round.to_i}" ] %>
-					<%= f.input :lang1, :collection => ["jp", "zh", "ko", "en", "es", "fr", "it"] %>
-					<%= f.input :lang2, :collection => ["jp", "zh", "ko", "en", "es", "fr", "it"] %>
-					<%= f.input :lang3, :collection => ["jp", "zh", "ko", "en", "es", "fr", "it"] %>
+					<%= f.input :round_id, :collection => [ "#{ApplicationHelper::curr_round}" ] %>
+					<%= f.input :lang1, :collection => Update::LANGUAGES %>
+					<%= f.input :lang2, :collection => Update::LANGUAGES %>
+					<%= f.input :lang3, :collection => Update::LANGUAGES %>
 					<%= f.input :goal, :prompt => "Input goal #" %>
 			</div>
 			<div class="modal-footer">
@@ -59,17 +59,40 @@
   </div>
 
 <% else %>
+	<script type="text/javascript" charset="utf-8">
+			$(function() {
+	    	$('div#clock').countdown("2013/01/01", function(event) {
+	        var $this = $(this);
+	        switch(event.type) {
+	            case "seconds":
+	            case "minutes":
+	            case "hours":
+	            case "days":
+	            case "weeks":
+	            case "daysLeft":
+	                $this.find('span#'+event.type).html(event.value);
+	                break;
+	            case "finished":
+	                $this.hide();
+	                break;
+	        }
+	    	});
+		});
+	</script>
 	<div class="center hero-unit">
 		<h1>Welcome to the Tadoku App!</h1>
-		<h2>Time until start/end of current round</h2>
-		
+		<br />
 		<div id="clock">
         <span id="weeks"></span>      Weeks
         <span id="daysLeft"></span>   Days
         <span id="hours"></span>      Hours
         <span id="minutes"></span>    Minutes
         <span id="seconds"></span>    Seconds
+        till start!
     </div>
+    <br />
+    <p> Tadoku is a friendly foreign-language reading contest aimed at building a habit of reading in your non-native languages.</p>
+    <p> Sign in to start!</p>
 		<%= link_to "Sign in with twitter", signin_path, class: "btn btn-large btn-danger" %>
 	</div>
 <% end %>

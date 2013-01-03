@@ -12,31 +12,48 @@ before_filter :admin_user, only: [:destroy, :edit]
 
 	def create
 
-		client = Twitter::Client.new
+		if !current_user.rounds.find_by_round_id(ApplicationHelper::curr_round).nil?
 
-		@update = current_user.updates.build(params[:update])
-		round = ApplicationHelper::curr_round.to_s
-		@update.round_id = round
-		@update.raw = @update.newread
-		@update.recpage = current_user.rounds.find_by_round_id(round).pcount
-		new_read = Calc::score_calc(@update.newread, @update.medium, @update.lang)
-		
-		#Don't like all these if statements, might try to add it to the score_calc function.
-		new_read = Calc::dr(new_read) if @update.dr == true
+			client = Twitter::Client.new
 
-		new_read = Calc::repeat(new_read, @update.repeat) if (@update.repeat > 0)
+			@update = current_user.updates.build(params[:update])
+			round = ApplicationHelper::curr_round.to_s
+			@update.round_id = round
 
-		@update.newread = new_read
-		new_total = new_read + @update.recpage
+			if @update.newread == '0.0' || @update.lang.empty? || @update.medium.empty?
+				flash[:error] = "Pages read, language, and medium MUST be included. Please provide all the information and try again."
+				redirect_to ranking_path
+			else
 
-		ApplicationHelper::medium_update(current_user,round,@update.medium,@update.raw,new_total)
-		Tweet::tweet_up(current_user,new_total,client)
+				@update.raw = @update.newread
+				@update.recpage = current_user.rounds.find_by_round_id(round).pcount
+				new_read = Calc::score_calc(@update.newread, @update.medium, @update.lang)
+				
+				#Don't like all these if statements, might try to add it to the score_calc function.
+				new_read = Calc::dr(new_read) if @update.dr == true
 
-		if @update.save
-			flash[:success] = "Update successfully submitted"
-			redirect_to ranking_path # temporary until user stats page is finished user_stats_path
-		else 
-			flash[:error] = "Failed to update"
+				@update.raw = Calc::dr(@update.raw) if @update.dr == true
+
+				new_read = Calc::repeat(new_read, @update.repeat) if (@update.repeat > 0)
+				@update.raw = Calc::repeat(@update.raw, @update.repeat) if (@update.repeat > 0)
+
+				@update.newread = new_read
+				new_total = new_read + @update.recpage
+
+				ApplicationHelper::medium_update(current_user,round,@update.medium,@update.raw,new_total)
+				rank = Round::rank(current_user,round)
+				Tweet::tweet_up(current_user,new_total.round(2),rank,client)
+
+				if @update.save
+					flash[:success] = "Update successfully submitted"
+					redirect_to ranking_path # temporary until user stats page is finished user_stats_path
+				else 
+					flash[:error] = "Failed to update"
+				end
+			end
+		else
+			flash[:error] = "You must be registered for the current round inorder to submit an update. Please register"
+			redirect_to root_path
 		end
 	end
 
