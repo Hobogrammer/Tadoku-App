@@ -10,8 +10,7 @@ class UsersController < ApplicationController
   		if !@user.rounds.find_by_round_id(ApplicationHelper::curr_round).nil?
   			@round_stats = Calc::usermed_info(@user,ApplicationHelper::curr_round)
   			@round = @user.rounds.find_by_round_id(ApplicationHelper::curr_round)
-  			@updates = @user.updates.where(:round_id => ApplicationHelper::curr_round).limit(10)
-  			@updates = @updates.reverse
+  			@updates = @user.updates.where(:round_id => ApplicationHelper::curr_round).order('created_at DESC').limit(10)
   		else
   			flash[:error] = "This user is not registered for the current round, for past round records please use access the old rankings."
   			redirect_to ranking_path
