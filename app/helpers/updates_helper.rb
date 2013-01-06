@@ -26,5 +26,5 @@ module UpdatesHelper
 			update = updates_by_day_user.detect { |update| update.created_at.in_time_zone("#{user.time_zone}").to_date == date }
 			update && update.total_read.to_f || 0
 		end.inspect
-	end										  
+	end
 end

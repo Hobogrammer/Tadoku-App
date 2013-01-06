@@ -10,7 +10,7 @@ module ApplicationHelper
 	end
 
 	def self.curr_round()
-		date = Time.now
+		date = Time.now.in_time_zone("Hawaii") #pused this over to hawaii time so the round doesnt change too soon
 
 		if date.month == 12
 			round = (date.year+1).to_s + "01"
