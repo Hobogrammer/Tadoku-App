@@ -27,4 +27,17 @@ module UpdatesHelper
 			update && update.total_read.to_f || 0
 		end.inspect
 	end
+
+	def language_chart_series(user, round, lng)
+		start_date = UpdatesHelper::start_date_full(round.to_s)
+		end_date = UpdatesHelper::end_date_full(round.to_s)
+		now = Time.now.in_time_zone("#{user.time_zone}")
+		lang_by_day_user = user.updates.where(:round_id => round, :lang => lng).
+												  group("date(created_at)").
+												  select("created_at, sum(newread) as total_read")
+		(start_date.to_date..(now.to_date > end_date.to_date ? end_date.to_date : now.to_date)).map do |date|
+			lang = lang_by_day_user.detect { |lang| lang.created_at.in_time_zone("#{user.time_zone}").to_date == date }
+			lang && lang.total_read.to_f || 0
+		end.inspect
+	end
 end
