@@ -1,7 +1,7 @@
 class Bot < ActiveRecord::Base
 include Calc,Tweet, ApplicationHelper
 
-MEDREGEX = /#(books?|manga|net|fullgame|game|news|subs|sentences?|nico|undo|lyric|reg)/i
+MEDREGEX = /#(books?|manga|net|fullgame|fgame|game|news|subs|sentences?|nico|undo|lyric|reg|target)/i
 LANGREGEX = /#(fr|de|es|en|ko|th |zh|it|nl|pl|el|ru|eo|sv|he|nn|nb|la|hu|jp|fi|af|ar)/i
 
 	#this got nasty real quick. Now I remember why I seperated the register and the bot
@@ -34,6 +34,8 @@ LANGREGEX = /#(fr|de|es|en|ko|th |zh|it|nl|pl|el|ru|eo|sv|he|nn|nb|la|hu|jp|fi|a
 					end
 				elsif !regis_check(update)  #Check tweeter's registration status if they are not attempting to register
 					Tweet::not_regis(partaker,client)
+				elsif !update.text.scan(/#target/i).empty?
+					goal_change(update,client)
 				else
 					split_up = update.text.split(/;/)
 					split_up.each do |reup|
@@ -76,6 +78,8 @@ LANGREGEX = /#(fr|de|es|en|ko|th |zh|it|nl|pl|el|ru|eo|sv|he|nn|nb|la|hu|jp|fi|a
 				end
 
 				medium = "book" if medium =="books"
+
+				medium = "fgame" if medium == "fullgame"
 
 				if language.empty? 
 					usr = User.find_by_uid(request.user.id)
@@ -234,6 +238,15 @@ LANGREGEX = /#(fr|de|es|en|ko|th |zh|it|nl|pl|el|ru|eo|sv|he|nn|nb|la|hu|jp|fi|a
 			end
 		end
 		return false
+	end
+
+	def self.goal_change(request,client)
+		user = User.find_by_uid(request.user.id) #check for registration needs to be added
+		new_goal =  request.text.scan(/\d+/).first.to_f
+		round = user.find_by_round_id(ApplicationHelper::curr_round)
+		round.goal  = new_goal
+		round.save
+		Tweet.goal_update(user.name,new_goal,client)
 	end
 end
 
