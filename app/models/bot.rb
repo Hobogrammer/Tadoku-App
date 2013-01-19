@@ -209,12 +209,12 @@ LANGREGEX = /#(fr|de|es|en|ko|th |zh|it|nl|pl|el|ru|eo|sv|he|nn|nb|la|hu|jp|fi|a
 	end
 
 	def self.get_id
-		status = File.read("/home/ec2-user/tadoku-app/lib/since_id.txt")
+		status = File.read("/home/silent/railed/tadoku-app/lib/since_id.txt")
 		return status
 	end
 
 	def self.save_id(since_id)
-		status_file = File.new("/home/ec2-user/tadoku-app/lib/since_id.txt","w")
+		status_file = File.new("/home/silent/railed/tadoku-app/lib/since_id.txt","w")
 		status_file.write(since_id)
 		status_file.close
 	end	
@@ -241,12 +241,20 @@ LANGREGEX = /#(fr|de|es|en|ko|th |zh|it|nl|pl|el|ru|eo|sv|he|nn|nb|la|hu|jp|fi|a
 	end
 
 	def self.goal_change(request,client)
-		user = User.find_by_uid(request.user.id) #check for registration needs to be added
-		new_goal =  request.text.scan(/\d+/).first.to_f
-		round = user.find_by_round_id(ApplicationHelper::curr_round)
-		round.goal  = new_goal
-		round.save
-		Tweet.goal_update(user.name,new_goal,client)
+		user = User.find_by_uid(request.user.id)
+		 if user.nil?
+		 	Tweet.not_regis(request.user.name,client)
+		 else
+			new_goal =  request.text.scan(/\d+/).first.to_f
+			round = user.rounds.find_by_round_id(ApplicationHelper::curr_round)
+			if round.nil?
+				Tweet.not_regis(request.user.name,client)
+			else
+				round.goal  = new_goal
+				round.save
+				Tweet.goal_update(user.name,new_goal,client)
+			end
+		end
 	end
 end
 
