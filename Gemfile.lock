@@ -47,6 +47,10 @@ GEM
     annotate (2.4.1.beta1)
     arel (3.0.2)
     bcrypt-ruby (3.0.1)
+    better_errors (0.3.2)
+      coderay (>= 1.0.0)
+      erubis (>= 2.7.0)
+    binding_of_caller (0.6.8)
     bootstrap-sass (2.2.1.1)
       sass (~> 3.2)
     bootstrap-will_paginate (0.0.6)
@@ -232,6 +236,8 @@ PLATFORMS
 DEPENDENCIES
   annotate (~> 2.4.1.beta)
   bcrypt-ruby (= 3.0.1)
+  better_errors
+  binding_of_caller
   bootstrap-sass (~> 2.2.1.1)
   bootstrap-will_paginate (= 0.0.6)
   capybara (= 1.1.2)

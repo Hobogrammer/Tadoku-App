@@ -21,6 +21,8 @@ group :development , :test do
 	gem 'annotate', '~> 2.4.1.beta'
 	gem 'timecop', '~> 0.4.5'
 	gem 'debugger'
+	gem 'better_errors'
+	gem 'binding_of_caller'
 end
 
 

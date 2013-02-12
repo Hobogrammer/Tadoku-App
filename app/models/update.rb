@@ -1,5 +1,5 @@
 class Update < ActiveRecord::Base
-  attr_accessible :raw, :medium, :newread, :recpage, :round_id, :user_id, :lang, :dr, :repeat
+  attr_accessible :raw, :medium, :newread, :recpage, :round_id, :user_id, :lang, :dr, :repeat, :created_at_in_user_time
   belongs_to :user
 
   validates :newread, presence: true
@@ -87,4 +87,14 @@ LANGUAGES = {
   		del_update.destroy
   		return rev_total
   end
+
+  def self.created_at_update
+		canidates = Update.includes(:user).all
+
+		canidates.each do |update|
+			usr_tz = update.user.time_zone
+			update.created_at_in_user_time = update.created_at.in_time_zone("#{usr_tz}")
+      		update.save
+    		end
+  	end
 end

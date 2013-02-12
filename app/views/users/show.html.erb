@@ -22,7 +22,29 @@
 				pointInterval: <%= 1.day * 1000 %>,
 				pointStart: <%= UpdatesHelper::start_date_full(ApplicationHelper::curr_round).to_i * 1000 %>,
 				data: <%= updates_chart_series(@user,ApplicationHelper::curr_round) %>
-			}]
+			}
+			<% if !@round.lang2.blank? %>
+				, { 
+					name: "<%= @round.lang1 %>",
+					pointInterval: <%= 1.day * 1000 %>,
+					pointStart: <%= UpdatesHelper::start_date_full(ApplicationHelper::curr_round).to_i * 1000 %>,
+					data: <%= language_chart_series(@user, ApplicationHelper::curr_round, @round.lang1) %>
+				}, {
+					name: "<%= @round.lang2 %>",
+					pointInterval: <%= 1.day * 1000 %>,
+					pointStart: <%= UpdatesHelper::start_date_full(ApplicationHelper::curr_round).to_i * 1000 %>,
+					data: <%= language_chart_series(@user, ApplicationHelper::curr_round, @round.lang2) %>
+				}
+			<% end %>
+			<% if !@round.lang3.blank? %>
+				, {
+					name: "<%= @round.lang3 %>",
+					pointInterval: <%= 1.day * 1000 %>,
+					pointStart: <%= UpdatesHelper::start_date_full(ApplicationHelper::curr_round).to_i * 1000 %>,
+					data: <%= language_chart_series(@user, ApplicationHelper::curr_round, @round.lang3) %>
+				}
+			<% end %>
+			]
 		});
 	});
 	</script>

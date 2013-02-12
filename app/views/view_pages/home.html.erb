@@ -48,7 +48,7 @@
 					<%= f.input :lang1, :collection => Update::LANGUAGES %>
 					<%= f.input :lang2, :collection => Update::LANGUAGES %>
 					<%= f.input :lang3, :collection => Update::LANGUAGES %>
-					<%= f.input :goal, :prompt => "Input goal #" %>
+					<%= f.input :goal, :collection => 30..20000, :prompt => "Input goal #" %>
 			</div>
 			<div class="modal-footer">
 				<%= submit_tag 'Cancel', :class => "btn btn-danger", 'data-dismiss' => "modal" %>

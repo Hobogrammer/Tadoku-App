@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130101051833) do
+ActiveRecord::Schema.define(:version => 20130128052631) do
 
   create_table "bots", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -44,15 +44,16 @@ ActiveRecord::Schema.define(:version => 20130101051833) do
   create_table "updates", :force => true do |t|
     t.integer  "user_id"
     t.integer  "round_id"
-    t.decimal  "newread",    :default => 0.0
+    t.decimal  "newread",                 :default => 0.0
     t.string   "medium"
     t.string   "lang"
-    t.decimal  "recpage",    :default => 0.0
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
-    t.integer  "repeat",     :default => 0
-    t.boolean  "dr",         :default => false
-    t.decimal  "raw",        :default => 0.0
+    t.decimal  "recpage",                 :default => 0.0
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
+    t.integer  "repeat",                  :default => 0
+    t.boolean  "dr",                      :default => false
+    t.decimal  "raw",                     :default => 0.0
+    t.datetime "created_at_in_user_time"
   end
 
   create_table "users", :force => true do |t|
@@ -63,7 +64,6 @@ ActiveRecord::Schema.define(:version => 20130101051833) do
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
     t.string   "time_zone"
-    t.integer  "utc_offset"
   end
 
 end

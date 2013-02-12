@@ -10,17 +10,18 @@ module ApplicationHelper
 	end
 
 	def self.curr_round()
-		date = Time.now.in_time_zone("Hawaii") #pused this over to hawaii time so the round doesnt change too soon
+		# date = Time.now.in_time_zone("Hawaii") #pused this over to hawaii time so the round doesnt change too soon
 
-		if date.month == 12
-			round = (date.year+1).to_s + "01"
-		elsif date.month == 1
-			round = date.year.to_s + "01"
-		elsif date.month.between?(2,5)
-			round = date.year.to_s + "05"
-		elsif date.month.between?(6,9) 
-			round = date.year.to_s + "09"
-		end
+		# if date.month == 12
+		# 	round = (date.year+1).to_s + "01"
+		# elsif date.month == 1
+		# 	round = date.year.to_s + "01"
+		# elsif date.month.between?(2,5)
+		# 	round = date.year.to_s + "05"
+		# elsif date.month.between?(6,9) 
+		# 	round = date.year.to_s + "09"
+		# end
+		round = "201301"
 	end
 
 	#TODO: create seperate current round function for 2week rounds. Also add additional button on front page to allow registering for 2week rounds. 
