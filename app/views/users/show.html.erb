@@ -164,7 +164,21 @@
 						</thead>
 						<tbody>
 							<tr>
+								<td>Raw Pages</td>
+								<td><%= @round_stats["book"]["raw"].round(2) %></td>
+								<td><%= @round_stats["manga"]["raw"].round(2) %></td>
+								<td><%= @round_stats["net"]["raw"].round(2) %></td>
+								<td><%= @round_stats["fgame"]["raw"].round(2) %></td>
+								<td><%= @round_stats["game"]["raw"].round(2) %></td>
+								<td><%= @round_stats["lyric"]["raw"].round(2) %></td>
+								<td><%= @round_stats["subs"]["raw"].round(2) %></td>
+								<td><%= @round_stats["news"]["raw"].round(2) %></td>
+								<td><%= @round_stats["sent"]["raw"].round(2) %></td>
+								<td><%= @round_stats["nico"]["raw"].round(2) %></td>
 								<td></td>
+							</tr>
+							<tr>
+								<td>Point Value</td>
 								<td><%= @round_stats["book"]["points"].round(2) %></td>
 								<td><%= @round_stats["manga"]["points"].round(2) %></td>
 								<td><%= @round_stats["net"]["points"].round(2) %></td>

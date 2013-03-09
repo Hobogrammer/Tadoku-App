@@ -70,6 +70,7 @@ module Calc
 
 	def self.usermed_info(user,round)
 		round_info = user.rounds.find_by_round_id(round)
+		sent_raw = user.updates.where(:medium => 'sent').sum(:raw)
 
 		book_point = round_info.book.to_f  
 		manga_point = round_info.manga.to_f / 5
@@ -94,16 +95,16 @@ module Calc
 		sent_percent = ((sent_point / round_info.pcount) * 100).to_s.to_f
 		
 		user_med = {
-			"book" => {"points" => book_point, "percent" => book_percent},
-			"manga" => {"points" => manga_point, "percent" => manga_percent},
-			"net" => {"points" => net_point, "percent" => net_percent},
-			"fgame" => {"points" => fgame_point, "percent" => fgame_percent},
-			"game" => {"points" => game_point, "percent" => game_percent},
-			"lyric" => {"points" => lyric_point, "percent" => lyric_percent},
-			"subs" => {"points" => subs_point, "percent" => subs_percent},
-			"news" => {"points" => news_point, "percent" => news_percent},
-			"nico" => {"points" => nico_point, "percent" => nico_percent},
-			"sent" => {"points" => sent_point, "percent" =>sent_percent},
+			"book" => {"points" => book_point, "percent" => book_percent, "raw" => round_info.book.to_f},
+			"manga" => {"points" => manga_point, "percent" => manga_percent, "raw" => round_info.manga.to_f},
+			"net" => {"points" => net_point, "percent" => net_percent, "raw" => round_info.net.to_f},
+			"fgame" => {"points" => fgame_point, "percent" => fgame_percent, "raw" => round_info.fgame.to_f},
+			"game" => {"points" => game_point, "percent" => game_percent, "raw" => round_info.game.to_f},
+			"lyric" => {"points" => lyric_point, "percent" => lyric_percent, "raw" => round_info.lyric.to_f},
+			"subs" => {"points" => subs_point, "percent" => subs_percent, "raw" => round_info.subs.to_f},
+			"news" => {"points" => news_point, "percent" => news_percent, "raw" => round_info.news.to_f},
+			"nico" => {"points" => nico_point, "percent" => nico_percent, "raw" => round_info.nico.to_f},
+			"sent" => {"points" => sent_point, "percent" =>sent_percent, "raw" => sent_raw.to_f},
 			"total" => round_info.pcount			
 		}
 	end	

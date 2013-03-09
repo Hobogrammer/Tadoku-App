@@ -39,12 +39,14 @@ before_filter :admin_user, only: [:destroy, :edit]
 
 				@update.newread = new_read
 				new_total = new_read + @update.recpage
-
-				ApplicationHelper::medium_update(current_user,round,@update.medium,@update.raw,new_total)
-				rank = Round::rank(current_user,round)
-				Tweet::tweet_up(current_user,new_total.round(2),rank,client)
+		
 
 				if @update.save
+					
+					ApplicationHelper::medium_update(current_user,round,@update.medium,@update.raw,new_total)
+					rank = Round::rank(current_user,round)
+					Tweet::tweet_up(current_user,new_total.round(2),rank,client)
+					
 					flash[:success] = "Update successfully submitted"
 					redirect_to ranking_path # temporary until user stats page is finished user_stats_path
 				else 
