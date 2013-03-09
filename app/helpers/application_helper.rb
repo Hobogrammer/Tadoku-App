@@ -79,7 +79,7 @@ module ApplicationHelper
 
 	def self.rollback(user,round)
 		del_update = user.updates.where(:round_id => round).last
-		unread = del_update.newread.to_f
+		unread = del_update.raw.to_f
 		unmed = del_update.medium.to_s
 		rev_total = del_update.recpage.to_f
 		usr_round = user.rounds.find_by_round_id(round)
