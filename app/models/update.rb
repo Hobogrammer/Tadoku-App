@@ -93,7 +93,9 @@ LANGUAGES = {
 
 		canidates.each do |update|
 			usr_tz = update.user.time_zone
-			update.created_at_in_user_time = update.created_at.in_time_zone("#{usr_tz}")
+			conv_time = update.created_at.in_time_zone(usr_tz)
+			off = conv_time.utc_offset
+			update.created_at_in_user_time = (update.created_at + off)
       		update.save
     		end
   	end
