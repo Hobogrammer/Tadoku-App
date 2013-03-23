@@ -1,0 +1,28 @@
+<% provide(:title, 'Main Ranking') %>
+<h1>Tadoku Round <%= @roundid %> Ranking page</h1>
+
+<br/>
+<div class = "ranking">
+	<ol>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Rank</th>
+				<th></th>
+				<th>Username</th>
+				<th>Pagecount</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @entrants.each do |entrant| %>
+				<tr>
+					<td><li></td>
+					<td><%= twivatar_for(entrant.user) %></td>
+					<td><%= link_to entrant.user.name, user_path(entrant.user) %></td>
+					<td><%= entrant.pcount.round(2) %></td></li>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+	</ol>
+</div>

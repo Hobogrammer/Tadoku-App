@@ -10,21 +10,22 @@ module ApplicationHelper
 	end
 
 	def self.curr_round()
-		# date = Time.now.in_time_zone("Hawaii") #pused this over to hawaii time so the round doesnt change too soon
+		date = Time.now.in_time_zone("Hawaii") #pushed this over to hawaii time so the round doesnt change too soon
 
-		# if date.month == 12
-		# 	round = (date.year+1).to_s + "01"
-		# elsif date.month == 1
-		# 	round = date.year.to_s + "01"
-		# elsif date.month.between?(2,5)
-		# 	round = date.year.to_s + "05"
-		# elsif date.month.between?(6,9) 
-		# 	round = date.year.to_s + "09"
-		# end
-		round = "201301"
+		if date.month == 12
+			round = (date.year+1).to_s + "01"
+		elsif date.month == 1
+			round = date.year.to_s + "01"
+		elsif date.month.between?(2,3)
+			round = date.year.to_s + "03"
+		elsif date.month.between(4,5)
+			round = date.year.to_s + "05"
+		elsif date.month.between?(6,7) 
+			round = date.year.to_s + "07"
+		elsif date.month.between?(8,11)
+			round = date.year.to_s + "09"
+		end
 	end
-
-	#TODO: create seperate current round function for 2week rounds. Also add additional button on front page to allow registering for 2week rounds. 
 
 	def twivatar_for(user)
 		twitter_url = "http://api.twitter.com/1/users/profile_image?screen_name=#{user.name}&size=original"
@@ -79,56 +80,68 @@ module ApplicationHelper
 
 	def self.rollback(user,round)
 		del_update = user.updates.where(:round_id => round).last
-		unread = del_update.raw.to_f
-		unmed = del_update.medium.to_s
-		rev_total = del_update.recpage.to_f
-		usr_round = user.rounds.find_by_round_id(round)
-		case unmed
-		when "book"
-			old_read = usr_round.book.to_f
-			rev_read = old_read.to_f - unread.to_f
-			usr_round.update_attributes(:book => rev_read)				
-		when "manga"
-			old_read = usr_round.manga.to_f
-			rev_read = old_read.to_f - unread.to_f
-			usr_round.update_attributes(:manga => rev_read)				
-		when "net"
-			old_read = usr_round.net.to_f
-			rev_read = old_read.to_f - unread.to_f
-			usr_round.update_attributes(:net => rev_read)				
-		when "fgame"
-			old_read = usr_round.fgame.to_f
-			rev_read = old_read.to_f - unread.to_f
-			usr_round.update_attributes(:fgame => rev_read)
-		when "game"
-			old_read = usr_round.game.to_f
-			rev_read = old_read.to_f - unread.to_f
-			usr_round.update_attributes(:game => rev_read)
-		when "lyric"
-			old_read = usr_round.lyric.to_f
-			rev_read = old_read.to_f - unread.to_f
-			usr_round.update_attributes(:lyric => rev_read)
-		when "subs"
-			old_read = usr_round.subs.to_f
-			rev_read = old_read.to_f - unread.to_f
-			usr_round.update_attributes(:subs => rev_read)
-		when "news"
-			old_read = usr_round.news.to_f
-			rev_read = old_read.to_f - unread.to_f
-			usr_round.update_attributes(:news => rev_read)
-		when "sent"
-			old_read = usr_round.sent.to_f
-			rev_read = old_read.to_f - unread.to_f
-			usr_round.update_attributes(:sent => rev_read)
-		when "nico"
-			old_read = usr_round.nico.to_f
-			rev_read = old_read.to_f - unread.to_f
-			usr_round.update_attributes(:nico => rev_read)
-		end
-		
-		usr_round.update_attributes(:pcount => rev_total)
-		del_update.destroy
+		if del_update = nil
+			return false
+		else
+			unread = del_update.raw.to_f
+			unmed = del_update.medium.to_s
+			rev_total = del_update.recpage.to_f
+			usr_round = user.rounds.find_by_round_id(round)
+			case unmed
+			when "book"
+				old_read = usr_round.book.to_f
+				rev_read = old_read.to_f - unread.to_f
+				usr_round.update_attributes(:book => rev_read)				
+			when "manga"
+				old_read = usr_round.manga.to_f
+				rev_read = old_read.to_f - unread.to_f
+				usr_round.update_attributes(:manga => rev_read)				
+			when "net"
+				old_read = usr_round.net.to_f
+				rev_read = old_read.to_f - unread.to_f
+				usr_round.update_attributes(:net => rev_read)				
+			when "fgame"
+				old_read = usr_round.fgame.to_f
+				rev_read = old_read.to_f - unread.to_f
+				usr_round.update_attributes(:fgame => rev_read)
+			when "game"
+				old_read = usr_round.game.to_f
+				rev_read = old_read.to_f - unread.to_f
+				usr_round.update_attributes(:game => rev_read)
+			when "lyric"
+				old_read = usr_round.lyric.to_f
+				rev_read = old_read.to_f - unread.to_f
+				usr_round.update_attributes(:lyric => rev_read)
+			when "subs"
+				old_read = usr_round.subs.to_f
+				rev_read = old_read.to_f - unread.to_f
+				usr_round.update_attributes(:subs => rev_read)
+			when "news"
+				old_read = usr_round.news.to_f
+				rev_read = old_read.to_f - unread.to_f
+				usr_round.update_attributes(:news => rev_read)
+			when "sent"
+				old_read = usr_round.sent.to_f
+				rev_read = old_read.to_f - unread.to_f
+				usr_round.update_attributes(:sent => rev_read)
+			when "nico"
+				old_read = usr_round.nico.to_f
+				rev_read = old_read.to_f - unread.to_f
+				usr_round.update_attributes(:nico => rev_read)
+			end
+			
+			usr_round.update_attributes(:pcount => rev_total)
+			del_update.destroy
 
-		return rev_total
+			return rev_total
+		end
+	end
+
+	def convert_usr_time(user,orig)
+		t_z = user.time_zone
+		conv_time = orig.in_time_zone(t_z)
+		offset = conv_time.utc_offset
+		user_time = orig + offset
+		return user_time
 	end
 end

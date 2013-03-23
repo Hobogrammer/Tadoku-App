@@ -9,6 +9,7 @@ class Update < ActiveRecord::Base
 LANGUAGES = {
 			'Afrikaans' => 'af',
 			'Arabic' => 'ar',
+			'Belarusian' => 'be',
 			'Chinese' => 'zh',
 			'Dutch' => 'nl',
 			'English' => 'en',
@@ -40,6 +41,8 @@ LANGUAGES = {
 					lang_hash['Afrikaans'] = 'af'
 				when 'ar'
 					lang_hash['Arabic'] = 'ar'
+				when 'be'
+					lang_hash['Belarusian'] = 'be'
 				when 'zh'
 					lang_hash['Chinese'] = 'zh'
 				when 'nl'

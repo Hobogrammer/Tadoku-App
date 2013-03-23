@@ -3,8 +3,14 @@ module UpdatesHelper
 	def self.start_date_full(round)
 		 year = round[0,4].to_i
 		 month = round[4,6].to_i
-		 day = 01
-		 start_date = Time.new(year,month,day)
+		 case month
+		 	when  03,07
+		 		day = 15
+		 		start_date = Time.new(year,month,day)
+		 	else 
+		 		day = 01
+		 		start_date = Time.new(year,month,day)
+		 end
 	end
 
 	def self.end_date_full(round)

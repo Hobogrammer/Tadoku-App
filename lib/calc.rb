@@ -70,7 +70,7 @@ module Calc
 
 	def self.usermed_info(user,round)
 		round_info = user.rounds.find_by_round_id(round)
-		sent_raw = user.updates.where(:medium => 'sent').sum(:raw)
+		sent_raw = user.updates.where(:medium => 'sent', :round_id => round).sum(:raw)
 
 		book_point = round_info.book.to_f  
 		manga_point = round_info.manga.to_f / 5

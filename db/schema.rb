@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130128052631) do
+ActiveRecord::Schema.define(:version => 20130322232208) do
 
   create_table "bots", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -34,9 +34,9 @@ ActiveRecord::Schema.define(:version => 20130128052631) do
     t.decimal  "pcount",     :default => 0.0
     t.integer  "goal"
     t.boolean  "gmet",       :default => false
-    t.string   "lang1"
-    t.string   "lang2"
-    t.string   "lang3"
+    t.string   "lang1",      :default => ""
+    t.string   "lang2",      :default => ""
+    t.string   "lang3",      :default => ""
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
   end

@@ -52,9 +52,15 @@ module Tweet
 	end
 
 	def self.goal_update(user,goal,client)
-		client.update ("@#{user}, your goal has been updated to #{goal} pages.")
+		client.update("@#{user}, your goal has been updated to #{goal} pages.")
 		#puts "@#{user}, your goal has been updated to #{goal} pages."
 	rescue
-		client.update ("@#{user}, your goal has been updated to #{goal} pages. #{random}")
+		client.update("@#{user}, your goal has been updated to #{goal} pages. #{random}")
+	end
+
+	def self.no_undo(user)
+		client.update("@#{user}, you do not have any updates to undo.")
+	rescue
+		client.update("@#{user}, you do not have any updates to undo.  #{random}")
 	end
 end

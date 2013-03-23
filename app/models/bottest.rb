@@ -225,12 +225,8 @@ LANGREGEX = /#(fr|de|es|en|ko|th |zh|it|nl|pl|el|ru|eo|sv|he|nn|nb|la|hu|jp|fi|a
 		requester_id = request.user.id
 		user = User.find_by_uid(requester_id)
 		old_total = ApplicationHelper::rollback(user,round)
-		if old_total == false
-			Tweet::no_undo(user)
-		else
-			rank = Round::rank(user,ApplicationHelper::curr_round)
-			Tweet::undo_tweet(user, old_total.round(2),rank,client)
-		end
+		rank = Round::rank(user,ApplicationHelper::curr_round)
+		Tweet::undo_tweet(user, old_total.round(2),rank,client)
 	end
 
 	def self.lang_check(req,lang)

@@ -40,12 +40,12 @@ before_filter :admin_user, only: [:destroy, :edit]
 				@update.newread = new_read
 				new_total = new_read + @update.recpage
 		
-
+				@update.created_at_in_user_time = ApplicationHelper::convert_usr_time(current_user,Time.now)
 				if @update.save
 					
 					ApplicationHelper::medium_update(current_user,round,@update.medium,@update.raw,new_total)
 					rank = Round::rank(current_user,round)
-				#	Tweet::tweet_up(current_user,new_total.round(2),rank,client)
+					Tweet::tweet_up(current_user,new_total.round(2),rank,client)
 					
 					flash[:success] = "Update successfully submitted"
 					redirect_to ranking_path # temporary until user stats page is finished user_stats_path
@@ -54,7 +54,7 @@ before_filter :admin_user, only: [:destroy, :edit]
 				end
 			end
 		else
-			flash[:error] = "You must be registered for the current round inorder to submit an update. Please register"
+			flash[:error] = "You must be registered for the current round in order to submit an update. Please register"
 			redirect_to root_path
 		end
 	end
