@@ -14,16 +14,16 @@ module ApplicationHelper
 
 		if date.month == 12
 			round = (date.year+1).to_s + "01"
-		elsif date.month == 1
+		elsif date.month.between?(1,2)
 			round = date.year.to_s + "01"
-		elsif date.month.between?(2,3)
+		elsif date.month.between?(3,4)
 			round = date.year.to_s + "03"
-		elsif date.month.between(4,5)
-			round = date.year.to_s + "05"
-		elsif date.month.between?(6,7) 
-			round = date.year.to_s + "07"
-		elsif date.month.between?(8,11)
-			round = date.year.to_s + "09"
+		elsif date.month.between?(5,7)
+			round = date.year.to_s + "06"
+		elsif date.month.between?(8,9) 
+			round = date.year.to_s + "08"
+		elsif date.month.between?(10,11)
+			round = date.year.to_s + "10"
 		end
 	end
 
@@ -80,7 +80,7 @@ module ApplicationHelper
 
 	def self.rollback(user,round)
 		del_update = user.updates.where(:round_id => round).last
-		if del_update = nil
+		if del_update == nil
 			return false
 		else
 			unread = del_update.raw.to_f
