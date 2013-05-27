@@ -144,4 +144,28 @@ module ApplicationHelper
 		user_time = orig + offset
 		return user_time
 	end
+
+	def lang_dist(user,round)
+		usr_round = user.rounds.find_by_round_id(round)
+
+		lang_arr = [usr_round.lang1.to_s , usr_round.lang2.to_s, usr_round.lang3.to_s ]
+		lang_arr.delete_if { |lang| lang.empty? }
+
+		lang_score = Hash.new
+
+		lang_arr.each do |lang|
+			total = 0 
+			langups = user.updates..where(:round_id => round, :lang => lang).select("sum(newread) as  accum")
+			langups.detect { |langtot| total = langtot.accum }
+
+			lang_score["#{lang}"] = total 
+		end
+
+		return lang_score
+	end
+
+	def self.prev_rounds
+		old_rounds_query = Round.select(:round_id).uniq
+		old_rounds = old_rounds_query.map(&:round_id)
+	end
 end

@@ -2,28 +2,16 @@
 <h1>Tadoku Ranking page</h1>
 
 <br/>
-<div class = "ranking">
-	<ol>
-	<table class="table">
-		<thead>
-			<tr>
-				<th>Rank</th>
-				<th></th>
-				<th>Username</th>
-				<th>Pagecount</th>
-			</tr>
-		</thead>
-		<tbody>
+<ol>
 			<% @entrants.each do |entrant| %>
-				<tr>
-					<td><li></td>
-					<td><%= twivatar_for(entrant.user) %></td>
-					<td><%= link_to entrant.user.name, user_path(entrant.user) %></td>
-					<td><%= entrant.pcount.round(2) %></td></li>
-				</tr>
+			<li>
+					<% if entrant.pcount > entrant.goal && entrant.goal != 0 %>
+						<font color="green">
+						<%= entrant.user.name %> <%= entrant.pcount.round(2) %>
+						</font>
+					<% else %>
+						<%= entrant.user.name %> <%= entrant.pcount.round(2) %>
+					<% end %>
+			</li>	
 			<% end %>
-		</tbody>
-	</table>
-	</ol>
-</div>
-
+</ol>

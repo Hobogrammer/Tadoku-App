@@ -23,7 +23,7 @@ LANGREGEX = /#(fr|de|es|en|ko|th |zh|it|nl|pl|el|ru|eo|sv|he|nn|nb|la|hu|jp|fi|a
 					elsif regis_check(update).nil?
 						puts "Creating new User"
 						if update.user.time_zone.nil?
-							client.update("@#{update.user.screen_name}, please set the timezone in your account settings and try again.")
+							Tweet::no_tz(update.user.screen_name)
 						else
 							new_user = User.new(uid: update.user.id, name: update.user.screen_name, provider: "twitter", time_zone: update.user.time_zone)
 							new_user.save
@@ -62,11 +62,9 @@ LANGREGEX = /#(fr|de|es|en|ko|th |zh|it|nl|pl|el|ru|eo|sv|he|nn|nb|la|hu|jp|fi|a
 		start_time = UpdatesHelper::start_date_full(ApplicationHelper::curr_round.to_s)
 		end_time = UpdatesHelper::end_date_full(ApplicationHelper::curr_round.to_s)
 		if usr_time.to_date < start_time.to_date
-			client.update("@#{request.user.screen_name},you're too early. Contest starts #{start_time.to_date} 00:00:00 your time.")
-			#puts "@#{request.user.screen_name},you're too early. Contest starts #{start_time.to_date} 00:00:00 your time."
+			Tweet::early_earn(request.user.screen_name)
 		elsif usr_time.to_date > end_time.to_date
-			client.update("@#{request.user.screen_name}, sorry, the contest has already ended in your timezone")
-			#puts "@#{request.user.screen_name}, sorry, the contest has already ended in your timezone"
+			Tweet::late_submit(request.user.screen_name)			
 		else
 			unless !subreq.scan(/#undo/i).empty? #this is what happens when you tack on an important fucntion last.
 				medium = subreq.scan(MEDREGEX).first.to_s.gsub(/[^A-Za-z]/, '')

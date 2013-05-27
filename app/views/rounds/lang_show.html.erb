@@ -1,5 +1,5 @@
 <% provide(:title, 'Main Ranking') %>
-<h1>Tadoku Round <%= @roundid %> Ranking page</h1>
+<h1>Tadoku Round <%= @roundid %> Language-sorted Ranking page</h1>
 
 <br/>
 <div class = "ranking">
@@ -18,7 +18,7 @@
 				<tr>
 					<td><li></td>
 					<td><%= twivatar_for(entrant.user) %></td>
-					<td><%= link_to entrant.user.name, old_user_path(@roundid, entrant.user) %></td>
+					<td><%= link_to entrant.user.name, user_path(entrant.user) %></td>
 					<td><%= entrant.pcount.round(2) %></td></li>
 				</tr>
 			<% end %>

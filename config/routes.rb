@@ -18,9 +18,9 @@ TadokuApp::Application.routes.draw do
   match '/signin' => redirect("/auth/twitter")
   match '/signout', to: "sessions#destroy", via: :delete
 
-  match 'rounds/:round_id/:lang', to: "rounds#arch_lang"
+  match 'rounds/:round_id/:lang', to: "rounds#lang_show"
   match 'rounds/:round_id' => 'rounds#show'
-  match '/users/:user_id/rounds/:id(.:format)' => 'users#archshow'
+  match '/rounds/:round_id/users/:user_id' => 'users#old_show', :as => :old_user
 
 
   match "auth/twitter/callback" => "sessions#create"

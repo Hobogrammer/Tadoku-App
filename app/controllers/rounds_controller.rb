@@ -29,9 +29,22 @@ class RoundsController < ApplicationController
         end
 
         def show
-          @entrants = Round.includes(:user).where(:round_id => params[:round_id])
+          @entrants = Round.includes(:user).where(:round_id => params[:id])
          #@entrants = Round.includes(:user).find_all_by_round_id(params[:round_id])
-          @roundid = params[:round_id]
+          @roundid = params[:id]
+          if signed_in?
+                        @update = current_user.updates.build
+           end
+
+           if @entrants == nil
+                        redirect_to root_url, :flash => { :error => "There are currently no users registered for this round." }
+            end
+        end
+
+        def lang_show
+            @entrants = Round.includes(:user).where("round_id = ? and (lang1 = ? or lang2 = ? or lang3 = ?)", params[:round_id], params[:lang], params[:lang], params[:lang])
+
+             @roundid = params[:id]
           if signed_in?
                         @update = current_user.updates.build
            end

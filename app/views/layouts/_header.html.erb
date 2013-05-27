@@ -13,9 +13,32 @@
               Ranking <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
-              <li><%= link_to "Current Ranking", ranking_path %>
+              <li><%= link_to "Current Ranking", ranking_path %></li>
               <li class="divider"></li>
-              <li><%= link_to "2011 Rankings", '#' %></li>
+               <li class="dropdown-submenu">
+                <a tabindex="-1" href=#>2013 Rankings</a>
+                  <ul class="dropdown-menu">
+                    <% @ordered_rounds["2013"].each do |r2013| %>
+                      <li><%= link_to "Round #{r2013}", round_path(r2013) %></li>
+                    <% end %>
+                  </ul>
+              </li>
+               <li class="dropdown-submenu">
+                <a tabindex="-1" href=#>2012 Rankings</a>
+                  <ul class="dropdown-menu">
+                    <% @ordered_rounds["2012"].each.each do |r2012| %>
+                      <li><%= link_to "Round #{r2013}", round_path(r2012) %></li>
+                    <% end %>
+                  </ul>
+              </li>
+              <li class="dropdown-submenu">
+                <a tabindex="-1" href=#>2011 Rankings</a>
+                  <ul class="dropdown-menu">
+                    <% @ordered_rounds["2011"].each.each do |r2011| %>
+                      <li><%= link_to "Round #{r2011}", round_path(r2011) %></li>
+                    <% end %>
+                  </ul>
+              </li>
               <li><%= link_to "2010 Ranking", '#' %></li>
             </ul>
           </li>

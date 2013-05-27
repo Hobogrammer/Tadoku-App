@@ -63,4 +63,22 @@ module Tweet
 	rescue
 		client.update("@#{user}, you do not have any updates to undo.  #{random}")
 	end
+
+	def self.no_tz(user)
+		client.update("@#{user}, please set the timezone in your account settings and try again.")
+	rescue
+		client.update("@#{user}, please set the timezone in your account settings and try again. #{random}")
+	end
+
+	def self.early_warn(user)
+		client.update("@#{user}, you're too early. Contest starts #{start_time.to_date} 00:00:00 your time.")
+	rescue
+		client.update("@#{user}, you're too early. Contest starts #{start_time.to_date} 00:00:00 your time. #{random}")
+	end
+
+	def self.late_submit(user)
+		client.update("@#{user}, sorry, the contest has already ended in your timezone")
+	rescue
+		client.update("@#{user}, sorry, the contest has already ended in your timezone. #{random}")
+	end
 end

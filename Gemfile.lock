@@ -253,6 +253,7 @@ DEPENDENCIES
   jquery-rails
   libnotify (= 0.5.9)
   omniauth-twitter
+  pry
   rails (= 3.2.3)
   rb-inotify (= 0.8.8)
   rb-readline

@@ -92,7 +92,7 @@ LANGUAGES = {
   end
 
   def self.created_at_update
-		canidates = Update.includes(:user).all
+		canidates = Update.includes(:user).where(:round_id => 201301)
 
 		canidates.each do |update|
 			usr_tz = update.user.time_zone
