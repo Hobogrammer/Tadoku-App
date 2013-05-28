@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130322232208) do
+ActiveRecord::Schema.define(:version => 20130527201329) do
 
   create_table "bots", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -39,6 +39,14 @@ ActiveRecord::Schema.define(:version => 20130322232208) do
     t.string   "lang3",      :default => ""
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
+    t.string   "tier",       :default => "0"
+  end
+
+  create_table "tiers", :force => true do |t|
+    t.string  "uid"
+    t.string  "prev_tier"
+    t.string  "curr_tier"
+    t.boolean "pending"
   end
 
   create_table "updates", :force => true do |t|

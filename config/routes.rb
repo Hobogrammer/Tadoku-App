@@ -21,6 +21,7 @@ TadokuApp::Application.routes.draw do
   match 'rounds/:round_id/:lang', to: "rounds#lang_show"
   match 'rounds/:round_id' => 'rounds#show'
   match '/rounds/:round_id/users/:user_id' => 'users#old_show', :as => :old_user
+  match '/ranking/0' => 'rounds#round0_show', :as => :zero
 
 
   match "auth/twitter/callback" => "sessions#create"

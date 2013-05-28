@@ -54,6 +54,10 @@ class RoundsController < ApplicationController
             end
         end
 
+        def round0_show
+            @entrants = Round.includes(:user).where(:round_id => 201008)
+        end
+
         private
         
                 def admin_user

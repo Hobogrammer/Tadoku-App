@@ -70,6 +70,55 @@ class Round < ActiveRecord::Base
 
     end
   end
+
+  def self.restore_zero
+     client = Twitter::Client.new
+
+    File.readlines("/home/silent/projects/rails/tadoku-app/oldDB/ranking.csv").each do |row|
+      row = row.gsub('"', "")
+      row = row.split(/;/)
+
+      pre_usr = row[1].to_s
+      usr = User.find_by_name(pre_usr)
+
+      uid = rand(100000) 
+
+      if usr.nil?
+        begin
+          
+          twi_usr = client.user(pre_usr)
+
+          puts "called to twitter"
+  
+        rescue Twitter::Error
+
+          puts "Twitter error"
+
+          usr = User.new(:name => pre_usr, :provider => "twitter", :uid => uid, :time_zone => "UTC")
+          usr.save
+
+        else
+
+          puts "call twitter call OK"
+
+          tz = twi_usr.time_zone
+
+          if tz.nil?
+           tz = "UTC" # Wouldn't let me directly assign .time_zone
+          end
+          new_usr = User.new(:name => pre_usr, :provider => "twitter", :uid => twi_usr.id, :time_zone => tz)
+          new_usr.save
+        end
+      end
+
+      puts "making round for user"
+      usr = User.find_by_name(pre_usr)
+      rest_round = usr.rounds.new(:round_id => "201008")
+      rest_round.save
+
+      usr.rounds.find_by_round_id("201008").update_attributes(:lang1 => "jp", :pcount => row[2])
+    end
+  end
 end 
 
 
