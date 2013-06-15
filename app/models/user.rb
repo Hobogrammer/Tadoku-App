@@ -12,7 +12,7 @@
 #
 
 class User < ActiveRecord::Base
-  attr_accessible :admin, :name, :provider, :uid, :time_zone
+  attr_accessible :admin, :name, :provider, :uid, :time_zone, :avatar
 
   has_many :rounds, dependent: :destroy
   has_many :updates, dependent: :destroy
@@ -28,6 +28,27 @@ class User < ActiveRecord::Base
   			user.uid = auth["uid"]
   			user.name = auth["info"]["nickname"]
   			user.time_zone = auth["extra"]["raw_info"]["time_zone"]
+                  user.avatar  = auth["info"]["image"]
   		end
+  end
+
+  def self.fill_avatar
+    client = Twitter::Client.new
+
+    usr_list= User.all
+
+    usr_list.each do |usr|
+      if usr.avatar.blank?
+        begin
+          twi_user = client.user(usr.name)
+        rescue Twitter::Error
+          puts "Skipping #{usr.name}"
+          next
+        end
+        usr.avatar = twi_user.profile_image_url
+        usr.save
+        puts "Saved"
+      end
+    end
   end
 end

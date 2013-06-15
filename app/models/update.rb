@@ -11,6 +11,7 @@ LANGUAGES = {
 			'Arabic' => 'ar',
 			'Belarusian' => 'be',
 			'Chinese' => 'zh',
+			'Croatian' => 'hr',
 			'Dutch' => 'nl',
 			'English' => 'en',
 			'Esperanto' => 'eo',
@@ -45,6 +46,8 @@ LANGUAGES = {
 					lang_hash['Belarusian'] = 'be'
 				when 'zh'
 					lang_hash['Chinese'] = 'zh'
+				when 'hr'
+					lang_hash['Croatian'] = 'hr'
 				when 'nl'
 					lang_hash['Dutch'] = 'nl'
 				when 'en'
@@ -101,5 +104,11 @@ LANGUAGES = {
 			update.created_at_in_user_time = (update.created_at + off)
       		update.save
     		end
-  	end
+  end
+
+  def self.lang_total(user,round,lang)
+
+    rel_total = user.updates.where(:round_id => round, :lang => lang).select("sum(newread) as lcount")
+    real_total = rel_total.map(&:lcount).first.to_f
+  end
 end

@@ -1,5 +1,5 @@
 <% provide(:title, 'Main Ranking') %>
-<h1>Tadoku Round <%= @roundid %> Language-sorted Ranking page</h1>
+<h1><%= round_name(@roundid) %> Round <%= @lang %> Ranking</h1>
 
 <br/>
 <div class = "ranking">
@@ -10,7 +10,7 @@
 				<th>Rank</th>
 				<th></th>
 				<th>Username</th>
-				<th>Pagecount</th>
+				<th>Language Total</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -19,7 +19,7 @@
 					<td><li></td>
 					<td><%= twivatar_for(entrant.user) %></td>
 					<td><%= link_to entrant.user.name, user_path(entrant.user) %></td>
-					<td><%= entrant.pcount.round(2) %></td></li>
+					<td><%= Update::lang_total(entrant.user, @roundid, @lang).round(2) %></td></li>
 				</tr>
 			<% end %>
 		</tbody>

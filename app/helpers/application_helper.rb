@@ -9,6 +9,13 @@ module ApplicationHelper
 		end
 	end
 
+	def round_name(round)
+        year = round[0,4]
+        month = Date::MONTHNAMES[round[4,6].to_i]
+
+        round_name = "#{month} #{year}"
+	end
+
 	def self.curr_round()
 		date = Time.now.in_time_zone("Hawaii") #pushed this over to hawaii time so the round doesnt change too soon
 
@@ -28,55 +35,35 @@ module ApplicationHelper
 	end
 
 	def twivatar_for(user)
-		twitter_url = "http://api.twitter.com/1/users/profile_image?screen_name=#{user.name}&size=original"
+		twitter_url = user.avatar.gsub("_normal", "")
 		image_tag(twitter_url, alt: user.name, class: "avatar")
 	end
 
 	def self.medium_update(user,round,med,newread,new_total)
 		usr_round = user.rounds.find_by_round_id(round)
-		case med
-		when "book"
-			old_med = usr_round.book.to_f
-			new_med = old_med.to_f + newread.to_f
-			usr_round.update_attributes(:book => new_med , :pcount => new_total)
-		when "manga"
-			old_med = usr_round.manga.to_f
-			new_med = old_med.to_f + newread.to_f
-			usr_round.update_attributes(:manga => new_med , :pcount => new_total)
-		when "net"
-			old_med = usr_round.net.to_f
-			new_med = old_med.to_f + newread.to_f
-			usr_round.update_attributes(:net => new_med , :pcount => new_total)
-		when "fgame"
-			old_med = usr_round.fgame.to_f
-			new_med = old_med.to_f + newread.to_f
-			usr_round.update_attributes(:fgame => new_med , :pcount => new_total)
-		when "game"
-			old_med = usr_round.game.to_f
-			new_med = old_med.to_f + newread.to_f
-			usr_round.update_attributes(:game => new_med , :pcount => new_total)
-		when "lyric"
-			old_med = usr_round.lyric.to_f
-			new_med = old_med.to_f + newread.to_f
-			usr_round.update_attributes(:lyric => new_med , :pcount => new_total)
-		when "news"
-			old_med = usr_round.news.to_f
-			new_med = old_med.to_f + newread.to_f
-			usr_round.update_attributes(:news => new_med , :pcount => new_total)
-		when "subs"
-			old_med = usr_round.subs.to_f
-			new_med = old_med.to_f + newread.to_f
-			usr_round.update_attributes(:subs => new_med , :pcount => new_total)
-		when "sent"
-			old_med = usr_round.sent.to_f
-			new_med = old_med.to_f + newread.to_f
-			usr_round.update_attributes(:sent => new_med , :pcount => new_total)
-		when "nico"
-			old_med = usr_round.nico.to_f
-			new_med = old_med.to_f + newread.to_f
-			usr_round.update_attributes(:nico => new_med , :pcount => new_total)
-		end
+		total_round = user.rounds.find_by_round_id(1)
+		
+		old_med = usr_round.send(med).to_f
+		new_med = old_med.to_f + newread.to_f
+		new_total_med = new_med + total_round.send(med).to_f
+		new_over_total = newread.to_f + total_round.pcount.to_f
+
+            ApplicationHelper::tier_check(user, total_round.pcount.to_f, new_over_total,usr_round)
+
+		usr_round.update_attributes(med.to_sym => new_med, :pcount => new_total)
+		total_round.update_attributes(med.to_sym => new_total_med, :pcount => new_over_total)
 	end
+
+	def self.tier_check(user, old_total, new_total, usr_round)
+        old_tier = Tier.tier(old_total)
+        new_tier = Tier.tier(new_total)
+
+        if old_tier != new_tier
+          usr_round.update_attributes(:tier => new_tier)
+          # TODO: Tweet when promoted
+        end
+      end
+
 
 	def self.rollback(user,round)
 		del_update = user.updates.where(:round_id => round).last
@@ -87,48 +74,10 @@ module ApplicationHelper
 			unmed = del_update.medium.to_s
 			rev_total = del_update.recpage.to_f
 			usr_round = user.rounds.find_by_round_id(round)
-			case unmed
-			when "book"
-				old_read = usr_round.book.to_f
-				rev_read = old_read.to_f - unread.to_f
-				usr_round.update_attributes(:book => rev_read)				
-			when "manga"
-				old_read = usr_round.manga.to_f
-				rev_read = old_read.to_f - unread.to_f
-				usr_round.update_attributes(:manga => rev_read)				
-			when "net"
-				old_read = usr_round.net.to_f
-				rev_read = old_read.to_f - unread.to_f
-				usr_round.update_attributes(:net => rev_read)				
-			when "fgame"
-				old_read = usr_round.fgame.to_f
-				rev_read = old_read.to_f - unread.to_f
-				usr_round.update_attributes(:fgame => rev_read)
-			when "game"
-				old_read = usr_round.game.to_f
-				rev_read = old_read.to_f - unread.to_f
-				usr_round.update_attributes(:game => rev_read)
-			when "lyric"
-				old_read = usr_round.lyric.to_f
-				rev_read = old_read.to_f - unread.to_f
-				usr_round.update_attributes(:lyric => rev_read)
-			when "subs"
-				old_read = usr_round.subs.to_f
-				rev_read = old_read.to_f - unread.to_f
-				usr_round.update_attributes(:subs => rev_read)
-			when "news"
-				old_read = usr_round.news.to_f
-				rev_read = old_read.to_f - unread.to_f
-				usr_round.update_attributes(:news => rev_read)
-			when "sent"
-				old_read = usr_round.sent.to_f
-				rev_read = old_read.to_f - unread.to_f
-				usr_round.update_attributes(:sent => rev_read)
-			when "nico"
-				old_read = usr_round.nico.to_f
-				rev_read = old_read.to_f - unread.to_f
-				usr_round.update_attributes(:nico => rev_read)
-			end
+
+			old read = usr_round.send(unmed).to_f
+			rev_read = old_read.to_f - unread.to_f
+			usr_round.update_attributes(unmed.to_sym => rev_read)	
 			
 			usr_round.update_attributes(:pcount => rev_total)
 			del_update.destroy
@@ -137,7 +86,7 @@ module ApplicationHelper
 		end
 	end
 
-	def convert_usr_time(user,orig)
+	def self.convert_usr_time(user,orig)
 		t_z = user.time_zone
 		conv_time = orig.in_time_zone(t_z)
 		offset = conv_time.utc_offset
@@ -155,7 +104,7 @@ module ApplicationHelper
 
 		lang_arr.each do |lang|
 			total = 0 
-			langups = user.updates..where(:round_id => round, :lang => lang).select("sum(newread) as  accum")
+			langups = user.updates.where(:round_id => round, :lang => lang).select("sum(newread) as  accum")
 			langups.detect { |langtot| total = langtot.accum }
 
 			lang_score["#{lang}"] = total 

@@ -123,7 +123,6 @@ LANGREGEX = /#(fr|de|es|en|ko|th |zh|it|nl|pl|el|ru|eo|sv|he|nn|nb|la|hu|jp|fi|a
 	def self.regis(request, client)
 		puts "User registering"
 		requester = request.user.screen_name
-		binding.pry
 		goal = request.text.to_s.scan(/[.]?\d+/)
 		user = User.find_by_uid(request.user.id)
 		user_total = user.rounds.find_by_round_id(1).pcount.to_f

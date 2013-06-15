@@ -48,37 +48,41 @@ module Tweet
 		client.update("@#{user}, '#{lang}' is not one of your registered reading languages. Update skipped.")
 		#puts "@#{user}, '#{lang}' is not one of your registered reading languages. Update skipped."
 	rescue
-		client.update("@#{user}, '#{lang}' is not one of your registered reading languages. Update skipped. #{random}")
+		client.update("@#{user}, '#{lang}' is not one of your registered reading languages. Update skipped. #{$random}")
 	end
 
 	def self.goal_update(user,goal,client)
 		client.update("@#{user}, your goal has been updated to #{goal} pages.")
 		#puts "@#{user}, your goal has been updated to #{goal} pages."
 	rescue
-		client.update("@#{user}, your goal has been updated to #{goal} pages. #{random}")
+		client.update("@#{user}, your goal has been updated to #{goal} pages. #{$random}")
 	end
 
-	def self.no_undo(user)
-		client.update("@#{user}, you do not have any updates to undo.")
+	def self.no_undo(user,client)
+		client.update("@#{user.name}, you do not have any updates to undo.")
+		#puts "@#{user}, you do not have any updates to undo."
 	rescue
-		client.update("@#{user}, you do not have any updates to undo.  #{random}")
+		client.update("@#{user.name}, you do not have any updates to undo.  #{$random}")
 	end
 
-	def self.no_tz(user)
+	def self.no_tz(user,client)
 		client.update("@#{user}, please set the timezone in your account settings and try again.")
+		#puts "@#{user}, please set the timezone in your account settings and try again."
 	rescue
-		client.update("@#{user}, please set the timezone in your account settings and try again. #{random}")
+		client.update("@#{user}, please set the timezone in your account settings and try again. #{$random}")
 	end
 
-	def self.early_warn(user)
+	def self.early_warn(user,client,start_time)
 		client.update("@#{user}, you're too early. Contest starts #{start_time.to_date} 00:00:00 your time.")
+		#puts "@#{user}, you're too early. Contest starts #{start_time.to_date} 00:00:00 your time."
 	rescue
-		client.update("@#{user}, you're too early. Contest starts #{start_time.to_date} 00:00:00 your time. #{random}")
+		client.update("@#{user}, you're too early. Contest starts #{start_time.to_date} 00:00:00 your time. #{$random}")
 	end
 
-	def self.late_submit(user)
+	def self.late_submit(user,client)
 		client.update("@#{user}, sorry, the contest has already ended in your timezone")
+		#puts "@#{user}, sorry, the contest has already ended in your timezone"
 	rescue
-		client.update("@#{user}, sorry, the contest has already ended in your timezone. #{random}")
+		client.update("@#{user}, sorry, the contest has already ended in your timezone. #{$random}")
 	end
 end

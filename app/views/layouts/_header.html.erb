@@ -19,23 +19,17 @@
                 <a tabindex="-1" href=#>2013 Rankings</a>
                   <ul class="dropdown-menu">
                     <% @ordered_rounds["2013"].each do |r2013| %>
-                      <li><%= link_to "Round #{r2013}", round_path(r2013) %></li>
+                      <li><%= link_to round_name(r2013.to_s), round_path(r2013) %></li>
                     <% end %>
                   </ul>
               </li>
-               <li class="dropdown-submenu">
-                <a tabindex="-1" href=#>2012 Rankings</a>
-                  <ul class="dropdown-menu">
-                    <% @ordered_rounds["2012"].each.each do |r2012| %>
-                      <li><%= link_to "Round #{r2013}", round_path(r2012) %></li>
-                    <% end %>
-                  </ul>
+               <li><%= link_to "2012 Ranking", round_name(@ordered_rounds["2012"].first.to_s) %></li>
               </li>
               <li class="dropdown-submenu">
                 <a tabindex="-1" href=#>2011 Rankings</a>
                   <ul class="dropdown-menu">
-                    <% @ordered_rounds["2011"].each.each do |r2011| %>
-                      <li><%= link_to "Round #{r2011}", round_path(r2011) %></li>
+                    <% @ordered_rounds["2011"].each do |r2011| %>
+                      <li><%= link_to  round_name(r2011.to_s), round_path(r2011) %></li>
                     <% end %>
                   </ul>
               </li>

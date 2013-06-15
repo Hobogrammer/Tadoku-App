@@ -22,7 +22,7 @@ class UsersController < ApplicationController
       @round_id = params[:round_id] 
       
       if signed_in?
-        @update = current.user.updates.build
+        @update = current_user.updates.build
       end
 
 
