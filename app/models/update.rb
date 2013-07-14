@@ -95,15 +95,15 @@ LANGUAGES = {
   end
 
   def self.created_at_update
-		canidates = Update.includes(:user).where(:round_id => 201301)
+	canidates = Update.includes(:user).where(:round_id => 201301)
 
-		canidates.each do |update|
-			usr_tz = update.user.time_zone
-			conv_time = update.created_at.in_time_zone(usr_tz)
-			off = conv_time.utc_offset
-			update.created_at_in_user_time = (update.created_at + off)
+	canidates.each do |update|
+		usr_tz = update.user.time_zone
+		conv_time = update.created_at.in_time_zone(usr_tz)
+		off = conv_time.utc_offset
+		update.created_at_in_user_time = (update.created_at + off)
       		update.save
-    		end
+    	end
   end
 
   def self.lang_total(user,round,lang)

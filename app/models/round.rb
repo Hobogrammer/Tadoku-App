@@ -147,6 +147,18 @@ class Round < ActiveRecord::Base
       over_round.save
     end
   end
+
+  def self.over_correct
+    user_list = User.all
+    user_list.each do |user|
+      user_rounds = user.rounds.where(Round.arel_table[:round_id].not_eq(1))
+      total = 0
+      user_rounds.each do |round|
+        total += round.pcount
+      end
+      user.rounds.find_by_round_id(1).update_attributes(:pcount => total)
+    end
+  end
 end 
 
 
