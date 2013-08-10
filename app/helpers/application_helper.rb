@@ -39,12 +39,12 @@ module ApplicationHelper
 		image_tag(twitter_url, alt: user.name, class: "avatar")
 	end
 
-	def self.medium_update(user,round,med,newread,new_total)
+	def self.medium_update(user,round,med,read_med,newread,new_total)
 		usr_round = user.rounds.find_by_round_id(round)
 		total_round = user.rounds.find_by_round_id(1)
 		
 		old_med = usr_round.send(med).to_f
-		new_med = old_med.to_f + newread.to_f
+		new_med = old_med.to_f + read_med.to_f
 		new_total_med = new_med + total_round.send(med).to_f
 		new_over_total = newread.to_f + total_round.pcount.to_f
 

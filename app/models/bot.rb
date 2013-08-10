@@ -160,7 +160,7 @@ LANGREGEX = /#(fr|de|es|en|ko|th\b|zh|it|nl|pl|el|ru|eo|sv|he|nn|nb|la|hu|jp|fi|
 	end
 
 
-	def self.db_update(req,count,med,lang,double,rep,fresh_count,client)
+	def self.db_update(req,count,med,lang,double,rep,fresh_count,client) #count is the calculated read from the update, fresh_count is the raw, medium read value
 		user = User.find_by_uid(req.user.id)
 		total = user.rounds.find_by_round_id(ApplicationHelper::curr_round).pcount
 
@@ -170,7 +170,7 @@ LANGREGEX = /#(fr|de|es|en|ko|th\b|zh|it|nl|pl|el|ru|eo|sv|he|nn|nb|la|hu|jp|fi|
 
 		new_update = Update.new(:user_id => user.id, :raw => fresh_count ,:newread => count, :medium => med, :lang => lang, :dr => double, :repeat => rep, :round_id => ApplicationHelper::curr_round,:recpage => total, :created_at_in_user_time => usr_tme)
 		new_update.save
-		ApplicationHelper::medium_update(user,ApplicationHelper::curr_round,med,fresh_count,new_total)
+		ApplicationHelper::medium_update(user,ApplicationHelper::curr_round,med,fresh_count, count,new_total) 
 	end
 
 	def self.repinterp(txt)

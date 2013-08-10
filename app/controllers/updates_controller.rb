@@ -43,7 +43,7 @@ before_filter :admin_user, only: [:destroy, :edit]
 				@update.created_at_in_user_time = ApplicationHelper::convert_usr_time(current_user,Time.now)
 				if @update.save
 					
-					ApplicationHelper::medium_update(current_user,round,@update.medium,@update.raw,new_total)
+					ApplicationHelper::medium_update(current_user,round,@update.medium,@update.raw,new_read,new_total)
 					rank = Round::rank(current_user,round)
 					Tweet::tweet_up(current_user,new_total.round(2),rank,client)
 					
