@@ -86,12 +86,12 @@ LANGUAGES = {
 		return lang_hash
 	end
 
-  def self.undo (user,round)
-  		del_update = user.updates.where(:round_id => round).last
-  		del_read = del_update.newread.to_f 
-  		rev_total = del_update.recpage.to_f
-  		del_update.destroy
-  		return rev_total
+  def self.undo (user, update_id)
+  	del_update = user.updates.find_by_id(update_id)
+  	del_read = del_update.newread.to_f 
+  	rev_total = del_update.recpage.to_f
+  	del_update.destroy
+  	return rev_total
   end
 
   def self.created_at_update
