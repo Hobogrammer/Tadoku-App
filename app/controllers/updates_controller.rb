@@ -63,13 +63,28 @@ before_filter :admin_user, only: [:destroy, :edit]
 		@update = current_user.updates.build(params[:update])
 	end
 
+      def destroy
+        unread = @update.raw.to_f
+        unmed = @update.medium.to_s
+        usr_round = current_user.rounds.find_by_round_id(ApplicationHelper::curr_round)
 
+        rev_total = usr_round.pcount.to_f - @update.newread.to_f
+        old_med_read = usr_round.send(unmed).to_f
+        rev_med_read = old_med_read.to_f - unread.to_f
+        usr_round.update_attributes(unmed.to_sym => rev_med_read)
+
+        usr_round.update_attributes(:pcount => rev_total)
+        @update.destroy
+
+        flash[:success] = "Update undo successful."
+        redirect_to ranking_path
+      end
 
 	private
 
 		def correct_user
-			@user = User.find(params[:id])
-			redirect_to(root_path) unless current_user?(@user)
+			@update = current_user.updates.find_by_id(params[:id])
+			redirect_to(root_path) if  @update.nil?
 		end
 
 		def admin_user

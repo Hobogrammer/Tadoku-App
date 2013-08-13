@@ -16,7 +16,7 @@
               <li><%= link_to "Current Ranking", ranking_path %></li>
               <li class="divider"></li>
                <li class="dropdown-submenu">
-                <a tabindex="-1" href=#>2013 Rankings</a>
+                <a tabindex="-1" href=#>2013 Rankings</a> 
                   <ul class="dropdown-menu">
                     <% @ordered_rounds["2013"].each do |r2013| %>
                       <li><%= link_to round_name(r2013.to_s), round_path(r2013) %></li>
@@ -34,6 +34,8 @@
                   </ul>
               </li>
               <li><%= link_to "2010 Ranking", zero_path %></li>
+              <li class="divider"></li>
+              <li><%= link_to "All-Time Ranking", round_path(1) %></li>
             </ul>
           </li>
           <% if current_user %>
