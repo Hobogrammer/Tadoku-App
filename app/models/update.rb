@@ -86,7 +86,7 @@ LANGUAGES = {
 		return lang_hash
 	end
 
-  def self.undo (user, update_id)
+  def self.undo (user, update_id) #TODO: See if this is called in the bot, if not remove.
   	del_update = user.updates.find_by_id(update_id)
   	del_read = del_update.newread.to_f 
   	rev_total = del_update.recpage.to_f

@@ -14,12 +14,13 @@
 			</tr>
 		</thead>
 		<tbody>
-			<% @entrants.each do |entrant| %>
+			<% @lang_sort.each do |sorted| %>
+				<% sort_usr = User.find_by_name("#{sorted[0]}") %>
 				<tr>
 					<td><li></td>
-					<td><%= twivatar_for(entrant.user) %></td>
-					<td><%= link_to entrant.user.name, user_path(entrant.user) %></td>
-					<td><%= Update::lang_total(entrant.user, @roundid, @lang).round(2) %></td></li>
+					<td><%= twivatar_for(sort_usr) %></td>
+					<td><%= link_to sort_usr.name, user_path(sort_usr) %></td>
+					<td><%= sorted[1].round(2) %></td></li>
 				</tr>
 			<% end %>
 		</tbody>

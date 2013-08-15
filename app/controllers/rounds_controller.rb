@@ -56,7 +56,19 @@ class RoundsController < ApplicationController
   end
 
   def lang_show
-    @entrants = Round.includes(:user).where("round_id = ? and (lang1 = ? or lang2 = ? or lang3 = ?)", params[:round_id], params[:lang], params[:lang], params[:lang])
+    lang_users = Round.includes(:user).where("round_id = ? and (lang1 = ? or lang2 = ? or lang3 = ?)", params[:round_id], params[:lang], params[:lang], params[:lang])
+
+    lang_top =Hash.new
+
+    lang_users.each do |entrant|
+      total = 0 
+        langups = entrant.user.updates.where(:round_id => params[:round_id], :lang => params[:lang]).select("sum(newread) as  accum")
+        total= langups.map(&:accum)
+        total = total.first.to_f
+        lang_top["#{entrant.user.name}"] = total
+      end
+      @lang_sort = lang_top.sort_by {|k,v| v  || 0}
+      @lang_sort = @lang_sort.reverse
 
 
     @roundid = params[:round_id]
@@ -65,7 +77,7 @@ class RoundsController < ApplicationController
       @update = current_user.updates.build
     end
 
-    if (@entrants.empty? | @entrants.nil?)
+    if (lang_users.empty? | lang_users.nil?)
       redirect_to root_url, :flash => { :error => "There are currently no users registered for this round." }
     end
   end
