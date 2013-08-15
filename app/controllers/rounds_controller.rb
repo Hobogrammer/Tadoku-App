@@ -14,6 +14,7 @@ class RoundsController < ApplicationController
     list = Round.where(:round_id => ApplicationHelper::curr_round).select(:tier).uniq
     lang_list = Update.where(:round_id => ApplicationHelper::curr_round).select(:lang).uniq
     @tier = list.map(&:tier)
+    @tier = @tier.sort{ |a,b|  Tier::TIER_VALUES[a.to_sym] <=> Tier::TIER_VALUES[b.to_sym]}
     @lang = lang_list.map(&:lang)
     if signed_in?
       @update = current_user.updates.build

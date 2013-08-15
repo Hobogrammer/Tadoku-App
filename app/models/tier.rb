@@ -1,6 +1,11 @@
 class Tier < ActiveRecord::Base
    attr_accessible :title, :body
 
+  TIER_VALUES = {:Bronze=>0, :Silver=>1, :Gold=>2, :Gundanium=>3, 
+    :Adamantium=>4, :Tiberium=>5, :Eridium=>6, :Illithium=>7, 
+    :Jasminum=>8, :Necrodermis=>9, :Stravidium=>10, 
+    :Melange=>11,:Yuanon=>12,:DarkMatter=>13}
+
   def self.tier (pagecount)
 
     case pagecount
@@ -31,7 +36,7 @@ class Tier < ActiveRecord::Base
     when (60000..69999)
       tier = "Yuanon"
     when (70000..1000000)
-      tier = "Dark Matter"
+      tier = "DarkMatter"
     end
   end
 end
