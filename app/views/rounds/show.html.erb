@@ -1,5 +1,9 @@
 <% provide(:title, 'Main Ranking') %>
-<h1>Tadoku <%= round_name(@roundid) %> Round Ranking</h1>
+<% if @roundid == '1' %>
+  <h1>Tadoku All-Time Ranking</h1>
+  <% else %>
+    <h1>Tadoku <%= round_name(@roundid) %> Round Ranking</h1>
+  <% end %>
 
 <br/>
 <div class = "ranking">
@@ -18,7 +22,11 @@
 				<tr>
 					<td><li></td>
 					<td><%= twivatar_for(entrant.user) %></td>
-					<td><%= link_to entrant.user.name, old_user_path(@roundid, entrant.user) %></td>
+                            <% if @roundid != '1' %>
+					   <td><%= link_to entrant.user.name, old_user_path(@roundid, entrant.user) %></td>
+                            <% else %>
+                              <td><%= entrant.user.name %></td>
+                            <% end %>
 					<td><%= entrant.pcount.round(2) %></td></li>
 				</tr>
 			<% end %>
