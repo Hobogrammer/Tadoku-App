@@ -86,14 +86,6 @@ LANGUAGES = {
 		return lang_hash
 	end
 
-  def self.undo (user, update_id) #TODO: See if this is called in the bot, if not remove.
-  	del_update = user.updates.find_by_id(update_id)
-  	del_read = del_update.newread.to_f 
-  	rev_total = del_update.recpage.to_f
-  	del_update.destroy
-  	return rev_total
-  end
-
   def self.created_at_update
 	canidates = Update.includes(:user).where(:round_id => 201301)
 
@@ -105,10 +97,3 @@ LANGUAGES = {
       		update.save
     	end
   end
-
-  def self.lang_total(user,round,lang)
-
-    rel_total = user.updates.where(:round_id => round, :lang => lang).select("sum(newread) as lcount")
-    real_total = rel_total.map(&:lcount).first.to_f
-  end
-end
