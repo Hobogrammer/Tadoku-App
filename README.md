@@ -1,1 +1,2 @@
-Might put the Tadoku manual in here...maybe not.
+Website: http://readMOD.com
+Twitter Bot: http://twitter.com/TadokuBot
