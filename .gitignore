@@ -18,3 +18,7 @@
 /lib/bot_handtest.rb
 /config/initializers/twitter.rb
 /lib/since_id.txt
+/app/models/bot.rb.bak
+/app/models/bottest.rb
+/oldDB
+/config/initializers/secret_token.rb

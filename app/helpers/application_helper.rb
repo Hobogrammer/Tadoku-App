@@ -75,7 +75,7 @@ module ApplicationHelper
 			rev_total = del_update.recpage.to_f
 			usr_round = user.rounds.find_by_round_id(round)
 
-			old read = usr_round.send(unmed).to_f
+			old_read = usr_round.send(unmed).to_f
 			rev_read = old_read.to_f - unread.to_f
 			usr_round.update_attributes(unmed.to_sym => rev_read)	
 			

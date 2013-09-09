@@ -5,7 +5,7 @@ module UpdatesHelper
 		 month = round[4,6].to_i
 		 case month
 		 	when  3,8
-		 		day = 01
+		 		day = 15
 		 		start_date = Time.new(year,month,day)
 		 	else 
 		 		day = 01

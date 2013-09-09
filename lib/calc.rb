@@ -83,7 +83,7 @@ module Calc
 		nico_point = round_info.nico / 10
 		sent_point = round_info.pcount.to_f - (book_point + manga_point + net_point + fgame_point + game_point + lyric_point + subs_point + news_point + nico_point) #cheatcodes
 
-		book_percent =  ((book_point / round_info.pcount)*100).to_s.to_f
+		book_percent =  ((book_point / round_info.pcount)*100).to_s.to_f  #there had to have been a reason behind the .to_s. I have forgotten why
 		manga_percent = (( manga_point / round_info.pcount)*100).to_s.to_f
 		net_percent = (( net_point / round_info.pcount)*100).to_s.to_f
 		fgame_percent = (( fgame_point / round_info.pcount)*100).to_s.to_f

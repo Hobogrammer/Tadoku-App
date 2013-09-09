@@ -1,63 +1,65 @@
 class Bot < ActiveRecord::Base
 include Calc,Tweet, ApplicationHelper
 
-MEDREGEX = /#(books?|manga|net|web|fullgame|fgame|game|news|subs|sentences?|nico|undo|lyric|reg|target)/i
+MEDREGEX = /#(books?|manga|net|web|fullgame|fgame|game|news|subs|sentences?|nico|lyric)/i
 LANGREGEX = /#(fr|de|es|en|ko|th\b|zh|it|nl|pl|el|ru|eo|sv|he|nn|nb|la|hu|jp|fi|af|ar|be|pt|hr)/i
 
-	#this got nasty real quick. Now I remember why I seperated the register and the bot
-	def self.main 
-		client = Twitter::Client.new
-		since = get_id
-		puts since
-		updates = client.mentions(:since_id=> since)
-		updates.reverse!
-		updates.each do |update|
-			relevance = update.text.scan(MEDREGEX)
-			if !relevance.empty?
-					partaker = update.user.screen_name
-					reg_check = update.text.scan(/#reg/i)
-				if !reg_check.empty?
-					if regis_check(update) == false
-
-						 regis(update,client)
-					elsif regis_check(update).nil?
-						puts "Creating new User"
-						if update.user.time_zone.nil?
-							Tweet::no_tz(update.user.screen_name,client)
-						else
-							new_user = User.new(uid: update.user.id, name: update.user.screen_name, provider: "twitter", time_zone: update.user.time_zone, avatar: update.user.profile_image_url)
-							new_user.save
-							bn_usr = User.find_by_uid(update.user.id)
-							over_round = bn_usr.rounds.new(:round_id => 1, :pcount => 0)
-							over_round.save
-							regis(update,client)
-						end
-					else
-						Tweet::already_regis(partaker,client)
-					end
-				elsif !regis_check(update)  #Check tweeter's registration status if they are not attempting to register
-					Tweet::not_regis(partaker,client)
-				elsif !update.text.scan(/#target/i).empty?
-					goal_change(update,client)
-				else
-					split_up = update.text.split(/;/)
-					split_up.each do |reup|
-						rel_check = reup.scan(MEDREGEX)
-						if !rel_check.empty?
-							processor(update,reup,client)
-						end
-					end
-					upuser = User.find_by_uid(update.user.id)
-					new_total = upuser.rounds.find_by_round_id(ApplicationHelper::curr_round).pcount
-					rank = Round::rank(upuser,ApplicationHelper::curr_round)
-					Tweet::tweet_up(upuser,new_total.round(2),rank,client)
-				end
-			end
-			since = update.id
-			save_id(since)
-		end
-	end	
-
+  def self.main 
+    client = Twitter::Client.new
+    since = get_id
+    puts since
+    updates = client.mentions(:since_id=>since)
+    updates.reverese!
+    updates.each do |update|
+    if update.text.scan(/#reg/i)
+      if regis_check(update) == false #user in database, not registered for curr_round
+        regis(update,client)
+      elsif regis_check(update).nil? #user not in database
+        puts "Creating new User"
+        if update.user.time_zone.nil?
+          Tweet::no_tz(update.user.screen_name,client)
+        else
+          new_user = User.new(uid: update.user.id, name: update.user.screen_name, provider: "twitter", time_zone: update.user.time_zone, avatar: update.user.profile_image_url)
+          new_user.save
+          bn_usr = User.find_by_uid(update.user.id)
+          over_round = bn_usr.rounds.new(:round_id => 1, :pcount => 0)
+          over_round.save
+          regis(update,client)
+        end
+      else
+        Tweet::already_regis(update.user.name,client)
+      end
+    elsif !update.text.scan.(MEDREGEX).empty? || !update.text.scan(/#undo/i).empty? || !update.text.scan(/#(target|goal)/i).empty?
+      if regis_check(update) != true 
+        Tweet::not_regis(update.user.name,client)
+      else
+        if !update.text.scan(MEDREGEX).empty? 
+          split_up = update.text.split(/;/)
+          split_up.each do |reup|
+             if !reup.scan(MEDREGEX).empty?
+               processor(update,reup,client)
+             end
+          end
+          upuser = User.find_by_uid(update.user.id)
+          new_total = upuser.rounds.find_by_round_id(ApplicationHelper::curr_round).pcount
+          rank = Round::rank(upuser,ApplicationHelper::curr_round)
+          Tweet::tweet_up(upuser,new_total.round(2),rank,client)
+        elsif update.text.scan(/#(target|goal)/i)
+          goal_change(update,client)
+        elsif update.text.scan(/#undo/i)
+          un_split = update.split(/;/)
+          un_split.each do |unup|
+            if !unup.scan(/#undo/).empty?
+              undo(update,ApplicationHelper::curr_round,client)
+            end
+          end
+        end
+      end
+    end
+    since = update.id
+    save_id(since)
+  end
+end
 
 	def self.processor(update,reup,client)
 		usr = User.find_by_uid(update.user.id)
@@ -69,56 +71,51 @@ LANGREGEX = /#(fr|de|es|en|ko|th\b|zh|it|nl|pl|el|ru|eo|sv|he|nn|nb|la|hu|jp|fi|
 		elsif usr_time.to_date > end_time.to_date
 			Tweet::late_submit(update.user.screen_name,client)			
 		else
-			unless !reup.scan(/#undo/i).empty? #this is what happens when you tack on an important fucntion last.
-				medium = reup.scan(MEDREGEX).first.to_s.gsub(/[^A-Za-z]/, '')
-				language = reup.scan(LANGREGEX).first.to_s.to_s.gsub(/[^A-Za-z]/, '')
-				sub_read = reup.scan(/[.]?\d+/).first.to_f
+      		medium = reup.scan(MEDREGEX).first.to_s.gsub(/[^A-Za-z]/, '')
+      		language = reup.scan(LANGREGEX).first.to_s.to_s.gsub(/[^A-Za-z]/, '')
+      		sub_read = reup.scan(/[.]?\d+/).first.to_f
 
-				if medium == "sentences" || medium == "sentence"
-					medium = "sent"
-				end
+      		if medium == "sentences" || medium == "sentence"
+      			medium = "sent"
+      		end
 
-				medium = "book" if medium =="books"
+      		medium = "book" if medium =="books"
 
-				medium = "fgame" if medium == "fullgame"
+      		medium = "fgame" if medium == "fullgame"
 
-				medium = "net" if medium == "web"
+      		medium = "net" if medium == "web"
 
-				if language.empty? 
-					usr = User.find_by_uid(update.user.id)
-					language = usr.rounds.find_by_round_id(ApplicationHelper::curr_round).lang1
-				end
-				
-				usrlng = lang_check(update,language)
-				
-				if usrlng == true
+      		if language.empty? 
+      			usr = User.find_by_uid(update.user.id)
+      			language = usr.rounds.find_by_round_id(ApplicationHelper::curr_round).lang1
+      		end
+      		
+      		usrlng = lang_check(update,language)
+      		
+      		if usrlng == true
 
-					new_read = Calc::score_calc(sub_read,medium,language).to_f
+      			new_read = Calc::score_calc(sub_read,medium,language).to_f
 
-					# really wanted to make this a one liner but I need to pass the variable just in case
-					if !reup.scan(/#dr/).empty?
-						new_read = Calc::dr(new_read)
-						sub_Read = Calc::dr(sub_read)
-						dr = true
-					else
-						dr = false
-					end
+      			if !reup.scan(/#dr/).empty?
+      				new_read = Calc::dr(new_read)
+      				sub_Read = Calc::dr(sub_read)
+      				dr = true
+      			else
+      				dr = false
+      			end
 
-					if !reup.scan(/#(second|third|fourth|fifth)/i).empty?
-						reps = repinterp(reup) 
-						new_read = Calc::repeat(new_read,reps)
-						sub_read = Calc::repeat(sub_read,reps)
-					else
-						reps = 0
-					end
-					db_update(update,new_read,medium,language,dr,reps,sub_read,client)
-				else
-					user = update.user.screen_name
-					Tweet::not_regis_lang(user,language,client)
-				end
-			else
-				undo(update,ApplicationHelper::curr_round,client)
-			end
+      			if !reup.scan(/#(second|third|fourth|fifth)/i).empty?
+      				reps = repinterp(reup) 
+      				new_read = Calc::repeat(new_read,reps)
+      				sub_read = Calc::repeat(sub_read,reps)
+      			else
+      				reps = 0
+      			end
+      			db_update(update,new_read,medium,language,dr,reps,sub_read,client)
+      		else
+      			user = update.user.screen_name
+      			Tweet::not_regis_lang(user,language,client)
+      		end
 		end
 	end
 
@@ -181,7 +178,7 @@ LANGREGEX = /#(fr|de|es|en|ko|th\b|zh|it|nl|pl|el|ru|eo|sv|he|nn|nb|la|hu|jp|fi|
 		elsif !txt.scan(/#fourth/).empty?
 			repeat_count = 3
 		else
-			repeat_count = 4 #kind of lazy but accounts for unforseen repeat call numbers, could potential be a problem. re-evaluate later
+			repeat_count = 4
 		end	
 	end
 
@@ -236,20 +233,15 @@ LANGREGEX = /#(fr|de|es|en|ko|th\b|zh|it|nl|pl|el|ru|eo|sv|he|nn|nb|la|hu|jp|fi|
 	end
 
 	def self.goal_change(update,client)
-		user = User.find_by_uid(update.user.id)
-		 if user.nil?
-		 	Tweet.not_regis(update.user.name,client)
-		 else
-			new_goal =  update.text.scan(/\d+/).first.to_f
-			round = user.rounds.find_by_round_id(ApplicationHelper::curr_round)
-			if round.nil?
-				Tweet.not_regis(update.user.name,client)
-			else
-				round.goal  = new_goal
-				round.save
-				Tweet.goal_update(user.name,new_goal,client)
-			end
-		end
+      	new_goal =  update.text.scan(/\d+/).first.to_f
+      	round = user.rounds.find_by_round_id(ApplicationHelper::curr_round)
+      	if round.nil?
+      		Tweet.not_regis(update.user.name,client)
+      	else
+      		round.goal  = new_goal
+      		round.save
+      		Tweet.goal_update(user.name,new_goal,client)
+      	end
 	end
 
 	def self.report(round)

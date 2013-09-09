@@ -39,4 +39,26 @@ class Tier < ActiveRecord::Base
       tier = "DarkMatter"
     end
   end
+
+  def self.tier_correct
+    user_list = User.all
+
+    user_list.each do |user|
+      user_round = user.rounds.find_by_round_id(ApplicationHelper::curr_round)
+      if user_round.nil?
+        next
+      else
+        user_total = user.rounds.find_by_round_id(1).pcount.to_f
+      end
+
+      if user_total.nil?
+        next
+      else
+        user_tier = Tier.tier(user_total)
+      end
+      puts "Old tier #{user_round.tier.to_s}"
+      puts "New tier #{user_tier}"
+      user_round.update_attributes(:tier => user_tier)
+    end
+  end
 end
