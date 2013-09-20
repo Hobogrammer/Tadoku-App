@@ -1,4 +1,3 @@
-
 The Tadoku application is the webapp for the ReadMOD foreign language reading contest. The application is automatically 
 managed for the most part using a predefined schedule to know when to allow, and disallow submissions.
 The bot portion of the application reads the [TadokuBot](http://twitter.com/TadokuBot) mentions and parses submissions using hastags similar 
@@ -27,4 +26,4 @@ Sample tags
 A complete list can be found in the [manual](http://readmod.wordpress.com/2011/09/21/a-very-%E5%A4%9A%E8%AA%AD-manual/).
 
 The web application allows users who are not programically inclined to easily submit updates with more easy to use interface. 
-The application also displays the [rankings](http://readMOD.com/rankings) (current and previous) and shows user's their reading [stats](http://readmod.com/rounds/201308/users/365).
+The application also displays the [rankings](http://readMOD.com/ranking) (current and previous) and shows user's their reading [stats](http://readmod.com/rounds/201308/users/365).
