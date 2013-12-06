@@ -15,6 +15,16 @@
             <ul class="dropdown-menu">
               <li><%= link_to "Current Ranking", ranking_path %></li>
               <li class="divider"></li>
+              <% if !@ordered_rounds["2014"].blank? %>   
+                <li class="dropdown-submenu">
+                  <a tabindex="-1" href=#>2014 Rankings</a>
+                    <ul class="dropdown-menu">
+                      <%= @ordered_rounds["2014"].each do |r2014| %>
+                        <li><%= link_to round_name(r2014.to_s), round_path(r2014) %></li>
+                      <% end %>
+                    </ul>
+                  </li>
+                <% end %>
                <li class="dropdown-submenu">
                 <a tabindex="-1" href=#>2013 Rankings</a> 
                   <ul class="dropdown-menu">

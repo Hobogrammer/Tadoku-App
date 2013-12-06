@@ -24,6 +24,7 @@ TadokuApp::Application.routes.draw do
   match 'rounds/:round_id/tier/:tier' => 'rounds#tier_show', :as => :tier
 
   match '/rounds/:round_id/users/:user_id' => 'users#old_show', :as => :old_user
+  match 'profile/:user_id' => 'users#profile'
 
 
 

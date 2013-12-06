@@ -7,7 +7,7 @@ module UsersHelper
 		when 'manga'
 			pg = "page"
 		when 'net'
-			pg = "webpage"
+			pg = "web article"
 		when 'fgame'
 			pg = "screen"
 		when 'game'
