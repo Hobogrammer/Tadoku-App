@@ -97,3 +97,4 @@ LANGUAGES = {
       		update.save
     	end
   end
+end
