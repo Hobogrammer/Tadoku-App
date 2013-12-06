@@ -6,10 +6,6 @@ before_filter :signed_in_user, only: :create
 before_filter :correct_user, only: :destroy
 before_filter :admin_user, only: [:destroy, :edit]
 
-	def index
-		@hist = User.find(params[:id]).updates
-	end
-
 	def create
 
 		if !current_user.rounds.find_by_round_id(ApplicationHelper::curr_round).nil?
