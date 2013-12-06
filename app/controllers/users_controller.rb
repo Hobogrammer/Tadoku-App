@@ -3,6 +3,7 @@ class UsersController < ApplicationController
 
 	def show
 		@user = User.find(params[:id])
+           @last_day = Date.civil(ApplicationHelper::curr_round[0,4].to_i,ApplicationHelper::curr_round[4,6].to_i,-1).day.to_i
 		if signed_in?
   			@update = current_user.updates.build
   		end
@@ -20,6 +21,7 @@ class UsersController < ApplicationController
     def old_show
       @user = User.find(params[:user_id])
       @round_id = params[:round_id] 
+      @last_day = Date.civil(@round_id[0,4].to_i,@round_id[4,6].to_i,-1).day.to_i
       
       if signed_in?
         @update = current_user.updates.build

@@ -126,6 +126,7 @@
 						<% today = Time.now.utc %>
 						<% interval = today.in_time_zone("#{@user.time_zone}") - UpdatesHelper::start_date_full(@round_id) %>
 						<% interval = (interval / (60*60*24)).floor %>
+                                 <% interval = @last_day if interval > @last_day %>
 						<% avg = @round.pcount / interval %>
 						<p class = "info">Goal: <%= @round.goal %></p>
 						<p class = "info">Round reading avg: <%= avg.to_s.to_f.round(2) %></p>
