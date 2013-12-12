@@ -38,6 +38,14 @@ class UsersController < ApplicationController
       end
     end
 
+    def profile
+      @user = User.find(params[:id])
+    #  @rounds = @user.rounds. #
+      if signed_in?
+        @update = current_user.updates.build
+      end
+    end
+
 	private
 		def admin_user
 			redirect_to(root_path) unless current_user.admin?

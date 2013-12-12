@@ -218,7 +218,7 @@
 				<br />
 				<ul>
 					<% @updates.each do |update| %>
-						<li><strong><%= pluralize(update.raw.to_f,medium_helper(update.medium))%></strong> of <strong><%= update.medium %></strong> in <strong><%= update.lang %></strong> for <strong><%= update.newread.round(2) %></strong> pages. <i><%= update.created_at_in_user_time.strftime('%H:%:M %Y/%m/%d') %></i>
+						<li><strong><%= pluralize(update.raw.to_f,medium_helper(update.medium))%></strong> of <strong><%= update.medium %></strong> in <strong><%= update.lang %></strong> for <strong><%= update.newread.round(2) %></strong> point(s). <p class="timestamp"><%= update.created_at_in_user_time.strftime('%H:%:M %Y/%m/%d') %></p>
 							<% if current_user %>
 								<% if current_user.admin? || current_user?(update.user) %>
 									<%= link_to "delete", update, method: :delete, date: { confirm: "Are you sure you want to undo this update?" } %>
