@@ -44,7 +44,7 @@ class UsersController < ApplicationController
       @rounds_stats = {}
       @rounds_list.each do |round|
         round_stats = Calc::usermed_info(@user, round.round_id)
-        @round_stats { round.round_id.to_sym => round_stats}
+        @rounds_stats["#{round.round_id}"] = round_stats
       end 
       
       if signed_in?
