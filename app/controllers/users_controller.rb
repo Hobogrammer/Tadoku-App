@@ -39,14 +39,16 @@ class UsersController < ApplicationController
     end
 
     def profile
-      @user = User.find(params[:id])
+      @user = User.find(params[:user_id])
       @rounds_list = @user.rounds.all
-      @rounds_stats = {}
+      @rounds_stats = Hash.new
       @rounds_list.each do |round|
         round_stats = Calc::usermed_info(@user, round.round_id)
         @rounds_stats["#{round.round_id}"] = round_stats
       end 
       
+     @rounds_stats.keep_if { |k,v| k.to_f != 0 }
+     
       if signed_in?
         @update = current_user.updates.build
       end
