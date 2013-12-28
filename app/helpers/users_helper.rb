@@ -24,4 +24,8 @@ module UsersHelper
 			pg = "lyric"
 		end 
 	end
+
+    def meter_graph_helper(usr)
+      
+    end
 end

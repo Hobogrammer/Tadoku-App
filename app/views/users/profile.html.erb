@@ -44,7 +44,7 @@
               </tr>
             </thead>
             <tbody>
-            <% @rounds_stats.each_pair do |round,stats| %>
+            <% @rounds_stats.sort.each do |round,stats| %>
               <% if round != "1" %>
                   <tr>
                     <td><%= round %></td>
@@ -58,7 +58,7 @@
                     <td><%= stats["news"]["raw"].round(2) %></td>
                     <td><%= stats["sent"]["raw"].round(2) %></td>
                     <td><%= stats["nico"]["raw"].round(2) %></td>
-                    <td></td>
+                    <td><%= stats["total"].round(2) %></td>
                   </tr>
                 <% end %>
               <% end %>
