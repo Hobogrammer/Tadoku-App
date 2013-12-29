@@ -19,12 +19,56 @@
 <div class="row">
   <div class="tabbable tabs-left">
     <ul id="myTab" class="nav nav-tabs">
-      <li class="active"><a href="#overchart" data-toggle="tab">Medium Chart</a></li>
+      <li class="active"><a href="#overchartraw" data-toggle="tab">Raw Pages Chart</a></li>
+      <li><a href="#overchartpoints">Points Chart</a></li>
       <li><a href="#medium" data-toggle="tab">Mediums Graph</a></li>
       <li><a href="#updates" data-toggle="tab">Updates</a></li>
     </ul>
     <div class="tab-content" id="myTabContent">
-      <div id="#overchart" class="tab-pane active">
+      <div id="#overchartraw" class="tab-pane active">
+        <div class="span10">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Round</th>
+                <th>Book</th>
+                <th>Manga</th>
+                <th>Net</th>
+                <th>Full Game</th>
+                <th>Game</th>
+                <th>Lyrics</th>
+                <th>Subs</th>
+                <th>News</th>
+                <th>Sentences</th>
+                <th>Nico</th>
+                <th>Total Points</th>
+              </tr>
+            </thead>
+            <tbody>
+            <% @rounds_stats.sort.each do |round,stats| %>
+              <% if round != "1" %>
+                  <tr>
+                    <td><%= round %></td>
+                    <td><%= stats["book"]["raw"].round(2) %></td>
+                    <td><%= stats["manga"]["raw"].round(2) %></td>
+                    <td><%= stats["net"]["raw"].round(2) %></td>
+                    <td><%= stats["fgame"]["raw"].round(2) %></td>
+                    <td><%= stats["game"]["raw"].round(2) %></td>
+                    <td><%= stats["lyric"]["raw"].round(2) %></td>
+                    <td><%= stats["subs"]["raw"].round(2) %></td>
+                    <td><%= stats["news"]["raw"].round(2) %></td>
+                    <td><%= stats["sent"]["raw"].round(2) %></td>
+                    <td><%= stats["nico"]["raw"].round(2) %></td>
+                    <td><%= stats["total"].round(2) %></td>
+                  </tr>
+                <% end %>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+       <div class="tab-content" id="myTabContent">
+      <div id="#overchartpoints" class="tab-pane active">
         <div class="span10">
           <table class="table table-bordered">
             <thead>
@@ -48,16 +92,16 @@
               <% if round != "1" %>
                   <tr>
                     <td><%= round %></td>
-                    <td><%= stats["book"]["raw"].round(2) %></td>
-                    <td><%= stats["manga"]["raw"].round(2) %></td>
-                    <td><%= stats["net"]["raw"].round(2) %></td>
-                    <td><%= stats["fgame"]["raw"].round(2) %></td>
-                    <td><%= stats["game"]["raw"].round(2) %></td>
-                    <td><%= stats["lyric"]["raw"].round(2) %></td>
-                    <td><%= stats["subs"]["raw"].round(2) %></td>
-                    <td><%= stats["news"]["raw"].round(2) %></td>
-                    <td><%= stats["sent"]["raw"].round(2) %></td>
-                    <td><%= stats["nico"]["raw"].round(2) %></td>
+                    <td><%= stats["book"]["points"].round(2) %></td>
+                    <td><%= stats["manga"]["points"].round(2) %></td>
+                    <td><%= stats["net"]["points"].round(2) %></td>
+                    <td><%= stats["fgame"]["points"].round(2) %></td>
+                    <td><%= stats["game"]["points"].round(2) %></td>
+                    <td><%= stats["lyric"]["points"].round(2) %></td>
+                    <td><%= stats["subs"]["points"].round(2) %></td>
+                    <td><%= stats["news"]["points"].round(2) %></td>
+                    <td><%= stats["sent"]["points"].round(2) %></td>
+                    <td><%= stats["nico"]["points"].round(2) %></td>
                     <td><%= stats["total"].round(2) %></td>
                   </tr>
                 <% end %>
