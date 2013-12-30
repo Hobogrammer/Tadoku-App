@@ -7,30 +7,30 @@
 
 <br/>
 <div class = "ranking">
-	<ol>
-	<table class="table">
-		<thead>
-			<tr>
-				<th>Rank</th>
-				<th></th>
-				<th>Username</th>
-				<th>Pagecount</th>
-			</tr>
-		</thead>
-		<tbody>
-			<% @entrants.each do |entrant| %>
-				<tr>
-					<td><li></td>
-					<td><%= twivatar_for(entrant.user) %></td>
-                            <% if @roundid != '1' %>
-					   <td><%= link_to entrant.user.name, old_user_path(@roundid, entrant.user) %></td>
-                            <% else %>
-                              <td><%= entrant.user.name %></td>
-                            <% end %>
-					<td><%= entrant.pcount.round(2) %></td></li>
-				</tr>
-			<% end %>
-		</tbody>
-	</table>
-	</ol>
+  <ol>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th></th>
+        <th>Username</th>
+        <th>Pagecount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @entrants.each do |entrant| %>
+        <tr>
+          <td><li></td>
+          <td><%= twivatar_for(entrant.user) %></td>
+            <% if @roundid != '1' %>
+               <td><%= link_to entrant.user.name, old_user_path(@roundid, entrant.user) %></td>
+            <% else %>
+              <td><%= entrant.user.name %></td>
+            <% end %>
+          <td><%= entrant.pcount.round(2) %></td></li>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  </ol>
 </div>

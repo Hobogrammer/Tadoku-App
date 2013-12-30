@@ -1,22 +1,22 @@
 class UsersController < ApplicationController
-	before_filter :admin_user, only: [:destroy, :edit]
+  before_filter :admin_user, only: [:destroy, :edit]
 
-	def show
-		@user = User.find(params[:id])
+  def show
+    @user = User.find(params[:id])
            @max_interval= Date.civil(ApplicationHelper::curr_round[0,4].to_i,ApplicationHelper::curr_round[4,6].to_i,-1).day
-		if signed_in?
-  			@update = current_user.updates.build
-  		end
+    if signed_in?
+        @update = current_user.updates.build
+      end
 
-  		if !@user.rounds.find_by_round_id(ApplicationHelper::curr_round).nil?
-  			@round_stats = Calc::usermed_info(@user,ApplicationHelper::curr_round)
-  			@round = @user.rounds.find_by_round_id(ApplicationHelper::curr_round)
-  			@updates = @user.updates.where(:round_id => ApplicationHelper::curr_round).order('created_at DESC').limit(10)
-  		else
-  			flash[:error] = "This user is not registered for the current round, for past round records please use access the old rankings."
-  			redirect_to ranking_path
-  		end
-	end
+      if !@user.rounds.find_by_round_id(ApplicationHelper::curr_round).nil?
+        @round_stats = Calc::usermed_info(@user,ApplicationHelper::curr_round)
+        @round = @user.rounds.find_by_round_id(ApplicationHelper::curr_round)
+        @updates = @user.updates.where(:round_id => ApplicationHelper::curr_round).order('created_at DESC').limit(10)
+      else
+        flash[:error] = "This user is not registered for the current round, for past round records please use access the old rankings."
+        redirect_to ranking_path
+      end
+  end
 
     def old_show
       @user = User.find(params[:user_id])
@@ -54,8 +54,8 @@ class UsersController < ApplicationController
       end
     end
 
-	private
-		def admin_user
-			redirect_to(root_path) unless current_user.admin?
-		end
+  private
+    def admin_user
+      redirect_to(root_path) unless current_user.admin?
+    end
 end

@@ -41,34 +41,64 @@
                 <th>News</th>
                 <th>Sentences</th>
                 <th>Nico</th>
-                <th>Total Points</th>
               </tr>
             </thead>
             <tbody>
+            <% raw_book_total = 0%>
+            <% raw_manga_total = 0%>
+            <% raw_net_total = 0%>
+            <% raw_fgame_total = 0%>
+            <% raw_game_total = 0%>
+            <% raw_lyric_total = 0%>
+            <% raw_subs_total = 0%>
+            <% raw_news_total = 0%>
+            <% raw_sent_total = 0%>
+            <% raw_nico_total = 0%>
             <% @rounds_stats.sort.each do |round,stats| %>
               <% if round != "1" %>
                   <tr>
-                    <td><%= round %></td>
+                    <td><%= short_round_name(round) %></td>
                     <td><%= stats["book"]["raw"].round(2) %></td>
+                    <% raw_book_total += stats["book"]["raw"] %>
                     <td><%= stats["manga"]["raw"].round(2) %></td>
+                    <% raw_manga_total += stats["manga"]["raw"] %>
                     <td><%= stats["net"]["raw"].round(2) %></td>
+                    <% raw_net_total += stats["net"]["raw"] %>
                     <td><%= stats["fgame"]["raw"].round(2) %></td>
+                    <% raw_fgame_total += stats["fgame"]["raw"] %>
                     <td><%= stats["game"]["raw"].round(2) %></td>
+                    <% raw_game_total += stats["game"]["raw"] %>
                     <td><%= stats["lyric"]["raw"].round(2) %></td>
+                    <% raw_lyric_total += stats["lyric"]["raw"] %>
                     <td><%= stats["subs"]["raw"].round(2) %></td>
+                    <% raw_subs_total += stats["subs"]["raw"] %>
                     <td><%= stats["news"]["raw"].round(2) %></td>
+                    <% raw_news_total += stats["news"]["raw"] %>
                     <td><%= stats["sent"]["raw"].round(2) %></td>
+                    <% raw_sent_total += stats["sent"]["raw"] %>
                     <td><%= stats["nico"]["raw"].round(2) %></td>
-                    <td><%= stats["total"].round(2) %></td>
+                    <% raw_nico_total += stats["nico"]["raw"] %>
                   </tr>
                 <% end %>
               <% end %>
+              <tr>
+                <td>Total</td>
+                <td><%= raw_book_total.round(2) %></td>
+                <td><%= raw_manga_total.round(2) %></td>
+                <td><%=raw_net_total.round(2) %></td>
+                <td><%= raw_fgame_total.round(2) %></td>
+                <td><%= raw_game_total.round(2) %></td>
+                <td><%= raw_lyric_total.round(2) %></td>
+                <td><%= raw_subs_total.round(2) %></td>
+                <td><%= raw_news_total.round(2) %></td>
+                <td><%= raw_sent_total.round(2) %></td>
+                <td><%= raw_nico_total.round(2) %></td>
+              </tr>
             </tbody>
           </table>
         </div>
       </div>
-       <div class="tab-content" id="myTabContent">
-      <div id="#overchartpoints" class="tab-pane active">
+      <div id="#overchartpoints" class ="tab-pane">
         <div class="span10">
           <table class="table table-bordered">
             <thead>
@@ -88,10 +118,11 @@
               </tr>
             </thead>
             <tbody>
+            <% points_sent_total = 0 %>
             <% @rounds_stats.sort.each do |round,stats| %>
               <% if round != "1" %>
                   <tr>
-                    <td><%= round %></td>
+                    <td><%= short_round_name(round) %></td>
                     <td><%= stats["book"]["points"].round(2) %></td>
                     <td><%= stats["manga"]["points"].round(2) %></td>
                     <td><%= stats["net"]["points"].round(2) %></td>
@@ -101,11 +132,26 @@
                     <td><%= stats["subs"]["points"].round(2) %></td>
                     <td><%= stats["news"]["points"].round(2) %></td>
                     <td><%= stats["sent"]["points"].round(2) %></td>
+                    <% points_sent_total += stats["sent"]["points"] %>
                     <td><%= stats["nico"]["points"].round(2) %></td>
                     <td><%= stats["total"].round(2) %></td>
                   </tr>
                 <% end %>
               <% end %>
+              <tr>
+                <td>Total</td>
+                <td><%= @rounds_stats["1"]["book"]["points"] %></td>
+                <td><%= @rounds_stats["1"]["manga"]["points"].round(2) %></td>
+                <td><%= @rounds_stats["1"]["net"]["points"].round(2) %></td>
+                <td><%= @rounds_stats["1"]["fgame"]["points"].round(2) %></td>
+                <td><%= @rounds_stats["1"]["game"]["points"].round(2) %></td>
+                <td><%= @rounds_stats["1"]["lyric"]["points"].round(2) %></td>
+                <td><%= @rounds_stats["1"]["subs"]["points"].round(2) %></td>
+                <td><%= @rounds_stats["1"]["news"]["points"].round(2) %></td>
+                <td><%= points_sent_total.round(2) %></td>
+                <td><%= @rounds_stats["1"]["nico"]["points"].round(2)%></td>
+                <td><%= @rounds_stats["1"]["total"].round(2) %></td>
+              </tr>
             </tbody>
           </table>
         </div>
