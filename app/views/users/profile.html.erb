@@ -7,11 +7,18 @@
   <div class = "user_side">
     <aside class = "span3">
       <section>
-          <%= twivatar_for @user %>
-          <p><a href='http://twitter.com/<%= @user.name %>'><%= @user.name %></a></p>
-          <div class = "well well-small">
+        <%= twivatar_for @user %>
+        <p><a href='http://twitter.com/<%= @user.name %>'><%= @user.name %></a></p>
+        <div class = "well well-small">
+          <p class="info"> Prev Rounds:
+            <% @rounds_list.each do |round| %>
+              <% if round != "1" %>
+                <%=  round.round_id %>
+              <% end %>
+            <% end %>
+          </p>
         </div>
-      </section>
+        </section>
     </aside>
   </div>
   <div class = "span5" id ="progress_chart" style="width:700px; height:300px;"></div>
@@ -22,7 +29,6 @@
       <li class="active"><a href="#overchartraw" data-toggle="tab">Raw Pages Chart</a></li>
       <li><a href="#overchartpoints">Points Chart</a></li>
       <li><a href="#medium" data-toggle="tab">Mediums Graph</a></li>
-      <li><a href="#updates" data-toggle="tab">Updates</a></li>
     </ul>
     <div class="tab-content" id="myTabContent">
       <div id="#overchartraw" class="tab-pane active">
@@ -140,16 +146,16 @@
               <% end %>
               <tr>
                 <td>Total</td>
-                <td><%= @rounds_stats["1"]["book"]["points"] %></td>
-                <td><%= @rounds_stats["1"]["manga"]["points"].round(2) %></td>
-                <td><%= @rounds_stats["1"]["net"]["points"].round(2) %></td>
-                <td><%= @rounds_stats["1"]["fgame"]["points"].round(2) %></td>
-                <td><%= @rounds_stats["1"]["game"]["points"].round(2) %></td>
-                <td><%= @rounds_stats["1"]["lyric"]["points"].round(2) %></td>
-                <td><%= @rounds_stats["1"]["subs"]["points"].round(2) %></td>
-                <td><%= @rounds_stats["1"]["news"]["points"].round(2) %></td>
+                <td><%#= @rounds_stats["1"]["book"]["points"] %></td>
+                <td><%#= @rounds_stats["1"]["manga"]["points"].round(2) %></td>
+                <td><%#= @rounds_stats["1"]["net"]["points"].round(2) %></td>
+                <td><%#= @rounds_stats["1"]["fgame"]["points"].round(2) %></td>
+                <td><%#= @rounds_stats["1"]["game"]["points"].round(2) %></td>
+                <td><%#= @rounds_stats["1"]["lyric"]["points"].round(2) %></td>
+                <td><%#= @rounds_stats["1"]["subs"]["points"].round(2) %></td>
+                <td><%#= @rounds_stats["1"]["news"]["points"].round(2) %></td>
                 <td><%= points_sent_total.round(2) %></td>
-                <td><%= @rounds_stats["1"]["nico"]["points"].round(2)%></td>
+                <td><%#= @rounds_stats["1"]["nico"]["points"].round(2)%></td>
                 <td><%= @rounds_stats["1"]["total"].round(2) %></td>
               </tr>
             </tbody>
