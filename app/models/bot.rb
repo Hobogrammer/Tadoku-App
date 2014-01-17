@@ -224,11 +224,7 @@ end
 		round_lang = user.rounds.find_by_round_id(ApplicationHelper::curr_round)
 		langarry = [round_lang.lang1, round_lang.lang2, round_lang.lang3]
 
-		langarry.each do |userlang|
-			if lang == userlang
-				return true
-			end
-		end
+		langarry.each { |userlang| return true if lang == userlang }
 		return false
 	end
 
