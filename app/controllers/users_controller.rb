@@ -19,8 +19,8 @@ class UsersController < ApplicationController
 
     def old_show
       @user = User.find(params[:user_id])
-      @round_id = params[:round_id] 
-      
+      @round_id = params[:round_id]
+
       if signed_in?
         @update = current_user.updates.build
       end
@@ -38,6 +38,6 @@ class UsersController < ApplicationController
 
 	private
 		def admin_user
-			redirect_to(root_path) unless current_user.admin?
+			redirect_to(root_path) unless current_user.admin? #change2
 		end
 end
