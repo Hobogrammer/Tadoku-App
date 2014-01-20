@@ -26,7 +26,7 @@ class Tier < ActiveRecord::Base
     when (30000...34999)
       tier = "Illithium"
     when (35000..39999)
-      tier = "Jasmium"
+      tier = "Jasminum"
     when (40000..44999)
       tier ="Necrodermis"
     when (45000..49999)
