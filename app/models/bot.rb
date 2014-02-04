@@ -4,7 +4,7 @@ include Calc,Tweet, ApplicationHelper
 MEDREGEX = /#(books?|manga|net|web|fullgame|fgame|game|news|subs|sentences?|nico|lyric)/i
 LANGREGEX = /#(fr|de|es|en|ko|th\b|zh|it|nl|pl|el|ru|eo|sv|he|nn|nb|la|hu|jp|fi|af|ar|be|pt|hr)/i
 
-  def self.main 
+  def self.main
     client = Twitter::Client.new
     since = get_id
     puts since
@@ -30,10 +30,10 @@ LANGREGEX = /#(fr|de|es|en|ko|th\b|zh|it|nl|pl|el|ru|eo|sv|he|nn|nb|la|hu|jp|fi|
         Tweet::already_regis(update.user.name,client)
       end
     elsif !update.text.scan.(MEDREGEX).empty? || !update.text.scan(/#undo/i).empty? || !update.text.scan(/#(target|goal)/i).empty?
-      if regis_check(update) != true 
+      if regis_check(update) != true
         Tweet::not_regis(update.user.name,client)
       else
-        if !update.text.scan(MEDREGEX).empty? 
+        if !update.text.scan(MEDREGEX).empty?
           split_up = update.text.split(/;/)
           split_up.each do |reup|
              if !reup.scan(MEDREGEX).empty?
@@ -69,7 +69,7 @@ end
     if usr_time.to_date < start_time.to_date
       Tweet::early_warn(update.user.screen_name,client,start_time)
     elsif usr_time.to_date > end_time.to_date
-      Tweet::late_submit(update.user.screen_name,client)      
+      Tweet::late_submit(update.user.screen_name,client)
     else
           medium = reup.scan(MEDREGEX).first.to_s.gsub(/[^A-Za-z]/, '')
           language = reup.scan(LANGREGEX).first.to_s.to_s.gsub(/[^A-Za-z]/, '')
@@ -85,13 +85,13 @@ end
 
           medium = "net" if medium == "web"
 
-          if language.empty? 
+          if language.empty?
             usr = User.find_by_uid(update.user.id)
             language = usr.rounds.find_by_round_id(ApplicationHelper::curr_round).lang1
           end
-          
+
           usrlng = lang_check(update,language)
-          
+
           if usrlng == true
 
             new_read = Calc::score_calc(sub_read,medium,language).to_f
@@ -105,7 +105,7 @@ end
             end
 
             if !reup.scan(/#(second|third|fourth|fifth)/i).empty?
-              reps = repinterp(reup) 
+              reps = repinterp(reup)
               new_read = Calc::repeat(new_read,reps)
               sub_read = Calc::repeat(sub_read,reps)
             else
@@ -128,7 +128,7 @@ end
     usr_tier = Tier::tier(user_total)
     new_round = user.rounds.new(round_id: ApplicationHelper::curr_round, goal: goal.first, tier: usr_tier)
     new_round.save
-    
+
     regis_counter = 1
 
     split_update = update.text.split(/;/)
@@ -167,7 +167,7 @@ end
 
     new_update = Update.new(:user_id => user.id, :raw => fresh_count ,:newread => count, :medium => med, :lang => lang, :dr => double, :repeat => rep, :round_id => ApplicationHelper::curr_round,:recpage => total, :created_at_in_user_time => usr_tme)
     new_update.save
-    ApplicationHelper::medium_update(user,ApplicationHelper::curr_round,med,fresh_count, count,new_total) 
+    ApplicationHelper::medium_update(user,ApplicationHelper::curr_round,med,fresh_count, count,new_total)
   end
 
   def self.repinterp(txt)
@@ -179,7 +179,7 @@ end
       repeat_count = 3
     else
       repeat_count = 4
-    end 
+    end
   end
 
   def self.regis_check(update)
@@ -205,7 +205,7 @@ end
     status_file = File.new("/home/ec2-user/tadoku-app/lib/since_id.txt","w")
     status_file.write(since_id)
     status_file.close
-  end 
+  end
 
   def self.undo(update,round,client)
     requester_id = update.user.id
@@ -260,8 +260,8 @@ end
         report.puts "<li>#{entrant.user.name} #{entrant.pcount.round(2)}</li>"
       end
     end
-    
-    report.puts "</ol>" 
+
+    report.puts "</ol>"
     report.puts "\n"
 
     report.puts "Congratulations to <strong> #{entrants.first.user.name}</strong>"
@@ -332,7 +332,7 @@ end
       report.puts "<ul>"
       report.puts "<li>honorable mention goes to #{top_nico.last.user.name} with #{top_nico.last.nico.to_f} nico recorded.</li>"
       report.puts "</ul>"
-  
+
 
     report.puts "</ul>"
     report.puts "\n"
@@ -345,7 +345,7 @@ end
       report.puts "<ol>"
       top_lang_readers = Round.includes(:user).where("round_id = ? and (lang1 = ? or lang2 = ? or lang3 = ?)", round, lang, lang, lang)
       top_lang_readers.each do |top_reader|
-        total = 0 
+        total = 0
         langups = top_reader.user.updates.where(:round_id => round, :lang => lang).select("sum(newread) as  accum")
         total= langups.map(&:accum)
         total = total[0]
@@ -363,4 +363,3 @@ end
     report.close
   end
 end
-

@@ -188,7 +188,7 @@ footer {
 
 	.info { 
 		font-size: 12px; 
-		line-height: 50%;
+		line-height: 90%;
 	}
 }
 
@@ -200,4 +200,10 @@ footer {
 	display:block;
 	margin-left:auto;
 	margin-right: auto;
+}
+
+.timestamp {
+	font-size: 10px;
+	font-style: italic;
+	font-weight: 600;
 }

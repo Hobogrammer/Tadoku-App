@@ -7,18 +7,18 @@ class Round < ActiveRecord::Base
   default_scope order: 'rounds.pcount DESC'
 
   def self.rank(user,roundid)
-  		part_list = Round.where(:round_id => roundid)
+      part_list = Round.where(:round_id => roundid)
 
-  		i = 1
+      i = 1
 
-  		part_list.each do |list|
-  			if (user.id == list.user_id)
-  		    rank = i
-  		    return rank
-  			end
-  			i += 1
-  		end
-  	end
+      part_list.each do |list|
+        if (user.id == list.user_id)
+          rank = i
+          return rank
+        end
+        i += 1
+      end
+    end
 
   def self.round_restore
     

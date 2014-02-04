@@ -1,56 +1,56 @@
 <% provide(:title, @user.name) %>
-	<script type="text/javascript" charset="utf-8">
-	$(function() {
-		new Highcharts.Chart({
-			chart: {
-				renderTo: "progress_chart"
-			},
-			title: {
-				text: "Reading Progress"
-			},
-			xAxis: {
-					type: "datetime"
-			},
-			yAxis: {
-				min: 0,
-				title: {
-					text: "Pages Read"
-				}
-			},
-			series: [{
-				name: "Overall",
-				pointInterval: <%= 1.day * 1000 %>,
-				pointStart: <%= UpdatesHelper::start_date_full(ApplicationHelper::curr_round).to_i * 1000 %>,
-				data: <%= updates_chart_series(@user,ApplicationHelper::curr_round) %>
-			}
-			<% if !@round.lang2.blank? %>
-				, { 
-					name: "<%= @round.lang1 %>",
-					pointInterval: <%= 1.day * 1000 %>,
-					pointStart: <%= UpdatesHelper::start_date_full(ApplicationHelper::curr_round).to_i * 1000 %>,
-					data: <%= language_chart_series(@user, ApplicationHelper::curr_round, @round.lang1) %>
-				}, {
-					name: "<%= @round.lang2 %>",
-					pointInterval: <%= 1.day * 1000 %>,
-					pointStart: <%= UpdatesHelper::start_date_full(ApplicationHelper::curr_round).to_i * 1000 %>,
-					data: <%= language_chart_series(@user, ApplicationHelper::curr_round, @round.lang2) %>
-				}
-			<% end %>
-			<% if !@round.lang3.blank? %>
-				, {
-					name: "<%= @round.lang3 %>",
-					pointInterval: <%= 1.day * 1000 %>,
-					pointStart: <%= UpdatesHelper::start_date_full(ApplicationHelper::curr_round).to_i * 1000 %>,
-					data: <%= language_chart_series(@user, ApplicationHelper::curr_round, @round.lang3) %>
-				}
-			<% end %>
-			]
-		});
-	});
-	</script>
+  <script type="text/javascript" charset="utf-8">
+  $(function() {
+    new Highcharts.Chart({
+      chart: {
+        renderTo: "progress_chart"
+      },
+      title: {
+        text: "Reading Progress"
+      },
+      xAxis: {
+          type: "datetime"
+      },
+      yAxis: {
+        min: 0,
+        title: {
+          text: "Pages Read"
+        }
+      },
+      series: [{
+        name: "Overall",
+        pointInterval: <%= 1.day * 1000 %>,
+        pointStart: <%= UpdatesHelper::start_date_full(ApplicationHelper::curr_round).to_i * 1000 %>,
+        data: <%= updates_chart_series(@user,ApplicationHelper::curr_round) %>
+      }
+      <% if !@round.lang2.blank? %>
+        , { 
+          name: "<%= @round.lang1 %>",
+          pointInterval: <%= 1.day * 1000 %>,
+          pointStart: <%= UpdatesHelper::start_date_full(ApplicationHelper::curr_round).to_i * 1000 %>,
+          data: <%= language_chart_series(@user, ApplicationHelper::curr_round, @round.lang1) %>
+        }, {
+          name: "<%= @round.lang2 %>",
+          pointInterval: <%= 1.day * 1000 %>,
+          pointStart: <%= UpdatesHelper::start_date_full(ApplicationHelper::curr_round).to_i * 1000 %>,
+          data: <%= language_chart_series(@user, ApplicationHelper::curr_round, @round.lang2) %>
+        }
+      <% end %>
+      <% if !@round.lang3.blank? %>
+        , {
+          name: "<%= @round.lang3 %>",
+          pointInterval: <%= 1.day * 1000 %>,
+          pointStart: <%= UpdatesHelper::start_date_full(ApplicationHelper::curr_round).to_i * 1000 %>,
+          data: <%= language_chart_series(@user, ApplicationHelper::curr_round, @round.lang3) %>
+        }
+      <% end %>
+      ]
+    });
+  });
+  </script>
 
-	<script type="text/javascript">
-	$(function () {
+  <script type="text/javascript">
+  $(function () {
     var chart;
     
     $(document).ready(function () {
@@ -106,134 +106,135 @@
 });
 </script>
 <div class="row">
-	<h1>Stats of Wrath</h1>
+  <h1>Stats of Wrath</h1>
 </div>
 <div class ="row">
-	<div class = "user_side">
-		<aside class = "span3">
-			<section>
-					<%= twivatar_for @user %>
-					<p><a href='http://twitter.com/<%= @user.name %>'><%= @user.name %></a></p>
-					<div class = "well well-small">
-						<p class = "info">Reading language(s): <%= @round.lang1 %>
-							<% if !@round.lang2.nil? %>
-								<%= @round.lang2 %>
-							<% end %>
-							<% if !@round.lang3.nil? %>
-								<%= @round.lang3 %>
-							<% end %>
-						</p>
-						<% today = Time.now.utc %>
-						<% interval = today.in_time_zone("#{@user.time_zone}") - UpdatesHelper::start_date_full(ApplicationHelper::curr_round) %>
-						<% interval = (interval / (60*60*24)).floor %>
-						<% avg = @round.pcount / interval %>
-						<p class = "info">Goal: <%= @round.goal %></p>
+  <div class = "user_side">
+    <aside class = "span3">
+      <section>
+          <%= twivatar_for @user %>
+          <p><a href='http://twitter.com/<%= @user.name %>'><%= @user.name %></a></p>
+          <div class = "well well-small">
+            <p class = "info">Reading language(s): <%= @round.lang1 %>
+              <% if !@round.lang2.nil? %>
+                <%= @round.lang2 %>
+              <% end %>
+              <% if !@round.lang3.nil? %>
+                <%= @round.lang3 %>
+              <% end %>
+            </p>
+            <% today = Time.now.utc %>
+            <% interval = today.in_time_zone("#{@user.time_zone}") - UpdatesHelper::start_date_full(ApplicationHelper::curr_round) %>
+            <% interval = (interval / (60*60*24)).floor %>
+                                 <% interval = @max_interval if interval > @max_interval %>
+            <% avg = @round.pcount / interval %>
+            <p class = "info">Goal: <%= @round.goal %></p>
                                     <p class = "info">Tier: <%= @round.tier %></p>
-						<p class = "info">Round reading avg: <%= avg.to_s.to_f.round(2) %></p>
-				</div>
-			</section>
-		</aside>
-	</div>
-	<div class = "span5" id ="progress_chart" style="width:700px; height:300px;"></div>
+            <p class = "info">Round reading avg: <%= avg.to_s.to_f.round(2) %></p>
+        </div>
+      </section>
+    </aside>
+  </div>
+  <div class = "span5" id ="progress_chart" style="width:700px; height:300px;"></div>
 </div>
 <div class="row">
-	<div class="tabbable tabs-left">
-		<ul id="myTab" class="nav nav-tabs">
-			<li class="active"><a href="#overchart" data-toggle="tab">Medium Chart</a></li>
-			<li><a href="#medium" data-toggle="tab">Mediums Graph</a></li>
-			<li><a href="#updates" data-toggle="tab">Updates</a></li>
-		</ul>
-		<div class="tab-content" id="myTabContent">
-			<div id="#overchart" class="tab-pane active">
-				<div class="span10">
-					<table class="table table-bordered">
-						<thead>
-							<tr>
-								<th></th>
-								<th>Book</th>
-								<th>Manga</th>
-								<th>Net</th>
-								<th>Full Game</th>
-								<th>Game</th>
-								<th>Lyrics</th>
-								<th>Subs</th>
-								<th>News</th>
-								<th>Sentences</th>
-								<th>Nico</th>
-								<th>Total</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>Raw Pages</td>
-								<td><%= @round_stats["book"]["raw"].round(2) %></td>
-								<td><%= @round_stats["manga"]["raw"].round(2) %></td>
-								<td><%= @round_stats["net"]["raw"].round(2) %></td>
-								<td><%= @round_stats["fgame"]["raw"].round(2) %></td>
-								<td><%= @round_stats["game"]["raw"].round(2) %></td>
-								<td><%= @round_stats["lyric"]["raw"].round(2) %></td>
-								<td><%= @round_stats["subs"]["raw"].round(2) %></td>
-								<td><%= @round_stats["news"]["raw"].round(2) %></td>
-								<td><%= @round_stats["sent"]["raw"].round(2) %></td>
-								<td><%= @round_stats["nico"]["raw"].round(2) %></td>
-								<td></td>
-							</tr>
-							<tr>
-								<td>Point Value</td>
-								<td><%= @round_stats["book"]["points"].round(2) %></td>
-								<td><%= @round_stats["manga"]["points"].round(2) %></td>
-								<td><%= @round_stats["net"]["points"].round(2) %></td>
-								<td><%= @round_stats["fgame"]["points"].round(2) %></td>
-								<td><%= @round_stats["game"]["points"].round(2) %></td>
-								<td><%= @round_stats["lyric"]["points"].round(2) %></td>
-								<td><%= @round_stats["subs"]["points"].round(2) %></td>
-								<td><%= @round_stats["news"]["points"].round(2) %></td>
-								<td><%= @round_stats["sent"]["points"].round(2) %></td>
-								<td><%= @round_stats["nico"]["points"].round(2) %></td>
-								<td><%= @round_stats["total"].round(2) %></td>
-							</tr>
-							<tr>
-								<td>% of Total</td>
-								<td><%= @round_stats["book"]["percent"].round(1) %>%</td>
-								<td><%= @round_stats["manga"]["percent"].round(1) %>%</td>
-								<td><%= @round_stats["net"]["percent"].round(1) %>%</td>
-								<td><%= @round_stats["fgame"]["percent"].round(1) %>%</td>
-								<td><%= @round_stats["game"]["percent"].round(1) %>%</td>
-								<td><%= @round_stats["lyric"]["percent"].round(1) %>%</td>
-								<td><%= @round_stats["subs"]["percent"].round(1) %>%</td>
-								<td><%= @round_stats["news"]["percent"].round(1) %>%</td>
-								<td><%= @round_stats["sent"]["percent"].round(1) %>%</td>
-								<td><%= @round_stats["nico"]["percent"].round(1) %>%</td>
-								<td>100%</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-			<div id="#medium" class="tab-pane">
-				<div class = "span5" id ="pie_chart" style="width:450px; height:450px;"></div>
-			</div>
-			<div id="#updates" class="tab-pane">
-				<h4> Last 10 Updates </h4>
-				<br />
-				<ul>
-					<% @updates.each do |update| %>
-						<li><strong><%= pluralize(update.raw.to_f,medium_helper(update.medium))%></strong> of <strong><%= update.medium %></strong> in <strong><%= update.lang %></strong> for <strong><%= update.newread.round(2) %></strong> pages.
-							<% if current_user %>
-								<% if current_user.admin? || current_user?(update.user) %>
-									<%= link_to "delete", update, method: :delete, date: { confirm: "Are you sure you want to undo this update?" } %>
-								<% end %>
-							<% end %>
-						</li>
-					<% end %>
-				</ul>
-			</div>
-		</div>
-	</div>
+  <div class="tabbable tabs-left">
+    <ul id="myTab" class="nav nav-tabs">
+      <li class="active"><a href="#overchart" data-toggle="tab">Medium Chart</a></li>
+      <li><a href="#medium" data-toggle="tab">Mediums Graph</a></li>
+      <li><a href="#updates" data-toggle="tab">Updates</a></li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+      <div id="#overchart" class="tab-pane active">
+        <div class="span10">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Book</th>
+                <th>Manga</th>
+                <th>Net</th>
+                <th>Full Game</th>
+                <th>Game</th>
+                <th>Lyrics</th>
+                <th>Subs</th>
+                <th>News</th>
+                <th>Sentences</th>
+                <th>Nico</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Raw Pages</td>
+                <td><%= @round_stats["book"]["raw"].round(2) %></td>
+                <td><%= @round_stats["manga"]["raw"].round(2) %></td>
+                <td><%= @round_stats["net"]["raw"].round(2) %></td>
+                <td><%= @round_stats["fgame"]["raw"].round(2) %></td>
+                <td><%= @round_stats["game"]["raw"].round(2) %></td>
+                <td><%= @round_stats["lyric"]["raw"].round(2) %></td>
+                <td><%= @round_stats["subs"]["raw"].round(2) %></td>
+                <td><%= @round_stats["news"]["raw"].round(2) %></td>
+                <td><%= @round_stats["sent"]["raw"].round(2) %></td>
+                <td><%= @round_stats["nico"]["raw"].round(2) %></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Point Value</td>
+                <td><%= @round_stats["book"]["points"].round(2) %></td>
+                <td><%= @round_stats["manga"]["points"].round(2) %></td>
+                <td><%= @round_stats["net"]["points"].round(2) %></td>
+                <td><%= @round_stats["fgame"]["points"].round(2) %></td>
+                <td><%= @round_stats["game"]["points"].round(2) %></td>
+                <td><%= @round_stats["lyric"]["points"].round(2) %></td>
+                <td><%= @round_stats["subs"]["points"].round(2) %></td>
+                <td><%= @round_stats["news"]["points"].round(2) %></td>
+                <td><%= @round_stats["sent"]["points"].round(2) %></td>
+                <td><%= @round_stats["nico"]["points"].round(2) %></td>
+                <td><%= @round_stats["total"].round(2) %></td>
+              </tr>
+              <tr>
+                <td>% of Total</td>
+                <td><%= @round_stats["book"]["percent"].round(1) %>%</td>
+                <td><%= @round_stats["manga"]["percent"].round(1) %>%</td>
+                <td><%= @round_stats["net"]["percent"].round(1) %>%</td>
+                <td><%= @round_stats["fgame"]["percent"].round(1) %>%</td>
+                <td><%= @round_stats["game"]["percent"].round(1) %>%</td>
+                <td><%= @round_stats["lyric"]["percent"].round(1) %>%</td>
+                <td><%= @round_stats["subs"]["percent"].round(1) %>%</td>
+                <td><%= @round_stats["news"]["percent"].round(1) %>%</td>
+                <td><%= @round_stats["sent"]["percent"].round(1) %>%</td>
+                <td><%= @round_stats["nico"]["percent"].round(1) %>%</td>
+                <td>100%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div id="#medium" class="tab-pane">
+        <div class = "span5" id ="pie_chart" style="width:450px; height:450px;"></div>
+      </div>
+      <div id="#updates" class="tab-pane">
+        <h4> Last 10 Updates </h4>
+        <br />
+        <ul>
+          <% @updates.each do |update| %>
+            <li><strong><%= pluralize(update.raw.to_f,medium_helper(update.medium))%></strong> of <strong><%= update.medium %></strong> in <strong><%= update.lang %></strong> for <strong><%= update.newread.round(2) %></strong> point(s). <p class="timestamp"><%= update.created_at_in_user_time.strftime('%H:%:M %Y/%m/%d') %></p>
+              <% if current_user %>
+                <% if current_user.admin? || current_user?(update.user) %>
+                  <%= link_to "delete", update, method: :delete, date: { confirm: "Are you sure you want to undo this update?" } %>
+                <% end %>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script type="text/javascript">
-	(function() {
+  (function() {
 
   $('#myTab a').click(function(e) {
     var paneWeWant, self;
