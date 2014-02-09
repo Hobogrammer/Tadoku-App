@@ -20,14 +20,10 @@ class UsersController < ApplicationController
 
     def old_show
       @user = User.find(params[:user_id])
-<<<<<<< HEAD
-      @round_id = params[:round_id]
 
-=======
-      @round_id = params[:round_id] 
+      @round_id = params[:round_id]
       @max_interval = Date.civil(@round_id[0,4].to_i,@round_id[4,6].to_i,-1).day
-      
->>>>>>> new_features
+
       if signed_in?
         @update = current_user.updates.build
       end
@@ -43,13 +39,6 @@ class UsersController < ApplicationController
       end
     end
 
-<<<<<<< HEAD
-	private
-		def admin_user
-			redirect_to(root_path) unless current_user.admin? #change2
-		end
-end
-=======
     def profile
       @user = User.find(params[:user_id])
       @rounds_list = @user.rounds.all
@@ -57,10 +46,10 @@ end
       @rounds_list.each do |round|
         round_stats = Calc::usermed_info(@user, round.round_id)
         @rounds_stats["#{round.round_id}"] = round_stats
-      end 
-      
+      end
+
      @rounds_stats.keep_if { |k,v| k.to_f != 0 }
-     
+
       if signed_in?
         @update = current_user.updates.build
       end
@@ -71,4 +60,3 @@ end
       redirect_to(root_path) unless current_user.admin?
     end
 end
->>>>>>> new_features

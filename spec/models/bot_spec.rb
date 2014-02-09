@@ -1,5 +1,7 @@
 require 'spec_helper'
 
 describe Bot do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it "should properly seperate updates at semicolons" do
+
+  end
 end
