@@ -1,9 +1,9 @@
 class Tier < ActiveRecord::Base
    attr_accessible :title, :body
 
-  TIER_VALUES = {:Bronze=>0, :Silver=>1, :Gold=>2, :Gundanium=>3, 
-    :Adamantium=>4, :Tiberium=>5, :Eridium=>6, :Illithium=>7, 
-    :Jasminum=>8, :Necrodermis=>9, :Stravidium=>10, 
+  TIER_VALUES = {:Bronze=>0, :Silver=>1, :Gold=>2, :Gundanium=>3,
+    :Adamantium=>4, :Tiberium=>5, :Eridium=>6, :Illithium=>7,
+    :Jasminum=>8, :Necrodermis=>9, :Stravidium=>10,
     :Melange=>11,:Yuanon=>12,:DarkMatter=>13}
 
   def self.tier (pagecount)
@@ -15,27 +15,27 @@ class Tier < ActiveRecord::Base
       tier = "Silver"
     when (5000..9999)
       tier = "Gold"
-    when (10000...14999) 
+    when (10000...15999)
       tier = "Gundanium"
-    when (15000...19999)
+    when (16000...22999)
       tier = "Adamantium"
-    when (20000..24999)
+    when (23000..30999)
       tier = "Tiberium"
-    when (25000..29999)
+    when (31000..39999)
       tier = "Eridium"
-    when (30000...34999)
+    when (40000...49999)
       tier = "Illithium"
-    when (35000..39999)
+    when (50000..60999)
       tier = "Jasminum"
-    when (40000..44999)
+    when (61000..72999)
       tier ="Necrodermis"
-    when (45000..49999)
+    when (73000..85999)
       tier = "Stravidium"
-    when (50000..59999)
+    when (86000..99999)
       tier = "Melange"
-    when (60000..69999)
+    when (100000..114999)
       tier = "Yuanon"
-    when (70000..1000000)
+    when (115000..1000000)
       tier = "DarkMatter"
     end
   end
