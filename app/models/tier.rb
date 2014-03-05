@@ -15,15 +15,15 @@ class Tier < ActiveRecord::Base
       tier = "Silver"
     when (5000..9999)
       tier = "Gold"
-    when (10000...15999)
+    when (10000..15999)
       tier = "Gundanium"
-    when (16000...22999)
+    when (16000..22999)
       tier = "Adamantium"
     when (23000..30999)
       tier = "Tiberium"
     when (31000..39999)
       tier = "Eridium"
-    when (40000...49999)
+    when (40000..49999)
       tier = "Illithium"
     when (50000..60999)
       tier = "Jasminum"
