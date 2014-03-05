@@ -8,6 +8,8 @@ class Tier < ActiveRecord::Base
 
   def self.tier (pagecount)
 
+    pagecount = pagecount.round
+
     case pagecount
     when (0..999)
       tier = "Bronze"
