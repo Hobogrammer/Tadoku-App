@@ -38,6 +38,5 @@ group :test do
   gem 'libnotify' , '0.5.9'
   gem 'rb-inotify' , '0.8.8'
   gem 'rb-readline', '~> 0.4.2'
-  gem 'rspec-rails' , '2.9.0'
   gem 'spork' , '0.9.0'
 end
