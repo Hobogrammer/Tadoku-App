@@ -37,5 +37,3 @@ The application also displays the [rankings](http://readMOD.com/ranking) (curren
 Contributing
 ----
 
-License
-----
