@@ -3,27 +3,27 @@
 
 <br/>
 <div class = "ranking">
-	<ol>
-	<table class="table">
-		<thead>
-			<tr>
-				<th>Rank</th>
-				<th></th>
-				<th>Username</th>
-				<th>Language Total</th>
-			</tr>
-		</thead>
-		<tbody>
-			<% @lang_sort.each do |sorted| %>
-				<% sort_usr = User.find_by_name("#{sorted[0]}") %>
-				<tr>
-					<td><li></td>
-					<td><%= twivatar_for(sort_usr) %></td>
-					<td><%= link_to sort_usr.name, user_path(sort_usr) %></td>
-					<td><%= sorted[1].round(2) %></td></li>
-				</tr>
-			<% end %>
-		</tbody>
-	</table>
-	</ol>
+  <ol>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th></th>
+        <th>Username</th>
+        <th>Language Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @lang_sort.each do |sorted| %>
+        <% sort_usr = User.find_by_name("#{sorted[0]}") %>
+        <tr>
+          <td><li></td>
+          <td><%= twivatar_for(sort_usr) %></td>
+          <td><%= link_to sort_usr.name, user_path(sort_usr) %></td>
+          <td><%= sorted[1].round(2) %></td></li>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  </ol>
 </div>

@@ -5,62 +5,62 @@
 
 <script type="text/javascript">
 <!--
-	function gotier(){
-		location=document.tierselc.tierselect.options[document.tierselc.tierselect.selectedIndex].value
+  function gotier(){
+    location=document.tierselc.tierselect.options[document.tierselc.tierselect.selectedIndex].value
 }
 
 function golang(){
-		location=document.langselc.langselect.options[document.langselc.langselect.selectedIndex].value
+    location=document.langselc.langselect.options[document.langselc.langselect.selectedIndex].value
 }
 //-->
 </script>
 
 <div class="row">
-	<div class="span4">
-		<form name="tierselc" method= "GET" style=" display:inline;">
-			<select name="tierselect">
-			<% @tier.each do |t| %>
-				<option value = <%= tier_path(ApplicationHelper::curr_round,t) %>><%= t %></option>
-			<% end %>
-			<input type="button" value="Show" class="btn btn-inverse" onClick="gotier()" style="margin-bottom:10px;">
-		</select>
-		</form>
-	</div>
+  <div class="span4">
+    <form name="tierselc" method= "GET" style=" display:inline;">
+      <select name="tierselect">
+      <% @tier.each do |t| %>
+        <option value = <%= tier_path(ApplicationHelper::curr_round,t) %>><%= t %></option>
+      <% end %>
+      <input type="button" value="Show" class="btn btn-inverse" onClick="gotier()" style="margin-bottom:10px;">
+    </select>
+    </form>
+  </div>
 
-	<div class="span4 offset4">
-		<form name="langselc" method= "GET" style=" display:inline;">
-			<input type="button" value="Show" class="btn btn-inverse" onClick="golang()" style="margin-bottom:10px;">
-			<select name="langselect">
-			<% @lang.each do |l| %>
-				<option value = <%= lang_path(ApplicationHelper::curr_round,l) %>><%= l %></option>
-			<% end %>
-		</select>
-		</form>
-	</div>
+  <div class="span4 offset4">
+    <form name="langselc" method= "GET" style=" display:inline;">
+      <input type="button" value="Show" class="btn btn-inverse" onClick="golang()" style="margin-bottom:10px;">
+      <select name="langselect">
+      <% @lang.each do |l| %>
+        <option value = <%= lang_path(ApplicationHelper::curr_round,l) %>><%= l %></option>
+      <% end %>
+    </select>
+    </form>
+  </div>
 </div>
 
 <br />
 <div class = "ranking">
-	<ol>
-	<table class="table">
-		<thead>
-			<tr>
-				<th>Rank</th>
-				<th></th>
-				<th>Username</th>
-				<th>Pagecount</th>
-			</tr>
-		</thead>
-		<tbody>
-			<% @entrants.each do |entrant| %>
-				<tr>
-					<td><li></td>
-					<td><%= twivatar_for(entrant.user) %></td>
-					<td><%= link_to entrant.user.name, user_path(entrant.user) %></td>
-					<td><%= entrant.pcount.round(2) %></td></li>
-				</tr>
-			<% end %>
-		</tbody>
-	</table>
-	</ol>
+  <ol>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th></th>
+        <th>Username</th>
+        <th>Pagecount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @entrants.each do |entrant| %>
+        <tr>
+          <td><li></td>
+          <td><%= twivatar_for(entrant.user) %></td>
+          <td><%= link_to entrant.user.name, user_path(entrant.user) %></td>
+          <td><%= entrant.pcount.round(2) %></td></li>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  </ol>
 </div>

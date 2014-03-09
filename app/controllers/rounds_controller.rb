@@ -4,7 +4,6 @@ class RoundsController < ApplicationController
   before_filter :signed_in_user, only: :create
   before_filter :admin_user, only: [:destroy, :edit]
 
-
   def index
     @entrants = Round.includes(:user).where(:round_id => "#{ApplicationHelper::curr_round}")
     if @entrants == nil
@@ -31,7 +30,7 @@ class RoundsController < ApplicationController
         @over_reg = current_user.rounds.build(:round_id => 1, :pcount => 0)
         @over_reg.save
         @reg.tier = "Bronze"
-      else 
+      else
         usr_total = current_user.rounds.find_by_round_id(1).pcount.to_f
         tier = Tier::tier(usr_total)
         @reg.tier = tier
@@ -61,14 +60,14 @@ class RoundsController < ApplicationController
     lang_top =Hash.new
 
     lang_users.each do |entrant|
-      total = 0 
-        langups = entrant.user.updates.where(:round_id => params[:round_id], :lang => params[:lang]).select("sum(newread) as  accum")
-        total= langups.map(&:accum)
-        total = total.first.to_f
-        lang_top["#{entrant.user.name}"] = total
-      end
-      @lang_sort = lang_top.sort_by {|k,v| v  || 0}
-      @lang_sort = @lang_sort.reverse
+      total = 0
+      langups = entrant.user.updates.where(:round_id => params[:round_id], :lang => params[:lang]).select("sum(newread) as  accum")
+      total= langups.map(&:accum)
+      total = total.first.to_f
+      lang_top["#{entrant.user.name}"] = total
+    end
+    @lang_sort = lang_top.sort_by {|k,v| v  || 0}
+    @lang_sort = @lang_sort.reverse
 
 
     @roundid = params[:round_id]

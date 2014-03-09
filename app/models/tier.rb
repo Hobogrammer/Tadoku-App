@@ -7,7 +7,6 @@ class Tier < ActiveRecord::Base
     :Melange=>11,:Yuanon=>12,:DarkMatter=>13}
 
   def self.tier (pagecount)
-
     pagecount = pagecount.round
 
     case pagecount

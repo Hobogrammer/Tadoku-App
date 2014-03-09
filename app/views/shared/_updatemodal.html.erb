@@ -1,35 +1,35 @@
 <div class="modal hide" id="updateModal">
-	<button type="button" class="close" data-dismiss="modal">×</button>
-	<% if !current_user.rounds.find_by_round_id(ApplicationHelper::curr_round).nil?  %>
-		<% if (Time.now.in_time_zone(current_user.time_zone).to_date < UpdatesHelper::start_date_full(ApplicationHelper::curr_round).to_date) ||
-			(Time.now.in_time_zone(current_user.time_zone).to_date > UpdatesHelper::end_date_full(ApplicationHelper::curr_round).to_date) %>
-			<h2>You're either too fast, or too slow</h2>
-		<% else %>
-			<div class="modal-header"
-				<h3>Update your score</h3>
-			</div>
-	    	<div class="modal-body">
-	    		<%= simple_form_for @update do |f| %>
-	         <%= render 'shared/error_messages', object: f.object %>
-	    			<%= f.input :newread , :label => "Amount Read", :placeholder => 'pages/screens/minutes #' , :input_html => { :maxlength => 5 } %>
-	     		<%= f.input :medium, :label=> "Medium Read", :collection => ["book", "manga", "game", "fgame", "net", "lyric", "subs", "news", "sent", "nico" ], :prompt => "Select medium read" %>
-	     		<% lang_list = Update::user_langs(current_user,ApplicationHelper::curr_round) %>
-	     		<% if lang_list.count == 1 %>
-	     			<% default =  lang_list.keys.to_s.gsub(/[^a-zA-Z0-9]/,'')%>
-	     			<%= f.input :lang, :label => "Language" ,:collection => lang_list, :include_blank => false%>
-	     		<% else %>	
-		         <%= f.input :lang, :label => "Language", :collection => lang_list, :prompt => "Select your language" %>
-		      <% end %>
-	         <%= f.input :repeat, :label => "Repeat number", :collection =>0..50 , :priority => '0' %>
-	         <%= f.input :dr, :inline_label => 'Double Rowed?', :hint => 'Only to be used with Japanese books', :label => false %>
-	    	</div>
-	    	<div class="modal-footer">
-	    		<%= submit_tag 'Cancel', :class => "btn btn-danger", 'data-dismiss' => "modal" %>
-	    		<%= f.button :submit, 'Submit Update' , :class => "btn btn-primary"%>
-	    	</div>
-	    		<% end %>
-	  <% end %>
-	<% else %>
-		<h2> You must register for the current round before attempting to submit an update.</h2>
-	<% end %>
+  <button type="button" class="close" data-dismiss="modal">×</button>
+  <% if !current_user.rounds.find_by_round_id(ApplicationHelper::curr_round).nil?  %>
+    <% if (Time.now.in_time_zone(current_user.time_zone).to_date < UpdatesHelper::start_date_full(ApplicationHelper::curr_round).to_date) ||
+      (Time.now.in_time_zone(current_user.time_zone).to_date > UpdatesHelper::end_date_full(ApplicationHelper::curr_round).to_date) %>
+      <h2>You're either too fast, or too slow</h2>
+    <% else %>
+      <div class="modal-header"
+        <h3>Update your score</h3>
+      </div>
+        <div class="modal-body">
+          <%= simple_form_for @update do |f| %>
+           <%= render 'shared/error_messages', object: f.object %>
+            <%= f.input :newread , :label => "Amount Read", :placeholder => 'pages/screens/minutes #' , :input_html => { :maxlength => 5 } %>
+          <%= f.input :medium, :label=> "Medium Read", :collection => ["book", "manga", "game", "fgame", "net", "lyric", "subs", "news", "sent", "nico" ], :prompt => "Select medium read" %>
+          <% lang_list = Update::user_langs(current_user,ApplicationHelper::curr_round) %>
+          <% if lang_list.count == 1 %>
+            <% default =  lang_list.keys.to_s.gsub(/[^a-zA-Z0-9]/,'')%>
+            <%= f.input :lang, :label => "Language" ,:collection => lang_list, :include_blank => false%>
+          <% else %>
+             <%= f.input :lang, :label => "Language", :collection => lang_list, :prompt => "Select your language" %>
+          <% end %>
+           <%= f.input :repeat, :label => "Repeat number", :collection =>0..50 , :priority => '0' %>
+           <%= f.input :dr, :inline_label => 'Double Rowed?', :hint => 'Only to be used with Japanese books', :label => false %>
+        </div>
+        <div class="modal-footer">
+          <%= submit_tag 'Cancel', :class => "btn btn-danger", 'data-dismiss' => "modal" %>
+          <%= f.button :submit, 'Submit Update' , :class => "btn btn-primary"%>
+        </div>
+          <% end %>
+    <% end %>
+  <% else %>
+    <h2> You must register for the current round before attempting to submit an update.</h2>
+  <% end %>
 </div>
