@@ -27,8 +27,6 @@ group :development , :test do
   gem 'rspec-rails' , '2.9.0'
   gem 'sextant'
   gem 'timecop', '~> 0.4.5'
-  gem 'vcr'
-  gem 'webmock'
 end
 
 group :test do
@@ -39,4 +37,6 @@ group :test do
   gem 'rb-inotify' , '0.8.8'
   gem 'rb-readline', '~> 0.4.2'
   gem 'spork' , '0.9.0'
+  gem 'vcr'
+  gem 'webmock'
 end
