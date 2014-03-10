@@ -13,6 +13,5 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap
-//= require jquery.countdown.js
 //= require highcharts.js
 //= require_tree .
