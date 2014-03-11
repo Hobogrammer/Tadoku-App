@@ -59,6 +59,7 @@ LANGREGEX = /#(fr|de|es|en|ko|th\b|zh|it|nl|pl|el|ru|eo|sv|he|nn|nb|la|hu|jp|fi|
     since = update.id
     save_id(since)
   end
+  true
 end
 
   def self.processor(update,reup,client)
@@ -197,12 +198,11 @@ end
   end
 
   def self.get_id
-    status = File.read("/home/ec2-user/tadoku-app/lib/since_id.txt")
-    return status
-  end
+    status = File.read("/home/silent/projects/Tadoku-App/lib/since_id.txt")
+    return status  end
 
   def self.save_id(since_id)
-    status_file = File.new("/home/ec2-user/tadoku-app/lib/since_id.txt","w")
+    status_file = File.new("/home/silent/projects/Tadoku-App/lib/since_id.txt","w")
     status_file.write(since_id)
     status_file.close
   end
