@@ -1,6 +1,5 @@
 require 'rubygems'
 require 'spork'
-require 'vcr'
 #uncomment the following line to use spork with the debugger
 #require 'spork/ext/ruby-debug'
 
@@ -114,13 +113,3 @@ RSpec.configure do |config|
 end
 
 OmniAuth.config.test_mode = true
-
-VCR.configure do |c|
-  c.cassette_library_dir = 'vcr_cassettes'
-  c.hook_into :webmock
-  c.configure_rspec_metadata!
-end
-
-RSpec.configure do |c|
-  c.treat_symbols_as_metadata_keys_with_true_values = true
-end
