@@ -9,7 +9,7 @@ LANGREGEX = /#(fr|de|es|en|ko|th\b|zh|it|nl|pl|el|ru|eo|sv|he|nn|nb|la|hu|jp|fi|
     since = get_id
     puts since
     updates = client.mentions(:since_id=>since)
-    updates.reverese!
+    updates.reverse!
     updates.each do |update|
     if update.text.scan(/#reg/i)
       if regis_check(update) == false #user in database, not registered for curr_round
