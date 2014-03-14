@@ -1,14 +1,11 @@
 require 'spec_helper'
 
-OmniAuth.config.add_mock(:twitter, {:uid => '123456', :info => { :nickname => 'JowJebus' }})
-
 describe "RoundPages" do
   subject { page }
 
-  let(:user) { FactoryGirl.create(:user) } 
+  let(:user) { FactoryGirl.create(:user) }
 
 	before do
-  		request.env["omniauth.auth"] = OmniAuth.config.mock_auth[:twitter] 
   		sign_in user
 	end
 
@@ -28,7 +25,7 @@ describe "RoundPages" do
 
 
   describe "registering for contest" do
-  		
+
   		before { visit root_path }
 
   		it "should increment the rounds count" do

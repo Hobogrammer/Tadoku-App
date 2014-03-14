@@ -16,7 +16,6 @@
 
 /config/initializers/omniauth.rb
 /config/initializers/twitter.rb
-/lib/*.txt
 /oldDB
 /config/initializers/secret_token.rb
 /vcr_cassettes

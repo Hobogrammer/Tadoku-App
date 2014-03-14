@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe "ViewPages" do
-	
-	subject { page }  
+
+	subject { page }
 
   describe "Home page" do
     before { visit root_path }
@@ -17,11 +17,6 @@ describe "ViewPages" do
 
       it "should greet the user" do
         page.should have_selector('h1', text: user.name)
-      end
-
-      it "should display countdown timer" do
-
-        page.should have_content('minutes')
       end
 
       it "should have a register for round button" do

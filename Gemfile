@@ -22,6 +22,7 @@ group :development , :test do
   gem 'better_errors' , '~> 0.3.2'
   gem 'binding_of_caller', '~> 0.6.8'
   gem 'guard-rspec' , '0.5.5'
+  gem 'launchy'
   gem 'pry', '~> 0.9.10'
   gem 'pry-debugger', '~> 0.2.2'
   gem 'rspec-rails' , '2.9.0'
