@@ -12,6 +12,7 @@ FactoryGirl.define do
     end
 
     factory :round do
+      id 16
       round_id ApplicationHelper::curr_round
       user_id 5
       book 10.0
@@ -25,9 +26,18 @@ FactoryGirl.define do
       nico 100.0
       sent 170.0
       pcount 100.0
+      goal 0
       lang1 "jp"
       lang2 "en"
       lang3 "zh"
       tier "Bronze"
+  end
+
+  factory :update do
+    user_id 5
+    round_id 16
+    lang "jp"
+    newread 10.0
+    medium "book"
   end
 end
