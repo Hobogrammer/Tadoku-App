@@ -18,7 +18,7 @@
               <li class="dropdown-submenu">
                 <a tabindex="-1" href=#>2014 Rankings</a>
                   <ul class="dropdown-menu">
-                    <%= @ordered_rounds["2014"].each do |r2014| %>
+                    <% @ordered_rounds["2014"].each do |r2014| %>
                       <li><%= link_to round_name(r2014.to_s), round_path(r2014) %></li>
                     <% end %>
                   </ul>
