@@ -19,3 +19,4 @@
 /oldDB
 /config/initializers/secret_token.rb
 /vcr_cassettes
+/coverage
