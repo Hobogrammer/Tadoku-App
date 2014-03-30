@@ -13,9 +13,7 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
-
 /oldDB
-/config/initializers/secret_token.rb
 /vcr_cassettes
 /coverage
 
