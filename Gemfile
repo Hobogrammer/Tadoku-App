@@ -5,6 +5,7 @@ gem 'rails', '4.0.3'
 
 gem 'bootstrap-sass'
 gem 'faker'
+gem 'figaro'
 gem 'jquery-rails'
 gem 'omniauth-twitter'
 gem 'simple_form'

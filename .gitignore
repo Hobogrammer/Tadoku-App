@@ -14,9 +14,10 @@
 /log/*.log
 /tmp
 
-/config/initializers/omniauth.rb
-/config/initializers/twitter.rb
 /oldDB
 /config/initializers/secret_token.rb
 /vcr_cassettes
 /coverage
+
+# Ignore application configuration
+/config/application.yml

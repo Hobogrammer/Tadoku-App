@@ -97,6 +97,9 @@ GEM
     faraday (0.9.0)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.3)
+    figaro (0.7.0)
+      bundler (~> 1.0)
+      rails (>= 3, < 5)
     formatador (0.2.4)
     guard (2.5.1)
       formatador (>= 0.2.4)
@@ -272,6 +275,7 @@ DEPENDENCIES
   coffee-rails
   factory_girl_rails
   faker
+  figaro
   guard-rspec
   guard-spork
   jquery-rails
