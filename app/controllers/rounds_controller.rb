@@ -100,6 +100,10 @@ class RoundsController < ApplicationController
 
   private
 
+  def round_params
+    params.require(:round).permit(:book, :fgame, :game, :gmet, :goal, :lang1, :lang2, :lang3, :lyric, :manga, :net, :news, :nico, :pcount, :round_id, :sent, :subs, :tier)
+  end
+
   def admin_user
     redirect_to(root_path) unless current_user.admin?
   end

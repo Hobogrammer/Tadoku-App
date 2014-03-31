@@ -12,8 +12,6 @@
 #
 
 class User < ActiveRecord::Base
-  attr_accessible :admin, :name, :provider, :uid, :time_zone, :avatar
-
   has_many :rounds, dependent: :destroy
   has_many :updates, dependent: :destroy
 

@@ -56,7 +56,11 @@ class UsersController < ApplicationController
 
   private
 
-    def admin_user
-      redirect_to(root_path) unless current_user.admin?
-    end
+  def user_params
+    params.require(:user).permit(:name, :provider, :uid, :time_zone, :avatar)
+  end
+
+  def admin_user
+    redirect_to(root_path) unless current_user.admin?
+  end
 end

@@ -1,5 +1,4 @@
 class Update < ActiveRecord::Base
-  attr_accessible :raw, :medium, :newread, :recpage, :round_id, :user_id, :lang, :dr, :repeat, :created_at_in_user_time
   belongs_to :user
 
   validates :newread, presence: true

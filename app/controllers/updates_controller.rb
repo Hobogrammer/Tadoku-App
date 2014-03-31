@@ -74,12 +74,16 @@ class UpdatesController < ApplicationController
 
   private
 
-    def correct_user
-      @update = current_user.updates.find_by_id(params[:id])
-      redirect_to(root_path) if  @update.nil?
-    end
+  def update_params
+    params.require(:update).permit(:raw, :medium, :newread, :recpage, :round_id, :lang, :dr, :repeat, :created_at_in_user_time)
+  end
 
-    def admin_user
-      redirect_to(root_path) unless current_user.admin?
-    end
+  def correct_user
+    @update = current_user.updates.find_by_id(params[:id])
+    redirect_to(root_path) if  @update.nil?
+  end
+
+  def admin_user
+    redirect_to(root_path) unless current_user.admin?
+  end
 end
