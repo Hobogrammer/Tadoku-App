@@ -3,19 +3,20 @@ source 'http://rubygems.org'
 ruby '2.1.1'
 gem 'rails', '4.0.3'
 
-gem 'bootstrap-sass'
+gem 'bootstrap-sass', '~> 3.1.1'
 gem 'faker'
 gem 'figaro'
 gem 'jquery-rails'
 gem 'omniauth-twitter'
 gem 'simple_form'
-gem 'twitter'
 gem 'scheduler_daemon', :git => 'git://github.com/ssoroka/scheduler_daemon.git'
 gem 'sqlite3'
+gem 'sprockets', '=2.11.0'
+gem 'twitter'
 
 group :assets do
   gem 'coffee-rails'
-  gem 'sass-rails'
+  gem 'sass-rails', '>= 3.2'
   gem 'uglifier'
 end
 
