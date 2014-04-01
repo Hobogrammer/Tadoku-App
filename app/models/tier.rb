@@ -1,5 +1,4 @@
 class Tier < ActiveRecord::Base
-   attr_accessible :title, :body
 
   TIER_VALUES = {:Bronze=>0, :Silver=>1, :Gold=>2, :Gundanium=>3,
     :Adamantium=>4, :Tiberium=>5, :Eridium=>6, :Illithium=>7,
