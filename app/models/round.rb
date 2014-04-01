@@ -3,7 +3,7 @@ class Round < ActiveRecord::Base
 
   validates :round_id, presence: true
 
-  default_scope order: 'rounds.pcount DESC'
+ default_scope { order( :pcount => :desc ) }
 
   def self.rank(user,roundid)
     part_list = Round.where(:round_id => roundid)
