@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
   end
 
   def self.fill_avatar
-    client = Twitter::Client.new
+    client = Update.initialize_twitter
 
     usr_list= User.all
 

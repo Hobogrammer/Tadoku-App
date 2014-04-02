@@ -5,7 +5,7 @@ MEDREGEX = /#(books?|manga|net|web|fullgame|fgame|game|news|subs|sentences?|nico
 LANGREGEX = /#(fr|de|es|en|ko|th\b|zh|it|nl|pl|el|ru|eo|sv|he|nn|nb|la|hu|jp|fi|af|ar|be|pt|hr)/i
 
   def self.main
-    client = Twitter::Client.new
+    client = Update.initialize_twitter
     since = get_id
     puts since
     updates = client.mentions(:since_id=>since)

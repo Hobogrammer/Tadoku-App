@@ -18,7 +18,7 @@ class Round < ActiveRecord::Base
   end
 
   def self.round_restore
-    client = Twitter::Client.new
+    client = Update.initialize_twitter
 
     File.readlines("/home/silent/projects/rails/tadoku-app/oldDB/tadoku04.csv").each do |row|
       row = row.gsub('"', "")
@@ -62,7 +62,7 @@ class Round < ActiveRecord::Base
   end
 
   def self.restore_zero
-    client = Twitter::Client.new
+    client = Update.initialize_twitter
 
     File.readlines("/home/silent/projects/rails/tadoku-app/oldDB/ranking.csv").each do |row|
       row = row.gsub('"', "")
