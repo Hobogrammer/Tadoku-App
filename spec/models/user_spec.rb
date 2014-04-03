@@ -15,7 +15,7 @@ require 'spec_helper'
 
 describe User do
 
-  before { @user = User.new(provider: "twitter", uid: "691563", name: "True Neighbor") }
+  before { @user = User.new(provider: "twitter", uid: "691563", name: "True Neighbor", time_zone: "Central US") }
 
   subject { @user }
 
@@ -23,6 +23,8 @@ describe User do
   it { should respond_to(:uid) }
   it { should respond_to(:name) }
   it { should respond_to(:admin) }
+  it { should respond_to(:time_zone) }
+  it { should respond_to(:avatar) }
 
   it { should be_valid }
   it { should_not be_admin }
@@ -47,6 +49,12 @@ describe User do
 
   describe "when there is no name present" do
       before { @user.name = nil }
+
+      it { should_not be_valid }
+    end
+
+    describe "when there is no time zone present" do
+      before { @user.time_zone = nil }
 
       it { should_not be_valid }
     end
