@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Round do
- 
+
 	let(:user) { FactoryGirl.create(:user) }
 	before { @round = user.rounds.build(round_id: "201202") }
 
@@ -25,6 +25,7 @@ describe Round do
 	it { should respond_to(:lang1) }
 	it { should respond_to(:lang2) }
 	it { should respond_to(:lang3) }
+	it { should respond_to(:tier) }
 
 	its(:user) { should == user }
 
