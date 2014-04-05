@@ -198,11 +198,11 @@ end
   end
 
   def self.get_id
-    status = File.read("/home/silent/projects/Tadoku-App/lib/since_id.txt")
+    status = File.read("lib/since_id.txt")
     return status  end
 
   def self.save_id(since_id)
-    status_file = File.new("/home/silent/projects/Tadoku-App/lib/since_id.txt","w")
+    status_file = File.new("lib/since_id.txt","w")
     status_file.write(since_id)
     status_file.close
   end
