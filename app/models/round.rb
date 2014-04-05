@@ -2,6 +2,7 @@ class Round < ActiveRecord::Base
   belongs_to :user
 
   validates :round_id, presence: true
+  validates :user_id, presence: true
 
  default_scope { order( :pcount => :desc ) }
 
@@ -20,7 +21,7 @@ class Round < ActiveRecord::Base
   def self.round_restore
     client = Update.initialize_twitter
 
-    File.readlines("/home/silent/projects/rails/tadoku-app/oldDB/tadoku04.csv").each do |row|
+    File.readlines("oldDB/tadoku04.csv").each do |row|
       row = row.gsub('"', "")
       row = row.split(/;/)
 
@@ -64,7 +65,7 @@ class Round < ActiveRecord::Base
   def self.restore_zero
     client = Update.initialize_twitter
 
-    File.readlines("/home/silent/projects/rails/tadoku-app/oldDB/ranking.csv").each do |row|
+    File.readlines("oldDB/ranking.csv").each do |row|
       row = row.gsub('"', "")
       row = row.split(/;/)
 
