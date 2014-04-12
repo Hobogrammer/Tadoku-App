@@ -101,6 +101,7 @@ GEM
       bundler (~> 1.0)
       rails (>= 3, < 5)
     formatador (0.2.4)
+    growl (1.0.3)
     guard (2.6.0)
       formatador (>= 0.2.4)
       listen (~> 2.7)
@@ -126,8 +127,6 @@ GEM
     json (1.8.1)
     launchy (2.4.2)
       addressable (~> 2.3)
-    libnotify (0.8.2)
-      ffi (>= 1.0.11)
     listen (2.7.1)
       celluloid (>= 0.15.2)
       celluloid-io (>= 0.15.0)
@@ -277,16 +276,15 @@ DEPENDENCIES
   factory_girl_rails
   faker
   figaro
+  growl
   guard-rspec
   guard-spork
   jquery-rails
   launchy
-  libnotify
   omniauth-twitter
   pry
   pry-debugger
   rails (= 4.0.3)
-  rb-inotify
   rb-readline
   rspec-rails
   sass-rails (>= 3.2)

@@ -35,11 +35,13 @@ group :test do
   gem 'capybara'
   gem 'factory_girl_rails'
   gem 'guard-spork'
-  gem 'libnotify'
-  gem 'rb-inotify'
+  gem 'growl' if /darwin/ =~ RUBY_PLATFORM
+  gem 'libnotify' if /linux/ =~ RUBY_PLATFORM
+  gem 'rb-inotify' if /linux/ =~ RUBY_PLATFORM
   gem 'rb-readline'
   gem 'simplecov', :require => false
   gem 'spork'
   gem 'vcr'
   gem 'webmock'
 end
+
