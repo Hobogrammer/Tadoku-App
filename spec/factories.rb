@@ -1,6 +1,5 @@
 FactoryGirl.define do
   factory :user do
-    id 5
     provider "twitter"
     uid "123456"
     name "JowJebus"
@@ -12,9 +11,8 @@ FactoryGirl.define do
     end
 
     factory :round do
-      id 16
       round_id ApplicationHelper::curr_round
-      user_id 5
+      user
       book 10.0
       manga 50.0
       fgame 60.0
@@ -34,10 +32,16 @@ FactoryGirl.define do
   end
 
   factory :update do
-    user_id 5
-    round_id 16
+    user
     lang "jp"
     newread 10.0
     medium "book"
+  end
+
+  factory :unreg_user do
+    provider "twitter"
+    uid "789101"
+    name "NotJoe"
+    time_zone "Mountain Time (US & Canada)"
   end
 end
