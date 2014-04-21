@@ -6,8 +6,8 @@ describe "User Pages" do
   let(:round) { FactoryGirl.create(:round) }
 
   before do
-    sign_in user
-    visit user_path(user)
+   #sign_in user
+    visit user_path(round,user)
   end
 
   subject { page }
