@@ -9,9 +9,10 @@ describe "ViewPages" do
 
     it { should have_selector('h1', text: 'Welcome to the Tadoku App!') }
 
-    describe "after signin" do
-      let(:user) { FactoryGirl.create(:user) }
+    describe "after signin as an unregisterd user" do
+      let(:unreg_user) { FactoryGirl.create(:unreg_user) }
       before do
+        puts unreg_user.name
         sign_in user
       end
 
@@ -21,7 +22,7 @@ describe "ViewPages" do
 
       it "should have a register for round button" do
 
-        page.should have_selector('a', class:'btn btn-large btn-primary')
+        page.should have_link('Register for the next round')
       end
     end
   end
