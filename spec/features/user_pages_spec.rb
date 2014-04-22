@@ -6,7 +6,6 @@ describe "User Pages" do
   let(:round) { FactoryGirl.create(:round) }
 
   before do
-   #sign_in user
     visit user_path(round,user)
   end
 
@@ -24,7 +23,6 @@ describe "User Pages" do
 
     describe "medium chart" do
       it "should show data" do
-        save_and_open_page
 
         page.should have_css( "tr:nth-child(1) td:nth-child(2)", :text => "#{round.book.to_f}")
       end
