@@ -37,11 +37,4 @@ FactoryGirl.define do
     newread 10.0
     medium "book"
   end
-
-  factory :unreg_user do
-    provider "twitter"
-    uid "789101"
-    name "NotJoe"
-    time_zone "Mountain Time (US & Canada)"
-  end
 end
