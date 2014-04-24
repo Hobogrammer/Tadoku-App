@@ -79,3 +79,9 @@ end
 # These instructions should self-destruct in 10 seconds.  If they don't, feel
 # free to delete them.
 OmniAuth.config.test_mode = true
+OmniAuth.config.mock_auth[:twitter] = {
+      'provider' => 'twitter',
+      'uid' => '123545',
+      'name' => "JowJebus",
+      'time_zone' => "Pacific Time (US & Canada)"
+    }
