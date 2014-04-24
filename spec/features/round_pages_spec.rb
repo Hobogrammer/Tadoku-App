@@ -6,7 +6,7 @@ describe "RoundPages" do
   let(:user) { FactoryGirl.create(:user) }
 
   before do
-      sign_in user
+    sign_in user
   end
 
   describe "Ranking page" do
@@ -25,6 +25,7 @@ describe "RoundPages" do
 
   describe "Past ranking" do
     it "should have the proper round link to the user profile" do
+
     end
   end
 end

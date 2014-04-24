@@ -11,7 +11,9 @@ describe "ViewPages" do
 
     describe "after signin as an unregisterd user" do
       let(:user) { FactoryGirl.create(:user) }
+
       before do
+        request.env["omniauth.auth"] = OmniAuth.config.mock_auth[:twitter]
         sign_in user
       end
 
