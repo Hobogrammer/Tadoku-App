@@ -4,31 +4,23 @@ module Calc
     case med
     when "manga"
       count *=  0.2
-      return count
     when "game"
       count *= 0.05
-      return count
     when "fgame"
-      count *= (1/6.0)
-      return count
-    when "net"
-      count = count
+      count *= 0.1666
     when "sub", "subs"
       count *= 0.2
-      return count
     when "sent", "sentences", "sentence"
       count = sent_count(count,lang)
-      return count
     when "nico"
       count *= 0.1
-      return count
-    when "book", "books", "net", "news", "lyric"
-      count = count
+    else
+      count
     end
   end
 
   def self.repeat(count,rep)
-    count *= (1/(2.0 * rep))
+    count *= (2.0 ** (-rep))
   end
 
   def self.dr(count)
@@ -36,7 +28,7 @@ module Calc
   end
 
   def self.sent_count(read,la)
-    case la 
+    case la
       when "jp"
         read *= (1/17.0)
       when "eo"
@@ -64,7 +56,7 @@ module Calc
       when "ar"
         read *= (1/8.0)
       else
-        read *= (1/33.0)    
+        read *= (1/33.0)
     end
   end
 
@@ -72,7 +64,7 @@ module Calc
     round_info = user.rounds.find_by_round_id(round)
     sent_raw = user.updates.where(:medium => 'sent', :round_id => round).sum(:raw)
 
-    book_point = round_info.book.to_f  
+    book_point = round_info.book.to_f
     manga_point = round_info.manga.to_f / 5
     net_point = round_info.net.to_f
     fgame_point = round_info.fgame.to_f / 6
@@ -93,7 +85,7 @@ module Calc
     news_percent = (( news_point / round_info.pcount)*100).to_s.to_f
     nico_percent = (( nico_point / round_info.pcount)*100).to_s.to_f
     sent_percent = ((sent_point / round_info.pcount) * 100).to_s.to_f
-    
+
     user_med = {
       "book" => {"points" => book_point, "percent" => book_percent, "raw" => round_info.book.to_f},
       "manga" => {"points" => manga_point, "percent" => manga_percent, "raw" => round_info.manga.to_f},
@@ -105,7 +97,7 @@ module Calc
       "news" => {"points" => news_point, "percent" => news_percent, "raw" => round_info.news.to_f},
       "nico" => {"points" => nico_point, "percent" => nico_percent, "raw" => round_info.nico.to_f},
       "sent" => {"points" => sent_point, "percent" =>sent_percent, "raw" => sent_raw.to_f},
-      "total" => round_info.pcount      
+      "total" => round_info.pcount
     }
-  end 
+  end
 end
