@@ -29,14 +29,10 @@ module Calc
 
   def self.sent_count(read,la)
     case la
-      when "jp"
+      when "jp", "it", "es", "en"
         read *= (1/17.0)
       when "eo"
         read *= (1/23.0)
-      when "en"
-        read *= (1/17.0)
-      when "es"
-        read *= (1/17.0)
       when "ko"
         read *= (1/18.0)
       when "zh"
@@ -45,8 +41,6 @@ module Calc
         read *= (1/13.0)
       when "fr"
         read *= (1/16.0)
-      when "it"
-        read *= (1/17.0)
       when "ru"
         read *= (1/24.0)
       when "nl"
