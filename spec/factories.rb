@@ -37,4 +37,15 @@ FactoryGirl.define do
     newread 10.0
     medium "book"
   end
+
+  sequence :users do |n|
+    provider "twitter"
+    uid "100#{n}"
+    name "User#{n}"
+    time_zone "Pacific Time (US & Canada)"
+  end
+
+  sequence :updates do |n|
+
+  end
 end
