@@ -38,14 +38,14 @@ FactoryGirl.define do
     medium "book"
   end
 
-  sequence :users do |n|
+  factory :users do
+    sequence("name") { |n| "Person #{n}" }
+    sequence("uid") { |n| "100#{n}"}
     provider "twitter"
-    uid "100#{n}"
-    name "User#{n}"
     time_zone "Pacific Time (US & Canada)"
   end
 
-  sequence :updates do |n|
+  factory :updates do
 
   end
 end
