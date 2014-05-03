@@ -1,16 +1,3 @@
-# == Schema Information
-#
-# Table name: users
-#
-#  id         :integer         not null, primary key
-#  provider   :string(255)
-#  uid        :string(255)
-#  name       :string(255)
-#  admin      :boolean         default(FALSE)
-#  created_at :datetime        not null
-#  updated_at :datetime        not null
-#
-
 require 'spec_helper'
 
 describe User do
@@ -24,7 +11,7 @@ describe User do
   it { should respond_to(:name) }
   it { should respond_to(:admin) }
   it { should respond_to(:time_zone) }
-  it { should respond_to(:avatar) }
+  it { should respond_to(:avatar) }"Central US"
 
   it { should be_valid }
   it { should_not be_admin }
