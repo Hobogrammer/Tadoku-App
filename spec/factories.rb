@@ -45,7 +45,14 @@ FactoryGirl.define do
     time_zone "Pacific Time (US & Canada)"
   end
 
-  factory :updates do
+  factory :rounds do
+    round_id ApplicationHelper::curr_round
+    sequence("user_id") { |n| "100#{n}"}
 
   end
+
+  factory :updates do
+   sequence("user_id") { |n| "100#{n}"}
+  end
+
 end
