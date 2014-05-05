@@ -48,6 +48,17 @@ FactoryGirl.define do
   factory :rounds do
     round_id ApplicationHelper::curr_round
     sequence("user_id") { |n| "100#{n}"}
+    sequence("book") { |n| }
+    sequence("manga") { |n| "#{n}" }
+    sequence("fgame") { |n| "#{n}" }
+    sequence("game") { |n| "#{n}" }
+    sequence("net") { |n| "#{n}" }
+    sequence("news") { |n| "#{n}" }
+    sequence("lyric") { |n| "#{n}" }
+    sequence("subs") { |n| "#{n}" }
+    sequence("nico") { |n| "#{n}" }
+    sequence("sent") { |n| "#{n}" }
+    sequence("pcount") { |n| "10#{n}"}
 
   end
 
