@@ -39,6 +39,7 @@ FactoryGirl.define do
   end
 
   factory :users do
+    sequence("id") { |n| "100#{n}"}
     sequence("name") { |n| "Person #{n}" }
     sequence("uid") { |n| "100#{n}"}
     provider "twitter"
@@ -59,11 +60,12 @@ FactoryGirl.define do
     sequence("nico") { |n| "#{n}" }
     sequence("sent") { |n| "#{n}" }
     sequence("pcount") { |n| "10#{n}"}
-
   end
 
   factory :updates do
    sequence("user_id") { |n| "100#{n}"}
+   medium "book"
+   sequence("newread") { |n| "#{n}"}
+   lang "jp"
   end
-
 end
