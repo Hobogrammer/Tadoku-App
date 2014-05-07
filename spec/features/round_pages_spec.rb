@@ -10,8 +10,10 @@ describe "RoundPages" do
   end
 
   describe "Ranking page" do
-    it "should contain all users" do
-
+    it "should contain all users currently registered in the current round" do
+      Round.where(round_id: ApplicationHelper::curr_round).each do |round|
+        expect( page ).to have_selector('li', text: round.user.name)
+      end
     end
 
     it "should link to users record for that round " do
@@ -29,5 +31,3 @@ describe "RoundPages" do
     end
   end
 end
-
-
