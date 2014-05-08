@@ -11,7 +11,7 @@ describe User do
   it { should respond_to(:name) }
   it { should respond_to(:admin) }
   it { should respond_to(:time_zone) }
-  it { should respond_to(:avatar) }"Central US"
+  it { should respond_to(:avatar) }
 
   it { should be_valid }
   it { should_not be_admin }
