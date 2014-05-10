@@ -33,16 +33,9 @@ FactoryGirl.define do
   end
 
   factory :update do
-    user
-    lang "jp"
-    newread 10.0
+    sequence("user_id") { |n| "100#{n}"}
     medium "book"
-  end
-
-  factory :updates do
-   sequence("user_id") { |n| "100#{n}"}
-   medium "book"
-   sequence("newread") { |n| "#{n}"}
-   lang "jp"
+    sequence("newread") { |n| "#{n}"}
+    lang "jp"
   end
 end
