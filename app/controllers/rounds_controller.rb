@@ -24,7 +24,7 @@ class RoundsController < ApplicationController
     if current_user.rounds.find_by_round_id(ApplicationHelper::curr_round) != nil
       redirect_to root_url, :flash => { :error => "You are already registered for the Contest"}
     else
-      @reg = current_user.rounds.build(params[:round])
+      @reg = current_user.rounds.build(round_params)
       @reg.pcount = '0'
       if current_user.rounds.find_by_round_id(1).nil?
         @over_reg = current_user.rounds.build(:round_id => 1, :pcount => 0)

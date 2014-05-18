@@ -9,7 +9,7 @@ class UpdatesController < ApplicationController
     if !current_user.rounds.find_by_round_id(ApplicationHelper::curr_round).nil?
       client = Update.initialize_twitter
 
-      @update = current_user.updates.build(params[:update])
+      @update = current_user.updates.build(update_params)
       round = ApplicationHelper::curr_round.to_s
       @update.round_id = round
 
