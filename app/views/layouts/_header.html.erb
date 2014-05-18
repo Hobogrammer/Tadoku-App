@@ -32,7 +32,7 @@
                   </ul>
                 </li>
               </li>
-               <li><%= link_to "2012 Ranking", round_path(@ordered_rounds["2012"]) %></li>
+               <li><%= link_to "2012 Ranking", round_path(@ordered_rounds["2012"].first.to_i) %></li>
               </li>
               <li class="dropdown-submenu">
                 <a tabindex="-1" href=#>2011 Rankings</a>
