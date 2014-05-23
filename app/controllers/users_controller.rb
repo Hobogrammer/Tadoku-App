@@ -13,7 +13,7 @@ class UsersController < ApplicationController
       @round = @user.rounds.find_by_round_id(ApplicationHelper::curr_round)
       @updates = @user.updates.where(:round_id => ApplicationHelper::curr_round).order('created_at DESC').limit(10)
     else
-      flash[:error] = "This user is not registered for the current round, for past round records please use access the old rankings."
+      flash[:error] = "This user is not registered for the current round. For past round records please  access the old rankings."
       redirect_to ranking_path
     end
   end
@@ -33,7 +33,7 @@ class UsersController < ApplicationController
       @round = @user.rounds.find_by_round_id(params[:round_id])
       @updates = @user.updates.where(:round_id => params[:round_id]).order('created_at DESC').limit(10)
     else
-      flash[:error] = "This user is not registered for the current round, for past round records please use access the old rankings."
+      flash[:error] = "This user is not registered for this round."
       redirect_to ranking_path
     end
   end
