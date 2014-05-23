@@ -2,18 +2,21 @@ require 'spec_helper'
 
 
 describe "User Pages" do
-  let(:user) { FactoryGirl.create(:user) }
-  let(:round) { FactoryGirl.create(:round) }
 
-  before do
-    visit user_path(round,user)
-  end
+  let!(:user) { FactoryGirl.create(:user, name: "Joe_user") }
+
+   before do
+      round = user.rounds.create(round_id: ApplicationHelper::curr_round, lang1: 'jp',
+                                                        lang2: 'en', lang3:'zh', tier: 'Bronze', book:  10 , manga: 10,
+                                                        fgame: 10, game: 10, net: 10, news: 10, lyric: 10,
+                                                        subs: 10, nico: 10, sent: 10, pcount: "1010")
+      visit user_path(user)
+    end
 
   subject { page }
 
   describe "user profile" do
-
-    it { should have_content "Stats of Wrath" }
+    it {should have_content "Stats of Wrath" }
     it { should have_content user.name }
     it { should have_css('img') }
 
@@ -24,7 +27,7 @@ describe "User Pages" do
     describe "medium chart" do
       it "should show data" do
 
-        page.should have_css( "tr:nth-child(1) td:nth-child(2)", :text => "#{round.book.to_f}")
+        page.should have_css( "tr:nth-child(1) td:nth-child(2)", :text => "10")
       end
     end
   end
