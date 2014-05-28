@@ -26,7 +26,6 @@ describe "RoundPages" do
 
     it "should contain all users currently registered in the current round" do
       round_count = Round.where(round_id: ApplicationHelper::curr_round).count
-      puts round_count
       Round.where(round_id: ApplicationHelper::curr_round).each do |round|
         expect( page ).to have_selector('td', text: round.user.name)
       end
