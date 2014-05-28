@@ -23,6 +23,8 @@ class RoundsController < ApplicationController
   def create
     if current_user.rounds.find_by_round_id(ApplicationHelper::curr_round) != nil
       redirect_to root_url, :flash => { :error => "You are already registered for the Contest"}
+    elsif !round_params["round_id"].present?
+      redirect_to root_url, :flash => { :error => "Please fill in the Round ID, and at least one language to register."}
     else
       @reg = current_user.rounds.build(round_params)
       @reg.pcount = '0'
@@ -49,7 +51,7 @@ class RoundsController < ApplicationController
       @update = current_user.updates.build
     end
 
-    if (@entrants.empty? | @entrants.nil?)
+    if (@entrants.empty? || @entrants.nil?)
       redirect_to root_url, :flash => { :error => "There are currently no users registered for this round." }
     end
   end
