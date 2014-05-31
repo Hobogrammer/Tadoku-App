@@ -16,7 +16,7 @@ TadokuApp::Application.routes.draw do
   get '/ranking', to: 'rounds#index'
 
   get '/signin' , to: redirect("/auth/twitter")
-  get '/signout', to: "sessions#destroy", via: :delete
+  match '/signout', to: "sessions#destroy", via: :delete
 
   get 'rounds/:round_id/:lang', to: "rounds#lang_show", :as => :lang
   get 'rounds/:round_id' , to: 'rounds#show'
@@ -25,8 +25,6 @@ TadokuApp::Application.routes.draw do
 
   get '/rounds/:round_id/users/:user_id' , to: 'users#old_show', :as => :old_user
   get 'profile/:user_id' , to: 'users#profile'
-
-
 
   get "auth/twitter/callback" , to: "sessions#create"
 end
