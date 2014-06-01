@@ -11,7 +11,7 @@ module OmniauthMacros
       },
       'extra' => {
         'raw_info' => {
-          'time_zone' => '"Europe/Paris'
+          'time_zone' => 'Europe/Paris'
         }
       }
     }
