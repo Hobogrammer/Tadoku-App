@@ -13,7 +13,7 @@ describe "ViewPages" do
       let!(:user) { FactoryGirl.create(:user) }
 
       before do
-        sign_in user
+        sign_in
       end
 
       it "should greet the user" do
