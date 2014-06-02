@@ -96,7 +96,7 @@ module Tweet
     client.update(message)
   rescue
     message += " #{rand(1000)}"
-    client.update(message))
+    client.update(message)
   end
 
   def self.late_submit(user,client)
