@@ -5,7 +5,8 @@ module Tweet
     return message if Rails.env.test?
     client.update(message)
   rescue
-    client.update(".@#{user.name} has #{total} pages recorded and a rank of #{rank}. #{rand(1000)}")
+    message += " #{rand(1000)}"
+    client.update(message)
   end
 
   def self.regis_tweet(user,round,client)
@@ -13,7 +14,8 @@ module Tweet
     return message if Rails.env.test?
     client.update(message)
   rescue
-    client.update("@#{user.name}, you are registered reading #{round.lang1.to_s}, #{round.lang2.to_s}, and #{round.lang3.to_s} goal: #{round.goal.to_s}. #{rand(1000)}")
+    message += " #{rand(1000)}"
+    client.update(message)
   end
 
   def self.undo_tweet(user,total,rank,client)
@@ -21,7 +23,8 @@ module Tweet
     return message if Rails.env.test?
     client.update(message)
   rescue
-    client.update(".@#{user.name} has a revised score of #{total} and revised rank of #{rank}. #{rand(1000)}")
+    message += " #{rand(1000)}"
+    client.update(message)
   end
 
   def self.not_regis(user,client)
@@ -29,7 +32,8 @@ module Tweet
     return message if Rails.env.test?
     client.update(message)
   rescue
-    client.update("@#{user}, you are not registered for this round. Please register and try again. #{rand(1000)}")
+    message += " #{rand(1000)}"
+    client.update(message)
   end
 
   def self.regis_exceed(user,client)
@@ -37,7 +41,8 @@ module Tweet
     return message if Rails.env.test?
     client.update(message)
   rescue
-    client.update("@#{user}, you may only register for 3 languages. Your first three choices will be used. #{rand(1000)}")
+    message += " #{rand(1000)}"
+    client.update(message)
   end
 
   def self.already_regis(user,client)
@@ -45,7 +50,8 @@ module Tweet
     return message if Rails.env.test?
     client.update(message)
   rescue
-    client.update("@#{user}, you are already registered for the current round. #{rand(1000)}")
+    message += " #{rand(1000)}"
+    client.update(message)
   end
 
   def self.not_regis_lang(user,lang,client)
@@ -53,7 +59,8 @@ module Tweet
     return message if Rails.env.test?
     client.update(message)
   rescue
-    client.update("@#{user}, '#{lang}' is not one of your registered reading languages. Update skipped. #{rand(1000)}")
+    message += " #{rand(1000)}"
+    client.update(message)
   end
 
   def self.goal_update(user,goal,client)
@@ -61,7 +68,8 @@ module Tweet
     return message if Rails.env.test?
     client.update(message)
   rescue
-    client.update("@#{user}, your goal has been updated to #{goal} pages. #{rand(1000)}")
+    message += " #{rand(1000)}"
+    client.update(message)
   end
 
   def self.no_undo(user,client)
@@ -69,7 +77,8 @@ module Tweet
     return message if Rails.env.test?
     client.update(message)
   rescue
-    client.update("@#{user.name}, you do not have any updates to undo.  #{rand(1000)}")
+    message += " #{rand(1000)}"
+    client.update(message)
   end
 
   def self.no_tz(user,client)
@@ -77,7 +86,8 @@ module Tweet
     return message if Rails.env.test?
     client.update(message)
   rescue
-    client.update("@#{user}, please set the timezone in your account settings and try again. #{rand(1000)}")
+    message += " #{rand(1000)}"
+    client.update(message)
   end
 
   def self.early_warn(user,client,start_time)
@@ -85,7 +95,8 @@ module Tweet
     return message if Rails.env.test?
     client.update(message)
   rescue
-    client.update("@#{user}, you're too early. Contest starts #{start_time.to_date} 00:00:00 your time. #{rand(1000)}")
+    message += " #{rand(1000)}"
+    client.update(message))
   end
 
   def self.late_submit(user,client)
@@ -93,6 +104,7 @@ module Tweet
     return message if Rails.env.test?
     client.update(message)
   rescue
-    client.update("@#{user}, sorry, the contest has already ended in your timezone. #{rand(1000)}")
+    message += " #{rand(1000)}"
+    client.update(message)
   end
 end
