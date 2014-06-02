@@ -12,7 +12,7 @@ class Round < ActiveRecord::Base
     i = 1
     part_list.each do |list|
       if (user.id == list.user_id)
-        rank = i
+        return i
       end
       i += 1
     end
