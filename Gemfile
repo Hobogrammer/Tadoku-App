@@ -33,6 +33,7 @@ end
 
 group :test do
   gem 'capybara'
+  gem 'selenium-webdriver'
   gem 'factory_girl_rails'
   gem 'guard-spork'
   gem 'growl' if /darwin/ =~ RUBY_PLATFORM
@@ -44,4 +45,3 @@ group :test do
   gem 'vcr'
   gem 'webmock'
 end
-
