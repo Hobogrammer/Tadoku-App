@@ -45,6 +45,7 @@ Spork.prefork do
     config.include FactoryGirl::Syntax::Methods
     config.infer_base_class_for_anonymous_controllers = false
     config.include(OmniauthMacros)
+    Capybara.javascript_driver = :selenium
   end
 end
 
