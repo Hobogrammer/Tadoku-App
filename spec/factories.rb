@@ -4,7 +4,7 @@ FactoryGirl.define do
     sequence("uid") { |n| "100#{n}"}
     provider "twitter"
     time_zone "Pacific Time (US & Canada)"
-    avatar "www.immakingthisup.com/hi.jpg"
+    avatar "http://immakingthisup.com/hi.jpg"
 
       factory :admin do
         admin true

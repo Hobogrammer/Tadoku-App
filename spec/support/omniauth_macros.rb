@@ -7,7 +7,7 @@ module OmniauthMacros
       'uid' => '123545',
       'info' => {
         'nickname' => 'Person 1',
-        'image' => 'www.immakingthisup.com/hi.jpg'
+        'image' => 'http://immakingthisup.com/hi.jpg'
       },
       'extra' => {
         'raw_info' => {
