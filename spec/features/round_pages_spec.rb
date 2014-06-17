@@ -49,4 +49,24 @@ describe "RoundPages" do
       #need to be able to generate rounds with not current round id
     end
   end
+
+describe "Registering for a round", :js => true do
+
+    before do
+      sign_in
+      visit root_path
+    end
+
+    it "should successfully register a signed in user" do
+      find('.btn').click
+      select "#{ApplicationHelper::curr_round}", :from => "Round"
+      select "Japanese", :from => "Lang1"
+      select "Chinese", :from => "Lang2"
+      select  "Korean", :from => "Lang3"
+      select  "32", :from => "Goal"
+      click_button "Register"
+
+      page.should have_content "You have successfully registered for the Tadoku contest"
+    end
+  end
 end
