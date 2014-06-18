@@ -22,7 +22,7 @@
             <% end %>
               <%= f.input :repeat, :label => "Repeat number", :collection =>0..50 , :priority => '0' %>
               <%= f.input :dr, :inline_label => 'Double Rowed?', :hint => 'Only to be used with Japanese books', :label => false %>
-            <% if Rails.environment.test? %>
+            <% if Rails.env.test? %>
               <%= submit_tag 'Cancel', :class => "btn btn-danger", 'data-dismiss' => "modal" %>
               <%= f.button :submit, 'Submit Update' , :class => "btn btn-primary"%>
               </div>
