@@ -78,7 +78,7 @@ class RoundsController < ApplicationController
       @update = current_user.updates.build
     end
 
-    if (lang_users.empty? | lang_users.nil?)
+    if (lang_users.empty? || lang_users.nil?)
       redirect_to root_url, :flash => { :error => "There are currently no users registered for this round." }
     end
   end
@@ -95,7 +95,7 @@ class RoundsController < ApplicationController
       @update = current_user.updates.build
     end
 
-    if (@entrants.empty? | @entrants.nil?)
+    if (@entrants.empty? || @entrants.nil?)
       redirect_to root_url, :flash => { :error => "There are no users in this tier registered for this round." }
     end
   end
