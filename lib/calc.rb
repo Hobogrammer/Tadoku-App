@@ -49,6 +49,8 @@ module Calc
         read *= (1/31.0)
       when "ar"
         read *= (1/8.0)
+      when "vi"
+        read *= (1/15.0)
       else
         read *= (1/33.0)
     end

@@ -27,7 +27,8 @@ LANGUAGES = {
       'Russian' => 'ru',
       'Spanish' => 'es',
       'Swedish' => 'sv',
-      'Thai' => 'th'
+      'Thai' => 'th',
+      'Vietnamese' => 'vi'
     }
 
   def self.user_langs(user,round)
@@ -82,6 +83,8 @@ LANGUAGES = {
           lang_hash['Swedish'] = 'sv'
         when 'th'
           lang_hash['Thai'] = 'th'
+        when 'vi'
+          lang_hash['Vietnamese'] = 'vi'
         end
       end
     end
