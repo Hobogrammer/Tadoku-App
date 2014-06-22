@@ -3,17 +3,17 @@ module Calc
   def self.score_calc(count,med,lang)
     case med
     when "manga"
-      count *=  0.2
+      count *=  (1/5.0)
     when "game"
-      count *= 0.05
+      count *= (1/20.0)
     when "fgame"
-      count *= 0.1666
+      count *= (1/6.0)
     when "sub", "subs"
-      count *= 0.2
+      count *= (1/5.0)
     when "sent", "sentences", "sentence"
       count = sent_count(count,lang)
     when "nico"
-      count *= 0.1
+      count *= (1/10.0)
     else
       count
     end
