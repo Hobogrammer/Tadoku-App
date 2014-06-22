@@ -71,28 +71,28 @@ module Calc
     nico_point = round_info.nico / 10
     sent_point = round_info.pcount.to_f - (book_point + manga_point + net_point + fgame_point + game_point + lyric_point + subs_point + news_point + nico_point) #cheatcodes
 
-    book_percent =  ((book_point / round_info.pcount)*100).to_s.to_f  #there had to have been a reason behind the .to_s. I have forgotten why
-    manga_percent = (( manga_point / round_info.pcount)*100).to_s.to_f
-    net_percent = (( net_point / round_info.pcount)*100).to_s.to_f
-    fgame_percent = (( fgame_point / round_info.pcount)*100).to_s.to_f
-    game_percent = (( game_point / round_info.pcount)*100).to_s.to_f
-    lyric_percent = (( lyric_point / round_info.pcount)*100).to_s.to_f
-    subs_percent = (( subs_point / round_info.pcount)*100).to_s.to_f
-    news_percent = (( news_point / round_info.pcount)*100).to_s.to_f
-    nico_percent = (( nico_point / round_info.pcount)*100).to_s.to_f
-    sent_percent = ((sent_point / round_info.pcount) * 100).to_s.to_f
+    book_percent =  ((book_point / round_info.pcount)*100)
+    manga_percent = ((manga_point / round_info.pcount)*100)
+    net_percent = ((net_point / round_info.pcount)*100)
+    fgame_percent = ((fgame_point / round_info.pcount)*100)
+    game_percent = ((game_point / round_info.pcount)*100)
+    lyric_percent = ((lyric_point / round_info.pcount)*100)
+    subs_percent = ((subs_point / round_info.pcount)*100)
+    news_percent = ((news_point / round_info.pcount)*100)
+    nico_percent = ((nico_point / round_info.pcount)*100)
+    sent_percent = ((sent_point / round_info.pcount) *100)
 
     user_med = {
-      "book" => {"points" => book_point, "percent" => book_percent, "raw" => round_info.book.to_f},
-      "manga" => {"points" => manga_point, "percent" => manga_percent, "raw" => round_info.manga.to_f},
-      "net" => {"points" => net_point, "percent" => net_percent, "raw" => round_info.net.to_f},
-      "fgame" => {"points" => fgame_point, "percent" => fgame_percent, "raw" => round_info.fgame.to_f},
-      "game" => {"points" => game_point, "percent" => game_percent, "raw" => round_info.game.to_f},
-      "lyric" => {"points" => lyric_point, "percent" => lyric_percent, "raw" => round_info.lyric.to_f},
-      "subs" => {"points" => subs_point, "percent" => subs_percent, "raw" => round_info.subs.to_f},
-      "news" => {"points" => news_point, "percent" => news_percent, "raw" => round_info.news.to_f},
-      "nico" => {"points" => nico_point, "percent" => nico_percent, "raw" => round_info.nico.to_f},
-      "sent" => {"points" => sent_point, "percent" =>sent_percent, "raw" => sent_raw.to_f},
+      "book" => {"points" => book_point, "percent" => book_percent.to_f, "raw" => round_info.book.to_f},
+      "manga" => {"points" => manga_point, "percent" => manga_percent.to_f, "raw" => round_info.manga.to_f},
+      "net" => {"points" => net_point, "percent" => net_percent.to_f, "raw" => round_info.net.to_f},
+      "fgame" => {"points" => fgame_point, "percent" => fgame_percent.to_f, "raw" => round_info.fgame.to_f},
+      "game" => {"points" => game_point, "percent" => game_percent.to_f, "raw" => round_info.game.to_f},
+      "lyric" => {"points" => lyric_point, "percent" => lyric_percent.to_f, "raw" => round_info.lyric.to_f},
+      "subs" => {"points" => subs_point, "percent" => subs_percent.to_f, "raw" => round_info.subs.to_f},
+      "news" => {"points" => news_point, "percent" => news_percent.to_f, "raw" => round_info.news.to_f},
+      "nico" => {"points" => nico_point, "percent" => nico_percent.to_f, "raw" => round_info.nico.to_f},
+      "sent" => {"points" => sent_point, "percent" =>sent_percent.to_f, "raw" => sent_raw.to_f},
       "total" => round_info.pcount
     }
   end
