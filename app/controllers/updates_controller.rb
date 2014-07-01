@@ -6,19 +6,18 @@ class UpdatesController < ApplicationController
   before_filter :admin_user, only: [:destroy, :edit]
 
   def create
-    if !current_user.rounds.find_by_round_id(ApplicationHelper.curr_round).nil?
+    current_user_round = current_user.rounds.find_by_round_id(ApplicationHelper.curr_round)
+    if current_user_round.present?
       client = Update.initialize_twitter
 
       @update = current_user.updates.build(update_params)
-      round = ApplicationHelper.curr_round.to_s
-      @update.round_id = round
+      @update.round_id = ApplicationHelper.curr_round
 
       if @update.newread == '0.0' || @update.lang.empty? || @update.medium.empty?
         flash[:error] = "Pages read, language, and medium MUST be included. Please provide all the information and try again."
         redirect_to ranking_path
       else
-        @update.raw = @update.newread
-        @update.recpage = current_user.rounds.find_by_round_id(round).pcount
+        @update.raw , @update.recpage = @update.newread, current_user_round.pcount
         new_read = Calc.score_calc(@update.newread, @update.medium, @update.lang)
 
         #Don't like all these if statements, might try to add it to the score_calc function.
@@ -36,8 +35,7 @@ class UpdatesController < ApplicationController
         if @update.save
 
           ApplicationHelper.medium_update(current_user,round,@update.medium,@update.raw,new_read,new_total)
-          rank = Round.rank(current_user,round)
-          Tweet.tweet_up(current_user,new_total.round(2),rank,client)
+          Tweet.tweet_up(current_user,new_total.round(2),Round.rank(current_user,round),client)
 
           flash[:success] = "Update successfully submitted"
           redirect_to ranking_path
@@ -56,16 +54,15 @@ class UpdatesController < ApplicationController
   end
 
   def destroy
-    unread = @update.raw.to_f
-    unmed = @update.medium.to_s
+    undo_read_amount, undo_med = @update.raw.to_f , @update.medium
     usr_round = current_user.rounds.find_by_round_id(ApplicationHelper.curr_round)
 
-    rev_total = usr_round.pcount.to_f - @update.newread.to_f
-    old_med_read = usr_round.send(unmed).to_f
-    rev_med_read = old_med_read.to_f - unread.to_f
-    usr_round.update_attributes(unmed.to_sym => rev_med_read)
+    revised_total = usr_round.pcount.to_f - @update.newread.to_f
+    old_med_read = usr_round.send(undo_med).to_f
+    revised_med_read = old_med_read.to_f - undo_read_amount.to_f
+    usr_round.update_attributes(undo_med.to_sym => revised_med_read)
 
-    usr_round.update_attributes(:pcount => rev_total)
+    usr_round.update_attributes(:pcount => revised_total)
     @update.destroy
 
     flash[:success] = "Update undo successful."
