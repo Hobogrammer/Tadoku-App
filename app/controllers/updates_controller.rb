@@ -6,11 +6,11 @@ class UpdatesController < ApplicationController
   before_filter :admin_user, only: [:destroy, :edit]
 
   def create
-    if !current_user.rounds.find_by_round_id(ApplicationHelper::curr_round).nil?
+    if !current_user.rounds.find_by_round_id(ApplicationHelper.curr_round).nil?
       client = Update.initialize_twitter
 
       @update = current_user.updates.build(update_params)
-      round = ApplicationHelper::curr_round.to_s
+      round = ApplicationHelper.curr_round.to_s
       @update.round_id = round
 
       if @update.newread == '0.0' || @update.lang.empty? || @update.medium.empty?
@@ -19,25 +19,25 @@ class UpdatesController < ApplicationController
       else
         @update.raw = @update.newread
         @update.recpage = current_user.rounds.find_by_round_id(round).pcount
-        new_read = Calc::score_calc(@update.newread, @update.medium, @update.lang)
+        new_read = Calc.score_calc(@update.newread, @update.medium, @update.lang)
 
         #Don't like all these if statements, might try to add it to the score_calc function.
-        new_read = Calc::dr(new_read) if @update.dr == true
+        new_read = Calc.dr(new_read) if @update.dr == true
 
-        @update.raw = Calc::dr(@update.raw) if @update.dr == true
+        @update.raw = Calc.dr(@update.raw) if @update.dr == true
 
-        new_read = Calc::repeat(new_read, @update.repeat) if (@update.repeat > 0)
-        @update.raw = Calc::repeat(@update.raw, @update.repeat) if (@update.repeat > 0)
+        new_read = Calc.repeat(new_read, @update.repeat) if (@update.repeat > 0)
+        @update.raw = Calc.repeat(@update.raw, @update.repeat) if (@update.repeat > 0)
 
         @update.newread = new_read
         new_total = new_read + @update.recpage
 
-        @update.created_at_in_user_time = ApplicationHelper::convert_usr_time(current_user,Time.now)
+        @update.created_at_in_user_time = ApplicationHelper.convert_usr_time(current_user,Time.now)
         if @update.save
 
-          ApplicationHelper::medium_update(current_user,round,@update.medium,@update.raw,new_read,new_total)
-          rank = Round::rank(current_user,round)
-          Tweet::tweet_up(current_user,new_total.round(2),rank,client)
+          ApplicationHelper.medium_update(current_user,round,@update.medium,@update.raw,new_read,new_total)
+          rank = Round.rank(current_user,round)
+          Tweet.tweet_up(current_user,new_total.round(2),rank,client)
 
           flash[:success] = "Update successfully submitted"
           redirect_to ranking_path
@@ -58,7 +58,7 @@ class UpdatesController < ApplicationController
   def destroy
     unread = @update.raw.to_f
     unmed = @update.medium.to_s
-    usr_round = current_user.rounds.find_by_round_id(ApplicationHelper::curr_round)
+    usr_round = current_user.rounds.find_by_round_id(ApplicationHelper.curr_round)
 
     rev_total = usr_round.pcount.to_f - @update.newread.to_f
     old_med_read = usr_round.send(unmed).to_f
