@@ -254,7 +254,7 @@ end
     report.puts "<ol>"
 
     entrants.each do |entrant|
-      if entrant.pcount < entrant.goal.to_i && entrant.goal.to_i > 0
+      if (entrant.pcount.to_f < entrant.goal.to_f) && entrant.goal.to_f > 0
         report.puts "<li><span style='color:#99cc00;'>#{entrant.user.name} #{entrant.pcount.round(2)} </span></li>"
       else
         report.puts "<li>#{entrant.user.name} #{entrant.pcount.round(2)}</li>"
