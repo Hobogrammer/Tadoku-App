@@ -144,4 +144,14 @@ class Round < ActiveRecord::Base
       end
     end
   end
+
+  def self.registraton_check(user)
+     current_user_round = user.rounds.find_by_round_id(ApplicationHelper.curr_round)
+
+     if current_user_round
+      current_user_round
+    else
+      false
+    end
+  end
 end
