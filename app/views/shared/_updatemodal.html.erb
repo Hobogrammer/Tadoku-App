@@ -10,7 +10,7 @@
       </div>
         <div class="modal-body">
           <%= simple_form_for @update do |f| %>
-           <%= render 'shared/error_messages', object: f.object %>
+           <%= render 'shared/error_messages', object: @update %>
             <%= f.input :newread , :label => "Amount Read", :placeholder => 'pages/screens/minutes #' , :input_html => { :maxlength => 5 } %>
             <%= f.input :medium, :label=> "Medium Read", :collection => ["book", "manga", "game", "fgame", "net", "lyric", "subs", "news", "sent", "nico" ], :prompt => "Select medium read" %>
             <% lang_list = Update::user_langs(current_user,ApplicationHelper::curr_round) %>
