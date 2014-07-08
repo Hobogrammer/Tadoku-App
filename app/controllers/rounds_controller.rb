@@ -47,13 +47,9 @@ class RoundsController < ApplicationController
   def show
     @entrants = Round.includes(:user).where(:round_id => params[:id])
     @roundid = params[:id]
-    if signed_in?
-      @update = current_user.updates.build
-    end
+    @update = current_user.updates.build if signed_in?
 
-    if (@entrants.empty? || @entrants.nil?)
-      redirect_to root_url, :flash => { :error => "There are currently no users registered for this round." }
-    end
+    redirect_to root_url, :flash => { :error => "There are currently no users registered for this round." } if !@entrants.present?
   end
 
   def lang_show
@@ -68,19 +64,16 @@ class RoundsController < ApplicationController
       total = total.first.to_f
       lang_top["#{entrant.user.name}"] = total
     end
+
     @lang_sort = lang_top.sort_by {|k,v| v  || 0}
     @lang_sort = @lang_sort.reverse
 
-
     @roundid = params[:round_id]
     @lang = params[:lang]
-    if signed_in?
-      @update = current_user.updates.build
-    end
+    @update = current_user.updates.build if signed_in?
 
-    if (lang_users.empty? || lang_users.nil?)
-      redirect_to root_url, :flash => { :error => "There are currently no users registered for this round." }
-    end
+    redirect_to root_url, :flash => { :error => "There are currently no users registered for this round." } if !lang_users.present?
+
   end
 
   def round0_show
@@ -92,11 +85,11 @@ class RoundsController < ApplicationController
     @roundid = params[:round_id]
     @tier = params[:tier]
     if signed_in?
-      @update = current_user.updates.build
+      @update = current_user.updates.build #This should probably be a helper function called by a before_filter
     end
 
-    if (@entrants.empty? || @entrants.nil?)
-      redirect_to root_url, :flash => { :error => "There are no users in this tier registered for this round." }
+    if !@entrants.present?
+      redirect_to root_url, :flash => { :error => "There are no users in this tier registered for this round." } #This pattern appears 3 times, extract
     end
   end
 
