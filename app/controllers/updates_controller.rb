@@ -16,7 +16,6 @@ class UpdatesController < ApplicationController
       @update.raw , @update.recpage = @update.newread, current_user_round.pcount
       new_read = Calc.score_calc(@update.newread, @update.medium, @update.lang)
 
-      #Don't like all these if statements, might try to add it to the score_calc function.
       if @update.dr == true
         new_read = Calc.dr(new_read)
         @update.raw = Calc.dr(@update.raw)
