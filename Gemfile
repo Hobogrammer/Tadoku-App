@@ -26,7 +26,7 @@ group :development , :test do
   gem 'guard-rspec'
   gem 'launchy'
   gem 'pry'
-  gem 'pry-debugger'
+  gem 'pry-byebug'
   gem 'rspec-rails'
   gem 'timecop'
 end
