@@ -122,4 +122,8 @@ module ApplicationHelper
     old_rounds_query = Round.select(:round_id).uniq
     old_rounds = old_rounds_query.map(&:round_id)
   end
+
+  def build_update
+    signed_in? ? update = current_user.updates.build : nil
+  end
 end
