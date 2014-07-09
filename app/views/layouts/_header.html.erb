@@ -47,7 +47,7 @@
               <li><%= link_to "All-Time Ranking", round_path(1) %></li>
             </ul>
           </li>
-          <% if current_user %>
+          <% if @update %>
             <li><%= link_to "Update", "#updateModal", "data-toggle" => "modal" %></li>
             <li><%= link_to "Sign out", signout_path, method: :delete %></li>
 					<% else %>
