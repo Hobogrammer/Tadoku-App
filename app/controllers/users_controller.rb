@@ -3,15 +3,13 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @max_interval= Date.civil(ApplicationHelper::curr_round[0,4].to_i,ApplicationHelper::curr_round[4,6].to_i,-1).day
-    if signed_in?
-      @update = current_user.updates.build
-    end
+    @max_interval= Date.civil(ApplicationHelper.curr_round[0,4].to_i,ApplicationHelper.curr_round[4,6].to_i,-1).day
+    @update = build_update
 
-    if !@user.rounds.find_by_round_id(ApplicationHelper::curr_round).nil?
-      @round_stats = Calc::usermed_info(@user,ApplicationHelper::curr_round)
-      @round = @user.rounds.find_by_round_id(ApplicationHelper::curr_round)
-      @updates = @user.updates.where(:round_id => ApplicationHelper::curr_round).order('created_at DESC').limit(10)
+    if !@user.rounds.find_by_round_id(ApplicationHelper.curr_round).nil?
+      @round_stats = Calc.usermed_info(@user,ApplicationHelper.curr_round)
+      @round = @user.rounds.find_by_round_id(ApplicationHelper.curr_round)
+      @updates = @user.updates.where(:round_id => ApplicationHelper.curr_round).order('created_at DESC').limit(10)
     else
       flash[:error] = "This user is not registered for the current round. For past round records please  access the old rankings."
       redirect_to ranking_path
@@ -23,13 +21,10 @@ class UsersController < ApplicationController
 
     @round_id = params[:round_id]
     @max_interval = Date.civil(@round_id[0,4].to_i,@round_id[4,6].to_i,-1).day
-
-    if signed_in?
-      @update = current_user.updates.build
-    end
+    @update = build_update
 
     if !@user.rounds.find_by_round_id(params[:round_id]).nil?
-      @round_stats = Calc::usermed_info(@user,params[:round_id])
+      @round_stats = Calc.usermed_info(@user,params[:round_id])
       @round = @user.rounds.find_by_round_id(params[:round_id])
       @updates = @user.updates.where(:round_id => params[:round_id]).order('created_at DESC').limit(10)
     else
@@ -44,14 +39,12 @@ class UsersController < ApplicationController
     @rounds_stats = Hash.new
 
     @rounds_list.each do |round|
-      round_stats = Calc::usermed_info(@user, round.round_id)
+      round_stats = Calc.usermed_info(@user, round.round_id)
       @rounds_stats["#{round.round_id}"] = round_stats
     end
     @rounds_stats.keep_if { |k,v| k.to_f != 0 }
 
-    if signed_in?
-      @update = current_user.updates.build
-    end
+    @update = build_update
   end
 
   private
