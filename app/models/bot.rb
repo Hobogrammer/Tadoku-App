@@ -210,7 +210,7 @@ end
   def self.undo(update,round,client)
     requester_id = update.user.id
     user = User.find_by_uid(requester_id)
-    old_total = ApplicationHelper::rollback(user,round)
+    old_total = rollback(user,round)
     if old_total == false
       Tweet::no_undo(user,client)
     else
@@ -241,6 +241,28 @@ end
       round.goal  = new_goal
       round.save
       Tweet.goal_update(user.name,new_goal,client)
+    end
+  end
+
+    def self.rollback(user,round) #originally intended for use in both the bot and app, move to bot since application cannot use
+    del_update = user.updates.where(:round_id => round).last
+
+    if !del_update.present?
+       false
+    else
+      unread = del_update.raw.to_f
+      unmed = del_update.medium.to_s
+      rev_total = del_update.recpage.to_f
+      usr_round = user.rounds.find_by_round_id(round)
+
+      old_read = usr_round.send(unmed).to_f
+      rev_read = old_read.to_f - unread.to_f
+      usr_round.update_attributes(unmed.to_sym => rev_read)
+
+      usr_round.update_attributes(:pcount => rev_total)
+      del_update.destroy
+
+      rev_total
     end
   end
 end

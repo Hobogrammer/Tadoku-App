@@ -55,7 +55,7 @@ module ApplicationHelper
     new_total_med = new_med + total_round.send(med).to_f
     new_over_total = newread.to_f + total_round.pcount.to_f
 
-    ApplicationHelper::tier_check(user, total_round.pcount.to_f, new_over_total,usr_round)
+    ApplicationHelper.tier_check(user, total_round.pcount.to_f, new_over_total,usr_round)
 
     usr_round.update_attributes(med.to_sym => new_med, :pcount => new_total)
     total_round.update_attributes(med.to_sym => new_total_med, :pcount => new_over_total)
@@ -68,28 +68,6 @@ module ApplicationHelper
     if old_tier != new_tier
       usr_round.update_attributes(:tier => new_tier)
       # TODO: Tweet when promoted
-    end
-  end
-
-  def self.rollback(user,round) #originally intended for use in both the bot and app, move to bot since application cannot use
-    del_update = user.updates.where(:round_id => round).last
-
-    if del_update == nil
-       false
-    else
-      unread = del_update.raw.to_f
-      unmed = del_update.medium.to_s
-      rev_total = del_update.recpage.to_f
-      usr_round = user.rounds.find_by_round_id(round)
-
-      old_read = usr_round.send(unmed).to_f
-      rev_read = old_read.to_f - unread.to_f
-      usr_round.update_attributes(unmed.to_sym => rev_read)
-
-      usr_round.update_attributes(:pcount => rev_total)
-      del_update.destroy
-
-      rev_total
     end
   end
 
