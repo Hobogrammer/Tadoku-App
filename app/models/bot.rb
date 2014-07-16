@@ -244,7 +244,7 @@ end
     end
   end
 
-    def self.rollback(user,round) #originally intended for use in both the bot and app, move to bot since application cannot use
+    def self.rollback(user,round)
       del_update = user.updates.where(:round_id => round).last
 
       if !del_update.present?
