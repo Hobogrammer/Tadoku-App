@@ -1,4 +1,4 @@
-class Bot < ActiveRecord.Base
+class Bot < ActiveRecord::Base
 include Calc,Tweet, ApplicationHelper
 
 MEDREGEX = /#(books?|manga|net|web|fullgame|fgame|game|news|subs|sentences?|nico|lyric)/i
