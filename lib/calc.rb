@@ -96,4 +96,13 @@ module Calc
       "total" => round_info.pcount
     }
   end
+
+  def self.month_reading_average(user, round_id, points)
+    max_interval = Date.civil(round_id[0,4].to_i,round_id[4,6].to_i,-1)
+    today = Time.now.utc
+    interval = today.in_time_zone("#{user.time_zone}") - UpdatesHelper.start_date_full(round_id)
+    interval /= (60*60*24).floor
+    interval = max_interval.day if interval > max_interval.day
+    avg = points / interval
+  end
 end

@@ -24,7 +24,7 @@
         data: <%= updates_chart_series(@user,ApplicationHelper::curr_round) %>
       }
       <% if !@round.lang2.blank? %>
-        , { 
+        , {
           name: "<%= @round.lang1 %>",
           pointInterval: <%= 1.day * 1000 %>,
           pointStart: <%= UpdatesHelper::start_date_full(ApplicationHelper::curr_round).to_i * 1000 %>,
@@ -52,9 +52,9 @@
   <script type="text/javascript">
   $(function () {
     var chart;
-    
+
     $(document).ready(function () {
-        
+
         // Build the chart
         chart = new Highcharts.Chart({
             chart: {
@@ -116,21 +116,16 @@
           <p><a href='http://twitter.com/<%= @user.name %>'><%= @user.name %></a></p>
           <div class = "well well-small">
             <p class = "info">Reading language(s): <%= @round.lang1 %>
-              <% if !@round.lang2.nil? %>
+              <% if @round.lang2 %>
                 <%= @round.lang2 %>
               <% end %>
-              <% if !@round.lang3.nil? %>
+              <% if @round.lang3 %>
                 <%= @round.lang3 %>
               <% end %>
             </p>
-            <% today = Time.now.utc %>
-            <% interval = today.in_time_zone("#{@user.time_zone}") - UpdatesHelper::start_date_full(ApplicationHelper::curr_round) %>
-            <% interval = (interval / (60*60*24)).floor %>
-                                 <% interval = @max_interval if interval > @max_interval %>
-            <% avg = @round.pcount / interval %>
             <p class = "info">Goal: <%= @round.goal %></p>
                                     <p class = "info">Tier: <%= @round.tier %></p>
-            <p class = "info">Round reading avg: <%= avg.to_s.to_f.round(2) %></p>
+            <p class = "info">Round reading avg: <%= @avg.round(2) %></p>
         </div>
       </section>
     </aside>
@@ -247,10 +242,8 @@
     self.addClass('active');
     self.parent().addClass('active');
     paneWeWant = this.href.match(/\#\w+/);
-    console.log("The pane we want is " + paneWeWant);
     return $('.tab-pane').each(function(n, i) {
       if (("" + i.id) === paneWeWant[0]) {
-        console.log("The tab-pane's id is " + i.id);
         return $(this).addClass('active in');
       } else {
         return $(this).removeClass('active in');
