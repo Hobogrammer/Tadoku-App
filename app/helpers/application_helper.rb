@@ -1,5 +1,5 @@
 module ApplicationHelper
-    #Returns the full title on a per-page basis
+
   def full_title(page_title)
    base_title = "Tadoku Contest Web App"
     if page_title.empty?
@@ -101,7 +101,7 @@ module ApplicationHelper
     old_rounds = old_rounds_query.map(&:round_id)
   end
 
-  def build_update
-    signed_in? ? update = current_user.updates.build : nil
+  def self.build_update(is_signed_in)
+    is_signed_in ? update = current_user.updates.build : nil
   end
 end
