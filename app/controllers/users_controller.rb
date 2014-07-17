@@ -3,12 +3,12 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @max_interval= Date.civil(ApplicationHelper.curr_round[0,4].to_i,ApplicationHelper.curr_round[4,6].to_i,-1).day
-    @update = build_update
+    @update = ApplicationHelper.build_update(signed_in?)
 
     if !@user.rounds.find_by_round_id(ApplicationHelper.curr_round).nil?
       @round_stats = Calc.usermed_info(@user,ApplicationHelper.curr_round)
       @round = @user.rounds.find_by_round_id(ApplicationHelper.curr_round)
+      @avg = Calc.month_reading_average(@user, ApplicationHelper.curr_round, @round.pcount)
       @updates = @user.updates.where(:round_id => ApplicationHelper.curr_round).order('created_at DESC').limit(10)
     else
       flash[:error] = "This user is not registered for the current round. For past round records please  access the old rankings."
@@ -20,12 +20,12 @@ class UsersController < ApplicationController
     @user = User.find(params[:user_id])
 
     @round_id = params[:round_id]
-    @max_interval = Date.civil(@round_id[0,4].to_i,@round_id[4,6].to_i,-1).day
-    @update = build_update
+    @update = ApplicationHelper.build_update(signed_in?)
 
     if !@user.rounds.find_by_round_id(params[:round_id]).nil?
       @round_stats = Calc.usermed_info(@user,params[:round_id])
       @round = @user.rounds.find_by_round_id(params[:round_id])
+      @avg = Calc.month_reading_average(@user, ApplicationHelper.curr_round, @round.pcount)
       @updates = @user.updates.where(:round_id => params[:round_id]).order('created_at DESC').limit(10)
     else
       flash[:error] = "This user is not registered for this round."
@@ -44,7 +44,7 @@ class UsersController < ApplicationController
     end
     @rounds_stats.keep_if { |k,v| k.to_f != 0 }
 
-    @update = build_update
+    @update = ApplicationHelper.build_update(signed_in?)
   end
 
   private
