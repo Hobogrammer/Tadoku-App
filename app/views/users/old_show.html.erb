@@ -116,12 +116,8 @@
 					<p><a href='http://twitter.com/<%= @user.name %>'><%= @user.name %></a></p>
 					<div class = "well well-small">
 						<p class = "info">Reading language(s): <%= @round.lang1 %>
-							<% if !(@round.lang2.nil?| @round.lang2.empty?)%>
-								<%= @round.lang2 %>
-							<% end %>
-							<% if !(@round.lang3.nil?| @round.lang3.empty?) %>
-								<%= @round.lang3 %>
-							<% end %>
+							<%= @round.lang2 if @round.lang2.present? %>
+							<%= @round.lang3 if @round.lang3.present? %>
 						</p>
 						<p class = "info">Goal: <%= @round.goal %></p>
 						<p class = "info">Round reading avg: <%= @avg.round(2) %></p>
