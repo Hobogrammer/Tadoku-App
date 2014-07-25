@@ -15,34 +15,16 @@
             <ul class="dropdown-menu">
               <li><%= link_to "Current Ranking", ranking_path %></li>
               <li class="divider"></li>
+              <% @ordered_rounds.each do |year_key,year_array| %>
               <li class="dropdown-submenu">
-                <a tabindex="-1" href=#>2014 Rankings</a>
+                <a tabindex="-1" href=#><%= year_key %> <%=pluralize(year_array.length,"Ranking") %></a>
                   <ul class="dropdown-menu">
-                    <% @ordered_rounds["2014"].each do |r2014| %>
-                      <li><%= link_to round_name(r2014.to_s), round_path(r2014) %></li>
+                    <% year_array.each do |round| %>
+                      <li><%= link_to round_name(round.to_s), round_path(round) %></li>
                     <% end %>
                   </ul>
                 </li>
-               <li class="dropdown-submenu">
-                <a tabindex="-1" href=#>2013 Rankings</a>
-                  <ul class="dropdown-menu">
-                    <% @ordered_rounds["2013"].each do |r2013| %>
-                      <li><%= link_to round_name(r2013.to_s), round_path(r2013) %></li>
-                    <% end %>
-                  </ul>
-                </li>
-              </li>
-               <li><%= link_to "2012 Ranking", round_path(@ordered_rounds["2012"].first.to_i) %></li>
-              </li>
-              <li class="dropdown-submenu">
-                <a tabindex="-1" href=#>2011 Rankings</a>
-                  <ul class="dropdown-menu">
-                    <% @ordered_rounds["2011"].each do |r2011| %>
-                      <li><%= link_to  round_name(r2011.to_s), round_path(r2011) %></li>
-                    <% end %>
-                  </ul>
-              </li>
-              <li><%= link_to "2010 Ranking", zero_path %></li>
+              <% end %>
               <li class="divider"></li>
               <li><%= link_to "All-Time Ranking", round_path(1) %></li>
             </ul>
