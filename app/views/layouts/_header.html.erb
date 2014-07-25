@@ -17,7 +17,7 @@
               <li class="divider"></li>
               <% @ordered_rounds.each do |year_key,year_array| %>
               <li class="dropdown-submenu">
-                <a tabindex="-1" href=#><%= year_key %> <%=pluralize(year_array.length,"Ranking") %></a>
+                <a tabindex="-1" href=#><%= year_key %> <%=ApplicationHelper.pluralize_sans_count(year_array.length,"Ranking") %></a>
                   <ul class="dropdown-menu">
                     <% year_array.each do |round| %>
                       <li><%= link_to round_name(round.to_s), round_path(round) %></li>

@@ -104,4 +104,10 @@ module ApplicationHelper
   def self.build_update(is_signed_in)
     is_signed_in ? update = current_user.updates.build : nil
   end
+
+  def self.pluralize_sans_count(count, noun, text = nil)
+  if count != 0
+    count == 1 ? "#{noun}#{text}" : "#{noun.pluralize}#{text}"
+  end
+end
 end
