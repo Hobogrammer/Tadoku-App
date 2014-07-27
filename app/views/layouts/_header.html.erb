@@ -16,14 +16,18 @@
               <li><%= link_to "Current Ranking", ranking_path %></li>
               <li class="divider"></li>
               <% @ordered_rounds.each do |year_key,year_array| %>
-              <li class="dropdown-submenu">
-                <a tabindex="-1" href=#><%= year_key %> <%=ApplicationHelper.pluralize_sans_count(year_array.length,"Ranking") %></a>
-                  <ul class="dropdown-menu">
-                    <% year_array.each do |round| %>
-                      <li><%= link_to round_name(round.to_s), round_path(round) %></li>
-                    <% end %>
-                  </ul>
-                </li>
+                <% if year_array.length == 1 %>
+                  <li><%= link_to "#{year_key} Ranking", round_path(year_array.first) %></li>
+                <% else %>
+                  <li class="dropdown-submenu">
+                    <a tabindex="-1" href=#><%= year_key %> <%=ApplicationHelper.pluralize_sans_count(year_array.length,"Ranking") %></a>
+                      <ul class="dropdown-menu">
+                        <% year_array.each do |round| %>
+                          <li><%= link_to round_name(round.to_s), round_path(round) %></li>
+                        <% end %>
+                      </ul>
+                    </li>
+                <% end %>
               <% end %>
               <li class="divider"></li>
               <li><%= link_to "All-Time Ranking", round_path(1) %></li>
@@ -32,8 +36,8 @@
           <% if @update %>
             <li><%= link_to "Update", "#updateModal", "data-toggle" => "modal" %></li>
             <li><%= link_to "Sign out", signout_path, method: :delete %></li>
-					<% else %>
-					<li><%= link_to "Sign in", signin_path %></li>
+          <% else %>
+            <li><%= link_to "Sign in", signin_path %></li>
           <% end %>
         </ul>
       </nav>
