@@ -19,8 +19,8 @@ function golang(){
   <div class="span4">
     <form name="tierselc" method= "GET" style=" display:inline;">
       <select name="tierselect">
-      <% @tier.each do |t| %>
-        <option value = <%= tier_path(ApplicationHelper::curr_round,t) %>><%= t %></option>
+      <% @tier.each do |tier| %>
+        <option value = <%= tier_path(ApplicationHelper.curr_round,tier) %>><%= tier %></option>
       <% end %>
       <input type="button" value="Show" class="btn btn-inverse" onClick="gotier()" style="margin-bottom:10px;">
     </select>
@@ -31,8 +31,8 @@ function golang(){
     <form name="langselc" method= "GET" style=" display:inline;">
       <input type="button" value="Show" class="btn btn-inverse" onClick="golang()" style="margin-bottom:10px;">
       <select name="langselect">
-      <% @lang.each do |l| %>
-        <option value = <%= lang_path(ApplicationHelper::curr_round,l) %>><%= l %></option>
+      <% @lang.each do |lang| %>
+        <option value = <%= lang_path(ApplicationHelper.curr_round,lang) %>><%= lang %></option>
       <% end %>
     </select>
     </form>
@@ -56,7 +56,7 @@ function golang(){
         <tr>
           <td><li></td>
           <td><%= twivatar_for(entrant.user) %></td>
-          <td><%= link_to entrant.user.name, user_path(entrant.user) %></td>
+          <td><%= link_to entrant.user.name, user_stats_path(ApplicationHelper.curr_round , entrant.user) %></td>
           <td><%= entrant.pcount.round(2) %></td></li>
         </tr>
       <% end %>
