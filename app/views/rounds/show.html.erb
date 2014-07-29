@@ -23,7 +23,7 @@
           <td><li></td>
           <td><%= twivatar_for(entrant.user) %></td>
             <% if @roundid != '1' %>
-               <td><%= link_to entrant.user.name, old_user_path(@roundid, entrant.user) %></td>
+               <td><%= link_to entrant.user.name, user_stats_path(@roundid, entrant.user) %></td>
             <% else %>
               <td><%= entrant.user.name %></td>
             <% end %>

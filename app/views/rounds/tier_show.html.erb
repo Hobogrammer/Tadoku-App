@@ -18,7 +18,7 @@
         <tr>
           <td><li></td>
           <td><%= twivatar_for(entrant.user) %></td>
-          <td><%= link_to entrant.user.name, old_user_path(@roundid, entrant.user) %></td>
+          <td><%= link_to entrant.user.name, user_stats_path(@roundid, entrant.user) %></td>
           <td><%= entrant.pcount.round(2) %></td></li>
         </tr>
       <% end %>
