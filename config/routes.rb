@@ -23,8 +23,8 @@ TadokuApp::Application.routes.draw do
   get '/ranking/0' , to: 'rounds#round0_show', :as => :zero
   get 'rounds/:round_id/tier/:tier' , to: 'rounds#tier_show', :as => :tier
 
-  get '/rounds/:round_id/users/:user_id' , to: 'users#old_show', :as => :old_user
-  get 'profile/:user_id' , to: 'users#profile'
+  get '/rounds/:round_id/users/:user_id' , to: 'users#show', :as => :user_stats
+  get 'profile/:user_id' , to: 'users#profile' #users route space is clear. profile may be able to go away
 
   get "auth/twitter/callback" , to: "sessions#create"
 end
