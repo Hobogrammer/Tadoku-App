@@ -1,11 +1,45 @@
 <% provide(:title, 'Main Ranking') %>
-<% if @roundid == '1' %>
-  <h1>Tadoku All-Time Ranking</h1>
-  <% else %>
-    <h1>Tadoku <%= round_name(@roundid) %> Round Ranking</h1>
-  <% end %>
+<h1>Tadoku Ranking Page</h1>
 
-<br/>
+<br />
+
+<script type="text/javascript">
+<!--
+  function gotier(){
+    location=document.tierselc.tierselect.options[document.tierselc.tierselect.selectedIndex].value
+}
+
+function golang(){
+    location=document.langselc.langselect.options[document.langselc.langselect.selectedIndex].value
+}
+//-->
+</script>
+
+<div class="row">
+  <div class="span4">
+    <form name="tierselc" method= "GET" style=" display:inline;">
+      <select name="tierselect">
+      <% @tier.each do |tier| %>
+        <option value = <%= tier_path(@round_id,tier) %>><%= tier %></option>
+      <% end %>
+      <input type="button" value="Show" class="btn btn-inverse" onClick="gotier()" style="margin-bottom:10px;">
+    </select>
+    </form>
+  </div>
+
+  <div class="span4 offset4">
+    <form name="langselc" method= "GET" style=" display:inline;">
+      <input type="button" value="Show" class="btn btn-inverse" onClick="golang()" style="margin-bottom:10px;">
+      <select name="langselect">
+      <% @lang.each do |lang| %>
+        <option value = <%= lang_path(@round_id,lang) %>><%= lang %></option>
+      <% end %>
+    </select>
+    </form>
+  </div>
+</div>
+
+<br />
 <div class = "ranking">
   <ol>
   <table class="table">
@@ -22,11 +56,7 @@
         <tr>
           <td><li></td>
           <td><%= twivatar_for(entrant.user) %></td>
-            <% if @roundid != '1' %>
-               <td><%= link_to entrant.user.name, user_stats_path(@roundid, entrant.user) %></td>
-            <% else %>
-              <td><%= entrant.user.name %></td>
-            <% end %>
+          <td><%= link_to entrant.user.name, user_stats_path(@round_id , entrant.user) %></td>
           <td><%= entrant.pcount.round(2) %></td></li>
         </tr>
       <% end %>

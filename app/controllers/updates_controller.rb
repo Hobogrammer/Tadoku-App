@@ -35,11 +35,11 @@ class UpdatesController < ApplicationController
         Tweet.tweet_up(current_user,new_total.round(2),Round.rank(current_user,round),client)
 
         flash[:success] = "Update successfully submitted"
-        redirect_to ranking_path
+        redirect_to round_path(ApplicationHelper.curr_round)
       else
         binding.pry
         flash[:error] = "Failed to update. Please make sure all required fields are filled in."
-        redirect_to ranking_path
+        redirect_to round_path(ApplicationHelper.curr_round)
       end
     else
       flash[:error] = "You must be registered for the current round in order to submit an update. Please register"
@@ -64,7 +64,7 @@ class UpdatesController < ApplicationController
     @update.destroy
 
     flash[:success] = "Update undo successful."
-    redirect_to ranking_path
+    redirect_to round_path(ApplicationHelper.curr_round)
   end
 
   private

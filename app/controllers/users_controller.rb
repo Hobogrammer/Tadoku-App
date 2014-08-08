@@ -12,8 +12,8 @@ class UsersController < ApplicationController
       @avg = Calc.month_reading_average(@user, @round_id, @round.pcount)
       @updates = @user.updates.where(:round_id => @round_id).order('created_at DESC').limit(10)
     else
-      flash[:error] = "This user is not registered for the current round. For past round records please  access the old rankings."
-      redirect_to ranking_path
+      flash[:error] = "This user is not registered for the selected round."
+      redirect_to round_path(ApplicationHelper.curr_round)
     end
   end
 

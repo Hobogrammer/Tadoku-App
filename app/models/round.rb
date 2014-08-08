@@ -27,4 +27,8 @@ class Round < ActiveRecord::Base
       false
     end
   end
+
+  def ranking_by_lang
+
+  end
 end

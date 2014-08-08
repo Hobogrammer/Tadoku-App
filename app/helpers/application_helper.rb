@@ -106,7 +106,7 @@ module ApplicationHelper
   end
 
   def self.pluralize_sans_count(count, noun, text = nil)
-  if count != 0
+  if !count.zero?
     count == 1 ? "#{noun}#{text}" : "#{noun.pluralize}#{text}"
   end
 end

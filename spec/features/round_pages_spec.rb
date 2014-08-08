@@ -21,7 +21,7 @@ describe "RoundPages" do
   describe "Ranking page" do
 
     before do
-      visit ranking_path
+      visit round_path(ApplicationHelper.curr_round)
     end
 
     it "should contain all users currently registered in the current round" do

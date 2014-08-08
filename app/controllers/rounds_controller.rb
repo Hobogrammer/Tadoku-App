@@ -5,19 +5,7 @@ class RoundsController < ApplicationController
   before_filter :admin_user, only: [:destroy, :edit]
 
   def index
-    @entrants = Round.includes(:user).where(:round_id => "#{ApplicationHelper.curr_round}")
-    if @entrants == nil
-      redirect_to root_url, :flash => { :error => "There are currently no users registered for this round." }
-    end
 
-    list = Round.where(:round_id => ApplicationHelper.curr_round).select(:tier).uniq
-    lang_list = Update.where(:round_id => ApplicationHelper.curr_round).select(:lang).uniq
-    @tier = list.map(&:tier)
-    @tier = @tier.sort{ |a,b|  Tier.TIER_VALUES[a.to_sym] <=> Tier.TIER_VALUES[b.to_sym]}
-    @lang = lang_list.map(&:lang)
-    if signed_in?
-      @update = current_user.updates.build
-    end
   end
 
   def create
@@ -45,8 +33,18 @@ class RoundsController < ApplicationController
   end
 
   def show
-    @entrants = Round.includes(:user).where(:round_id => params[:id])
-    @roundid = params[:id]
+    @round_id = params[:id]
+    @entrants = Round.includes(:user).where(:round_id => @round_id)
+    if @entrants == nil
+      redirect_to root_url, :flash => { :error => "There are currently no users registered for this round." }
+    end
+
+    list = Round.where(:round_id => @round_id).select(:tier).uniq
+    lang_list = Update.where(:round_id => @round_id).select(:lang).uniq
+    @tier = list.map(&:tier)
+    @tier = @tier.sort{ |a,b|  Tier::TIER_VALUES[a.to_sym] <=> Tier::TIER_VALUES[b.to_sym]}
+    @lang = lang_list.map(&:lang)
+
     @update = current_user.updates.build if signed_in?
 
     redirect_to root_url, :flash => { :error => "There are currently no users registered for this round." } if !@entrants.present?

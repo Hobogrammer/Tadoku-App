@@ -12,7 +12,7 @@
               Ranking <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
-              <li><%= link_to "Current Ranking", ranking_path %></li>
+              <li><%= link_to "Current Ranking", round_path(ApplicationHelper.curr_round) %></li>
               <li class="divider"></li>
               <% @ordered_rounds.each do |year_key,year_array| %>
                 <% if year_array.length == 1 %>
