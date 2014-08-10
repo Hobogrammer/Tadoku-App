@@ -27,7 +27,7 @@ group :development , :test do
   gem 'launchy'
   gem 'pry'
   gem 'pry-byebug'
-  gem 'rspec-rails'
+  gem 'rspec-rails' , '~> 2.14.2'
   gem 'timecop'
 end
 
