@@ -52,16 +52,7 @@ class UpdatesController < ApplicationController
   end
 
   def destroy
-    undo_read_amount, undo_med = @update.raw.to_f , @update.medium
-    usr_round = current_user.rounds.find_by_round_id(ApplicationHelper.curr_round)
-
-    revised_total = usr_round.pcount.to_f - @update.newread.to_f
-    old_med_read = usr_round.send(undo_med).to_f
-    revised_med_read = old_med_read.to_f - undo_read_amount.to_f
-    usr_round.update_attributes(undo_med.to_sym => revised_med_read)
-
-    usr_round.update_attributes(:pcount => revised_total)
-    @update.destroy
+    Update.undo_update(@update,current_user)
 
     flash[:success] = "Update undo successful."
     redirect_to round_path(ApplicationHelper.curr_round)

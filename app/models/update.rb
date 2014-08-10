@@ -31,6 +31,19 @@ LANGUAGES = {
       'Vietnamese' => 'vi'
     }
 
+  def self.undo_update(update, user)
+    undo_read_amount, undo_med = update.raw.to_f , update.medium
+    usr_round = user.rounds.find_by_round_id(ApplicationHelper.curr_round)
+
+    revised_total = usr_round.pcount.to_f - update.newread.to_f
+    old_med_read = usr_round.send(undo_med).to_f
+    revised_med_read = old_med_read.to_f - undo_read_amount.to_f
+    usr_round.update_attributes(undo_med.to_sym => revised_med_read)
+
+    usr_round.update_attributes(:pcount => revised_total)
+    update.destroy
+  end
+
   def self.user_langs(user,round)
     round_info = user.rounds.find_by_round_id(round)
     lang_rry = [round_info.lang1, round_info.lang2,round_info.lang3]
