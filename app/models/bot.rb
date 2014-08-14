@@ -244,25 +244,32 @@ end
     end
   end
 
-    def self.rollback(user,round)
-      del_update = user.updates.where(:round_id => round).last
+  def self.rollback(user,round)
+    del_update = user.updates.where(:round_id => round).last
 
-      if !del_update.present?
-         false
-      else
-        unread = del_update.raw.to_f
-        unmed = del_update.medium.to_s
-        rev_total = del_update.recpage.to_f
-        usr_round = user.rounds.find_by_round_id(round)
+    if !del_update.present?
+       false
+    else
+      unread = del_update.raw.to_f
+      unmed = del_update.medium.to_s
+      rev_total = del_update.recpage.to_f
+      usr_round = user.rounds.find_by_round_id(round)
 
-        old_read = usr_round.send(unmed).to_f
-        rev_read = old_read.to_f - unread.to_f
-        usr_round.update_attributes(unmed.to_sym => rev_read)
+      old_read = usr_round.send(unmed).to_f
+      rev_read = old_read.to_f - unread.to_f
+      usr_round.update_attributes(unmed.to_sym => rev_read)
 
-        usr_round.update_attributes(:pcount => rev_total)
-        del_update.destroy
+      usr_round.update_attributes(:pcount => rev_total)
+      del_update.destroy
 
-        rev_total
-      end
+      rev_total
+    end
+  end
+
+   def self.user_info_update(update)
+    usr = User.find_by_uid(update.user.id)
+    usr.update_attributes( :name  => update.user.screen_name ) if usr.name != update.user.screen_name
+    usr.update_attributes( :avatar => update.user.profile_image_url ) if usr.avatar != update.user.profile_image_url
+    usr.update_attributes( :time_zone => update.user.time_zone ) if usr.time_zone != update.user.time_zone
   end
 end
