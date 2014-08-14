@@ -37,6 +37,7 @@ LANGREGEX = /#(fr|de|es|en|ko|th\b|zh|it|nl|pl|el|ru|eo|sv|he|nn|nb|la|hu|jp|fi|
           split_up = update.text.split(/;/)
           split_up.each do |reup|
              if !reup.scan(MEDREGEX).empty?
+              user_info_update(update)
                processor(update,reup,client)
              end
           end
