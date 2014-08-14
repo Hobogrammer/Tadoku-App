@@ -76,16 +76,7 @@ end
           medium = reup.scan(MEDREGEX).first.to_s.gsub(/[^A-Za-z]/, '')
           language = reup.scan(LANGREGEX).first.to_s.to_s.gsub(/[^A-Za-z]/, '')
           sub_read = reup.scan(/[.]?\d+/).first.to_f
-
-          if medium == "sentences" || medium == "sentence"
-            medium = "sent"
-          end
-
-          medium = "book" if medium =="books"
-
-          medium = "fgame" if medium == "fullgame"
-
-          medium = "net" if medium == "web"
+          medium = medium_normalizer(medium)
 
           if language.empty?
             usr = User.find_by_uid(update.user.id)
@@ -272,5 +263,17 @@ end
     usr.update_attributes( :name  => update.user.screen_name ) if usr.name != update.user.screen_name
     usr.update_attributes( :avatar => update.user.profile_image_url ) if usr.avatar != update.user.profile_image_url
     usr.update_attributes( :time_zone => update.user.time_zone ) if usr.time_zone != update.user.time_zone
+  end
+
+  def self.medium_normalizer(medium)
+    if medium == "sentences" || medium == "sentence"
+      medium = "sent"
+    end
+
+    medium = "book" if medium =="books"
+
+    medium = "fgame" if medium == "fullgame"
+
+    medium = "net" if medium == "web"
   end
 end
