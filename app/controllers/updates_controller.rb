@@ -1,5 +1,5 @@
 class UpdatesController < ApplicationController
-  include ApplicationHelper, Calc, Tweet
+  include ApplicationHelper,Tweet
 
   before_filter :signed_in_user, only: :create
   before_filter :correct_user, only: :destroy
@@ -13,23 +13,9 @@ class UpdatesController < ApplicationController
       @update = current_user.updates.build(update_params)
       @update.round_id = ApplicationHelper.curr_round
 
-      @update.raw , @update.recpage = @update.newread, current_user_round.pcount
-      new_read = Calc.score_calc(@update.newread, @update.medium, @update.lang)
 
-      if @update.dr == true
-        new_read = Calc.dr(new_read)
-        @update.raw = Calc.dr(@update.raw)
-      end
+      @update = Update.process_update(@update,  current_user_round)
 
-      if @update.repeat > 0
-        new_read = Calc.repeat(new_read, @update.repeat)
-        @update.raw = Calc.repeat(@update.raw, @update.repeat)
-      end
-
-      @update.newread = new_read
-      new_total = new_read + @update.recpage
-
-      @update.created_at_in_user_time = ApplicationHelper.convert_usr_time(current_user,Time.now)
       if @update.save
         ApplicationHelper.medium_update(current_user,round,@update.medium,@update.raw,new_read,new_total)
         Tweet.tweet_up(current_user,new_total.round(2),Round.rank(current_user,round),client)
@@ -37,7 +23,6 @@ class UpdatesController < ApplicationController
         flash[:success] = "Update successfully submitted"
         redirect_to round_path(ApplicationHelper.curr_round)
       else
-        binding.pry
         flash[:error] = "Failed to update. Please make sure all required fields are filled in."
         redirect_to round_path(ApplicationHelper.curr_round)
       end
