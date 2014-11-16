@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
-ruby '2.1.2'
-gem 'rails', '4.0.3'
+ruby '2.1.5'
+gem 'rails', '4.1.7'
 
 gem 'bootstrap-sass', '~> 3.1.1'
 gem 'faker'
