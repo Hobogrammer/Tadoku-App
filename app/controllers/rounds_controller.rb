@@ -4,10 +4,6 @@ class RoundsController < ApplicationController
   before_filter :signed_in_user, only: :create
   before_filter :admin_user, only: [:destroy, :edit]
 
-  def index
-
-  end
-
   def create
     if !current_user.rounds.find_by_round_id(ApplicationHelper.curr_round).present?
       redirect_to root_url, :flash => { :error => "You are already registered for the Contest"}
@@ -65,7 +61,6 @@ class RoundsController < ApplicationController
 
     @lang_sort = lang_top.sort_by {|k,v| v  || 0}
     @lang_sort = @lang_sort.reverse
-    binding.pry
 
     @roundid = params[:round_id]
     @lang = params[:lang]
