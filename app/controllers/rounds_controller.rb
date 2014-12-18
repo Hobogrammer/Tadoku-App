@@ -30,16 +30,13 @@ class RoundsController < ApplicationController
 
   def show
     @round_id = params[:id]
-    @entrants = Round.includes(:user).where(:round_id => @round_id)
+    @entrants = Round.users_for_round(@round_id)
     if @entrants == nil
       redirect_to root_url, :flash => { :error => "There are currently no users registered for this round." }
     end
 
-    list = Round.where(:round_id => @round_id).select(:tier).uniq
-    lang_list = Update.where(:round_id => @round_id).select(:lang).uniq
-    @tier = list.map(&:tier)
-    @tier = @tier.sort{ |a,b|  Tier::TIER_VALUES[a.to_sym] <=> Tier::TIER_VALUES[b.to_sym]}
-    @lang = lang_list.map(&:lang)
+    @tier =  Round.tiers_for_round(@round_id)
+    @lang = Round.langs_for_round(@round_id)
 
     @update = current_user.updates.build if signed_in?
 
@@ -47,37 +44,23 @@ class RoundsController < ApplicationController
   end
 
   def lang_show
-    lang_users = Round.includes(:user).where("round_id = ? and (lang1 = ? or lang2 = ? or lang3 = ?)", params[:round_id], params[:lang], params[:lang], params[:lang])
-
-    lang_top =Hash.new
-
-    lang_users.each do |entrant|
-      total = 0
-      langups = entrant.user.updates.where(:round_id => params[:round_id], :lang => params[:lang]).select("sum(newread) as  accum")
-      total= langups.map(&:accum)
-      total = total.first.to_f
-      lang_top["#{entrant.user.name}"] = total
-    end
-
-    @lang_sort = lang_top.sort_by {|k,v| v  || 0}
-    @lang_sort = @lang_sort.reverse
-
+    @lang_sort = Round.ranking_by_lang(params[:round_id],params[:lang])
+    
     @roundid = params[:round_id]
     @lang = params[:lang]
     @update = current_user.updates.build if signed_in?
 
     redirect_to root_url, :flash => { :error => "There are currently no users registered for this round." } if !lang_users.present?
-
   end
 
   def round0_show
-    @entrants = Round.includes(:user).where(:round_id => 201008)
+    @entrants = Round.users_for_round(201008)
   end
 
   def tier_show
-    @entrants = Round.includes(:user).where("round_id = ? and tier = ?", params[:round_id], params[:tier])
-    @roundid = params[:round_id]
+    @round_id = params[:round_id]
     @tier = params[:tier]
+    @entrants = Round.users_by_round_tier(@round_id, @tier)
     if signed_in?
       @update = current_user.updates.build #This should probably be a helper function called by a before_filter
     end

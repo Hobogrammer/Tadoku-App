@@ -6,7 +6,7 @@ class Round < ActiveRecord::Base
 
  default_scope { order( :pcount => :desc ) }
 
-  def self.rank(user,roundid)
+  def self.rank(user,roundid) # TODO: Make this more efficient...just cause
     part_list = Round.where(:round_id => roundid)
 
     i = 1
@@ -28,7 +28,38 @@ class Round < ActiveRecord::Base
     end
   end
 
-  def ranking_by_lang
+  def self.ranking_by_lang(round_id, lang)
+    lang_users = Round.includes(:user).where("round_id = ? and (lang1 = ? or lang2 = ? or lang3 = ?)", round_id, lang, lang, lang)
 
+    lang_top = Hash.new
+
+    lang_users.each do |entrant|
+      total = 0
+      
+      entrant_lang_updates = entrant.user.updates.where(:round_id => round_id, :lang => lang).select("sum(newread) as  accum")
+      
+      total = entrant_lang_updates.map(&:accum).first.to_f
+
+      lang_top["#{entrant.user.name}"] = total
+    end
+
+    lang_top = lang_top.sort_by {|k,v| v  || 0}.reverse
+  end
+
+  def self.tiers_for_round(round_id)
+    tiers = Round.where(:round_id => @round_id).select(:tier).uniq.map(&:tier)
+    tiers.sort{ |a,b|  Tier::TIER_VALUES[a.to_sym] <=> Tier::TIER_VALUES[b.to_sym]}
+  end
+
+  def self.langs_for_round(round_id)
+    Update.where(:round_id => @round_id).select(:lang).uniq.map(&:lang)
+  end
+
+  def self.users_for_round(round_id)
+    Round.includes(:user).where(:round_id => @round_id)
+  end
+
+  def self.users_by_round_tier(round_id,tier)
+    Round.includes(:user).where("round_id = ? and tier = ?", round_id, tier)
   end
 end
