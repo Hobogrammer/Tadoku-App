@@ -106,7 +106,7 @@ LANGUAGES = {
   end
 
   def self.created_at_update
-  canidates = Update.includes(:user).where(:round_id => 201301)
+    canidates = Update.includes(:user).where(:round_id => 201301)
 
     canidates.each do |update|
       usr_tz = update.user.time_zone
@@ -130,21 +130,21 @@ LANGUAGES = {
   def process_update(update, current_user)
     update.raw , update.recpage = update.newread, current_user.pcount
 
-     new_read = Calc.score_calc(update.newread, update.medium, update.lang)
+    new_read = Calc.score_calc(update.newread, update.medium, update.lang)
 
-      if update.dr == true
-        new_read = Calc.dr(new_read)
-        update.raw = Calc.dr(update.raw)
-      end
+    if update.dr == true
+      new_read = Calc.dr(new_read)
+      update.raw = Calc.dr(update.raw)
+    end
 
-      if update.repeat > 0
-        new_read = Calc.repeat(new_read, update.repeat)
-        update.raw = Calc.repeat(update.raw, update.repeat)
-      end
+    if update.repeat > 0
+      new_read = Calc.repeat(new_read, update.repeat)
+      update.raw = Calc.repeat(update.raw, update.repeat)
+    end
 
-      update.newread = new_read
-      new_total = new_read + update.recpage
+    update.newread = new_read
+    new_total = new_read + update.recpage
 
-      update.created_at_in_user_time = ApplicationHelper.convert_usr_time(current_user,Time.now)
+    update.created_at_in_user_time = ApplicationHelper.convert_usr_time(current_user,Time.now)
   end
 end
