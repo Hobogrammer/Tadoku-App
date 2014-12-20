@@ -10,18 +10,8 @@ class RoundsController < ApplicationController
     elsif !round_params["round_id"].present?
       redirect_to root_url, :flash => { :error => "Please fill in the Round ID, and at least one language to register."}
     else
-      @reg = current_user.rounds.build(round_params)
-      @reg.pcount = '0'
-      if current_user.rounds.find_by_round_id(1).nil?
-        @over_reg = current_user.rounds.build(:round_id => 1, :pcount => 0)
-        @over_reg.save
-        @reg.tier = "Bronze"
-      else
-        usr_total = current_user.rounds.find_by_round_id(1).pcount.to_f
-        tier = Tier.tier(usr_total)
-        @reg.tier = tier
-      end
-
+      @reg = Round.build_user_round(current_user, round_params)
+      
       if @reg.save
         redirect_to root_url, :flash => { :success => "You have successfully registered for the Tadoku contest" }
       end
@@ -31,13 +21,11 @@ class RoundsController < ApplicationController
   def show
     @round_id = params[:id]
     @entrants = Round.users_for_round(@round_id)
-    if @entrants == nil
-      redirect_to root_url, :flash => { :error => "There are currently no users registered for this round." }
-    end
+
+     redirect_to root_url, :flash => { :error => "There are currently no users registered for this round." } if entrants.nil?
 
     @tier =  Round.tiers_for_round(@round_id)
     @lang = Round.langs_for_round(@round_id)
-
     @update = current_user.updates.build if signed_in?
 
     redirect_to root_url, :flash => { :error => "There are currently no users registered for this round." } if !@entrants.present?

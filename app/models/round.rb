@@ -62,4 +62,19 @@ class Round < ActiveRecord::Base
   def self.users_by_round_tier(round_id,tier)
     Round.includes(:user).where("round_id = ? and tier = ?", round_id, tier)
   end
+
+  def self.build_user_round(current_user, params)
+    reg = current_user.rounds.build(params)
+    reg.pcount = '0'
+    if current_user.rounds.find_by_round_id(1).nil?
+      over_reg = current_user.rounds.build(:round_id => 1, :pcount => 0)
+      over_reg.save
+      reg.tier = "Bronze"
+    else
+      usr_total = current_user.rounds.find_by_round_id(1).pcount.to_f
+      tier = Tier.tier(usr_total)
+      reg.tier = tier
+    end
+    reg
+  end
 end
