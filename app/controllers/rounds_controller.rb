@@ -22,7 +22,7 @@ class RoundsController < ApplicationController
     @round_id = params[:id]
     @entrants = Round.users_for_round(@round_id)
 
-     redirect_to root_url, :flash => { :error => "There are currently no users registered for this round." } if entrants.nil?
+     redirect_to root_url, :flash => { :error => "There are currently no users registered for this round." } if @entrants.nil?
 
     @tier =  Round.tiers_for_round(@round_id)
     @lang = Round.langs_for_round(@round_id)
