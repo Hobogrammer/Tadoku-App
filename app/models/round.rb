@@ -77,4 +77,15 @@ class Round < ActiveRecord::Base
     end
     reg
   end
+
+  def self.previous_rounds
+    
+  end
+
+  private
+
+  def years
+    current_year = Date.today.year
+    year_list = (2010..current_year).to_a
+  end
 end
