@@ -13,9 +13,12 @@
 
 ActiveRecord::Schema.define(version: 20130613030900) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "bots", force: true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "rounds", force: true do |t|
@@ -37,8 +40,8 @@ ActiveRecord::Schema.define(version: 20130613030900) do
     t.string   "lang1",      default: ""
     t.string   "lang2",      default: ""
     t.string   "lang3",      default: ""
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.string   "tier",       default: "0"
   end
 
@@ -56,8 +59,8 @@ ActiveRecord::Schema.define(version: 20130613030900) do
     t.string   "medium"
     t.string   "lang"
     t.decimal  "recpage",                 default: 0.0
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
     t.integer  "repeat",                  default: 0
     t.boolean  "dr",                      default: false
     t.decimal  "raw",                     default: 0.0
@@ -69,8 +72,8 @@ ActiveRecord::Schema.define(version: 20130613030900) do
     t.string   "uid"
     t.string   "name"
     t.boolean  "admin",      default: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.string   "time_zone"
     t.string   "avatar",     default: ""
   end
