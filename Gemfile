@@ -13,6 +13,7 @@ gem 'scheduler_daemon', :git => 'git://github.com/ssoroka/scheduler_daemon.git'
 gem 'simple_form'
 gem 'sqlite3'
 gem 'sprockets', '=2.11.0'
+gem "therubyracer"
 gem 'twitter'
 
 group :assets do
