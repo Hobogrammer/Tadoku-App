@@ -1,24 +1,14 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= full_title(yield(:title)) %></title>
-    <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
-    <%= csrf_meta_tags %>
-  </head>
-  <body>
-    <%= render 'layouts/header' %>
-    <div class="container">
-      <% flash.each do |key, value| %>
-        <%= content_tag(:div, value, class: "alert alert-#{key}") %>
-      <% end %>
-      <%= yield %>
-      <%= render 'layouts/footer' %>
-      <%= debug(params) if Rails.env.development? %>
-    </div>
-  </body>
-</html>
+<head>
+  <title>TadokuApp</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
 
-<% if signed_in? %>
-	<%= render "shared/updatemodal" %>
-<% end %>
+<%= yield %>
+
+</body>
+</html>

@@ -1,50 +1,47 @@
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 
-ruby '2.2.1'
-gem 'rails', '4.1.7'
 
-gem 'bootstrap-sass', '~> 3.1.1'
-gem 'faker'
-gem 'figaro'
+# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
+gem 'rails', '4.2.6'
+# Use postgresql as the database for Active Record
+gem 'pg', '~> 0.15'
+# Use SCSS for stylesheets
+gem 'sass-rails', '~> 5.0'
+# Use Uglifier as compressor for JavaScript assets
+gem 'uglifier', '>= 1.3.0'
+# Use CoffeeScript for .coffee assets and views
+gem 'coffee-rails', '~> 4.1.0'
+# See https://github.com/rails/execjs#readme for more supported runtimes
+# gem 'therubyracer', platforms: :ruby
+
+# Use jquery as the JavaScript library
 gem 'jquery-rails'
-gem 'language_list'
-gem 'omniauth-twitter'
-gem 'pg'
-gem 'scheduler_daemon', :git => 'git://github.com/ssoroka/scheduler_daemon.git'
-gem 'simple_form'
-gem 'sqlite3'
-gem 'sprockets', '=2.11.0'
-gem "therubyracer"
-gem 'twitter'
+# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
+gem 'turbolinks'
+# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
+gem 'jbuilder', '~> 2.0'
+# bundle exec rake doc:rails generates the API under doc/api.
+gem 'sdoc', '~> 0.4.0', group: :doc
 
-group :assets do
-  gem 'coffee-rails'
-  gem 'sass-rails', '>= 3.2'
-  gem 'uglifier'
+# Use ActiveModel has_secure_password
+# gem 'bcrypt', '~> 3.1.7'
+
+# Use Unicorn as the app server
+# gem 'unicorn'
+
+# Use Capistrano for deployment
+# gem 'capistrano-rails', group: :development
+
+group :development, :test do
+  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'byebug'
 end
 
-group :development , :test do
-  gem 'better_errors'
-  gem 'binding_of_caller'
-  gem 'guard-rspec'
-  gem 'launchy'
-  gem 'pry'
-  gem 'pry-byebug'
-  gem 'rspec-rails' , '~> 2.14.2'
-  gem 'timecop'
+group :development do
+  # Access an IRB console on exception pages or by using <%= console %> in views
+  gem 'web-console', '~> 2.0'
+
+  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  gem 'spring'
 end
 
-group :test do
-  gem 'capybara'
-  gem 'selenium-webdriver'
-  gem 'factory_girl_rails'
-  gem 'guard-spork'
-  gem 'growl' if /darwin/ =~ RUBY_PLATFORM
-  gem 'libnotify' if /linux/ =~ RUBY_PLATFORM
-  gem 'rb-inotify' if /linux/ =~ RUBY_PLATFORM
-  gem 'rb-readline'
-  gem 'simplecov', :require => false
-  gem 'spork'
-  gem 'vcr'
-  gem 'webmock'
-end
